@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, compose } from 'redux';
+import rootReducer from './reducers';
+
 import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layoutframe';
@@ -11,33 +15,46 @@ import Ordermonitor from './pages/Ordermonitor/Ordermonitor';
 
 import './index.css';
 
+const storeFactory = (initialState) => {
+    return (rootReducer) => {
+        const store = createStore(rootReducer, initialState, compose(
+            window.devToolsExtension ? window.devToolsExtension() : f => f
+        ));
+        return store;
+    };
+}
+
+const store = storeFactory()(rootReducer);
+
 ReactDOM.render(
-    <Router>
-        <Route path="/" exact component={Homepage} />
-        <Route path="/dashboard" >
-            <Layout>
-                <Dashboard />
-            </Layout>
-        </Route>
-        <Route path="/orderconfirm" >
-            <Layout>
-                <Orderconfirm />
-            </Layout>
-        </Route>
-        <Route path="/ordermanage" >
-            <Layout>
-                <Ordermanage />
-            </Layout>
-        </Route>
-        <Route exact path="/ordermonitor" >
-            <Layout>
-                <Ordermonitor />
-            </Layout>
-        </Route>
-        <Route path="/ordermonitor/detail" >
-            <Layout>
-                <Dashboard />
-            </Layout>
-        </Route>
-    </Router>
+    <Provider store={store}>
+        <Router>
+            <Route path="/" exact component={Homepage} />
+            <Route path="/dashboard" >
+                <Layout>
+                    <Dashboard />
+                </Layout>
+            </Route>
+            <Route path="/orderconfirm" >
+                <Layout>
+                    <Orderconfirm />
+                </Layout>
+            </Route>
+            <Route path="/ordermanage" >
+                <Layout>
+                    <Ordermanage />
+                </Layout>
+            </Route>
+            <Route exact path="/ordermonitor" >
+                <Layout>
+                    <Ordermonitor />
+                </Layout>
+            </Route>
+            <Route path="/ordermonitor/detail" >
+                <Layout>
+                    <Dashboard />
+                </Layout>
+            </Route>
+        </Router>
+    </Provider>
     , document.getElementById('root'));

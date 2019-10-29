@@ -1,21 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from './actions';
 import { Button, Table, Avatar } from 'antd';
-import { HashRouter as Router, Link, withRouter } from 'react-router-dom';
+import { HashRouter as Router, Link } from 'react-router-dom';
 
 import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
 
 import "./style.less"
 
-class Ordermonitor extends React.Component {
-
-    state = {
-        currentUrl: '',
-        dataSource: [],
+const mapDispatchToProps = dispatch => ({
+    changeTable: (data = {}, bool = true) => {
+        dispatch(actions.changeTable(data, bool))
+    },
+    tableLoading: (bool = false) => {
+        dispatch(actions.tableLoading(bool))
     }
-    componentDidMount() {
-        axiosget(APIS.testapi).then(res => this.setState({ dataSource: res }))
+})
 
+
+class Ordermonitor extends React.Component {
+    state = {}
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    fetchData() {
+        const { changeTable, tableLoading } = this.props;
+        tableLoading(true);
+        axiosget(APIS.testapi).then(res => {
+            changeTable(res, false)
+        })
     }
     showDetail() {
         console.log("===detail")
@@ -42,18 +58,19 @@ class Ordermonitor extends React.Component {
             key: 'phone',
         },
         ]
-        const { dataSource } = this.state
+        const tableData = this.props.ordermonitor.get('table') || {}
         return (
             <div>
                 <p>
                     <Link to='/dashboard'><Button type="primary">Jump to dashboard</Button></Link>
                     <Link to='/ordermonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
                 </p>
-
-                <Table dataSource={dataSource} columns={columns} />
+                <Table loading={tableData.get('loading')} rowKey={(record, index) => index} dataSource={tableData.get('data').toJS()} columns={columns} />
             </div>
         );
     }
 }
-
-export default Ordermonitor
+export default connect(
+    state => ({ ordermonitor: state.ordermonitor }),
+    mapDispatchToProps
+)(Ordermonitor)
