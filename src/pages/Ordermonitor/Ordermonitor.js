@@ -23,7 +23,7 @@ class Ordermonitor extends React.Component {
     state = {}
 
     componentDidMount() {
-        this.fetchData()
+        this.fetchData();
     }
 
     fetchData() {
@@ -58,14 +58,18 @@ class Ordermonitor extends React.Component {
             key: 'phone',
         },
         ]
-        const tableData = this.props.ordermonitor.get('table') || {}
+        const tableData = this.props.ordermonitor.get('table')
         return (
             <div>
                 <p>
                     <Link to='/dashboard'><Button type="primary">Jump to dashboard</Button></Link>
                     <Link to='/ordermonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
                 </p>
-                <Table loading={tableData.get('loading')} rowKey={(record, index) => index} dataSource={tableData.get('data').toJS()} columns={columns} />
+                <Table
+                    loading={tableData.get('loading')}
+                    rowKey={(record, index) => index}
+                    dataSource={tableData.get('data').toJS ? tableData.get('data').toJS() : tableData.get('data')}
+                    columns={columns} />
             </div>
         );
     }
