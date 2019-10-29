@@ -24,7 +24,7 @@ class Bread extends React.Component {
             </Breadcrumb.Item>,
         ].concat(extraBreadcrumbItems);
         return (
-            <Breadcrumb style={{ margin: '16px 0' }}>{breadcrumbItems}</Breadcrumb>
+            <Breadcrumb separator=">" style={{ margin: '16px 0' }}>{breadcrumbItems}</Breadcrumb>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 import { testHeadmenu } from 'utils/util';
@@ -35,20 +35,24 @@ class Appheader extends React.Component {
         const { currentMenu } = this.state;
         // console.log(currentMenu, "===render")
         return (
-            <Header style={{ textAlign: 'center' }}>
-                <div className="logo" />
+            <Header className="layout_header">
+                <div className="layout_header__logo" >5G网络切片商城</div>
                 <Menu
                     theme="dark"
                     mode="horizontal"
                     selectedKeys={[currentMenu]}
                     onSelect={(item) => this.handleMenu(item)}
-                    style={{ lineHeight: '64px' }}
+                    className="layout_header__menu"
                 >
                     <Menu.Item key="dashboard" >Dashboard</Menu.Item>
                     <Menu.Item key="orderconfirm" >Order Confirm</Menu.Item>
                     <Menu.Item key="ordermanage">Order Manage</Menu.Item>
                     <Menu.Item key="ordermonitor">Order Monitor</Menu.Item>
                 </Menu>
+                <div>
+                    <span><Icon type="user" style={{ marginRight: 5 }} />Admin</span>
+                    <Icon type="logout" style={{ marginLeft: 25 }} />
+                </div>
             </Header>
         );
     }
