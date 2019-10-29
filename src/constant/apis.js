@@ -8,7 +8,7 @@ function resolvePath(url) {
     return path;
 }
 const APIS = {
-    testapi: resolvePath('/customer/info')
+    testapi: resolvePath('/home')
 }
 
 export default APIS

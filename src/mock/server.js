@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 
 let localJsonDb = {};                                 //import mock datas
-const fakeoriginalData = require('./fake/mock.js.js');   //import datas created in fake.js
+const fakeoriginalData = require('./fake/mock.js');   //import datas created in fake.js
 const mockFolder = './src/mock/json';                 //set mock json path folder
 const filePath = path.resolve(mockFolder);
 
