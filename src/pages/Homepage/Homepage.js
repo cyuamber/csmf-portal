@@ -13,42 +13,39 @@ class Homepage extends React.Component {
         return (
             <div className="homepage">
                 <div>
-                    <p>content</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+
                     <Button type="primary" onClick={this.jumpTodashboard}>Jump to dashboard</Button>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
-                    <p>content</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
+                    <p>Homepage</p>
                 </div>
 
             </div>

@@ -6,6 +6,13 @@ class Orderconfirm extends React.Component {
         return (
             <div>
                 <p>Orderconfirm</p>
+                <p>Orderconfirm</p>
+                <p>Orderconfirm</p>
+                <p>Orderconfirm</p>
+                <p>Orderconfirm</p>
+                <p>Orderconfirm</p>
+                <p>Orderconfirm</p>
+
             </div>
         );
     }

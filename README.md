@@ -1,8 +1,8 @@
-CSMF Portal
+## React Architecture via Create-react-app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). This architecture includes functions as: react-router, redux and mock server.
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -23,6 +23,10 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run mock`
+
+Start the mock server and get mock data for development.
 
 ## Learn More
 

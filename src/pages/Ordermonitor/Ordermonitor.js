@@ -12,7 +12,6 @@ class Ordermonitor extends React.Component {
     state = {
         currentUrl: '',
         dataSource: [],
-
     }
     componentDidMount() {
         axiosget(APIS.testapi).then(res => this.setState({ dataSource: res }))
@@ -46,13 +45,11 @@ class Ordermonitor extends React.Component {
         const { dataSource } = this.state
         return (
             <div>
-                <p>Ordermonitor</p>
                 <p>
                     <Link to='/dashboard'><Button type="primary">Jump to dashboard</Button></Link>
+                    <Link to='/ordermonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
                 </p>
-                <div>
-                    <Link to='/ordermonitor/detail'><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
-                </div>
+
                 <Table dataSource={dataSource} columns={columns} />
             </div>
         );

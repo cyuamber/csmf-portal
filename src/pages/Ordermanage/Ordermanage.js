@@ -6,6 +6,11 @@ class Ordermanage extends React.Component {
         return (
             <div>
                 <p>Ordermanage</p>
+                <p>Ordermanage</p>
+                <p>Ordermanage</p>
+                <p>Ordermanage</p>
+                <p>Ordermanage</p>
+                <p>Ordermanage</p>
             </div>
         );
     }
