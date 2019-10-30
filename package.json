@@ -43,8 +43,8 @@
     "html-webpack-plugin": "4.0.0-beta.5",
     "http-proxy-middleware": "^0.20.0",
     "i18next": "^18.0.1",
-    "i18next-browser-languagedetector": "^4.0.0",
-    "i18next-xhr-backend": "^3.2.0",
+    "i18next-browser-languagedetector": "^4.0.1",
+    "i18next-xhr-backend": "^3.2.1",
     "identity-obj-proxy": "3.0.0",
     "immutable": "^4.0.0-rc.12",
     "is-wsl": "^1.1.0",
@@ -164,6 +164,12 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.6.0"
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "cz-conventional-changelog": "^3.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

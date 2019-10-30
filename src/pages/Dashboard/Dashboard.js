@@ -1,10 +1,12 @@
 import React from 'react';
+import { withNamespaces } from 'react-i18next';
 
 class Dashboard extends React.Component {
     render() {
+        const { t } = this.props;
         return (
             <div>
-                <p>Dashboard</p>
+                <p>{t("Dashboard")}</p>
                 <p>Dashboard</p>
                 <p>Dashboard</p>
                 <p>Dashboard</p>
@@ -21,4 +23,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard
+export default withNamespaces()(Dashboard)

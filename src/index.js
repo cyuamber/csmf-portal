@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, compose } from 'redux';
 import rootReducer from './reducers';
-
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import Layout from './components/Layout/Layoutframe';
@@ -14,6 +13,7 @@ import Ordermanage from './pages/Ordermanage/Ordermanage';
 import Ordermonitor from './pages/Ordermonitor/Ordermonitor';
 
 import './index.css';
+import './i18n';
 
 const storeFactory = (initialState) => {
     return (rootReducer) => {
@@ -29,7 +29,13 @@ const store = storeFactory()(rootReducer);
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-            <Redirect from="/" to="/home" />
+
+            <Route path="/" exact >
+                <Layout>
+                    <Homepage />
+                </Layout>
+                <Redirect exact from="/" to="/home" />
+            </Route>
             <Route path="/home" exact >
                 <Layout>
                     <Homepage />
