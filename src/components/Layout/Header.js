@@ -38,7 +38,6 @@ class Appheader extends React.Component {
         this.setState({ currentMenu: item.key })
     }
     handleLogout() {
-        console.log("=====logout")
         this.props.history.push('/login');
     }
     render() {
