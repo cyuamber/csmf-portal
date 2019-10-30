@@ -12,7 +12,7 @@ const path = require('path');
 
 let localJsonDb = {};                                 //import mock datas
 const fakeoriginalData = require('./fake/mock.js');   //import datas created in fake.js
-const mockFolder = './src/mock/json';                 //set mock json path folder
+const mockFolder = './src/assets/mock/json';                 //set mock json path folder
 const filePath = path.resolve(mockFolder);
 
 fileDisplay(filePath);
@@ -53,7 +53,7 @@ function fileDisplay(filePath) {
     }, 100)
 }
 function getjsonContent(path) {
-    let newpath = `./src/mock/json/${path}.json`;
+    let newpath = `./src/assets/mock/json/${path}.json`;
     let result = JSON.parse(fs.readFileSync(newpath));
     return result;
 }

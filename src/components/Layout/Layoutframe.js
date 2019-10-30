@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 
 import Appheader from './Header';
 import Bread from './Bread';
-import Appfooter from './Footer';
+// import Appfooter from './Footer';
 
 import './style.less';
 

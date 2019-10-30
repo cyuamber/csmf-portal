@@ -6,7 +6,7 @@
     "start": "cross-env PORT=9000 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "mock": "node ./src/mock/server.js --port 4002 | npm run start"
+    "mock": "node ./src/assets/mock/server.js --port 4002 | npm run start"
   },
   "dependencies": {
     "@babel/core": "7.6.0",
