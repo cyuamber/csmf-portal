@@ -1,7 +1,6 @@
 import React from 'react';
 import { createHashHistory } from 'history';
 import { withNamespaces } from 'react-i18next';
-import { Button } from 'antd';
 import './style.less';
 
 import Qiuckcard from './Quickcard';
@@ -44,9 +43,9 @@ class Homepage extends React.Component {
                 <div style={{ position: 'relative' }}>
                     <img alt="header" src={HeaderPicture} />
                     <div className="homepage_text animated fadeInDown delay-0.8s">
-                        <p className="homepage_text__main">5G网络切片服务</p>
+                        <p className="homepage_text__main">{t('Picture Title')}</p>
                         <hr className="homepage_text__divid" />
-                        <p className="homepage_text__sub">助力企业数字化转型</p>
+                        <p className="homepage_text__sub">{t('Picture Sub Title')}</p>
                     </div>
                 </div>
                 <div className="homepage_entry">
