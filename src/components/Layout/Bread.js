@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import { ROUTER } from 'constant/router.js';
+import { withNamespaces } from 'react-i18next';
 
 class Bread extends React.Component {
     state = {
@@ -11,19 +12,20 @@ class Bread extends React.Component {
         console.log(this.props.location, "=====>handelBreaditem")
     }
     render() {
-        const { location } = this.props;
+        const { location, t } = this.props;
         let pathSnippets = location.pathname.split('/').filter(i => i);
         const extraBreadcrumbItems = pathSnippets.map((_, index) => {
             const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+            console.log(ROUTER[url], "===>ROUTER[url]")
             return (
                 <Breadcrumb.Item key={url} onClick={() => this.handelBreaditem}>
-                    <Link to={url} >{ROUTER[url]}</Link>
+                    <Link to={url} >{t(ROUTER[url])}</Link>
                 </Breadcrumb.Item>
             );
         });
         const breadcrumbItems = [
             <Breadcrumb.Item key="home">
-                <Link to="/home">Home</Link>
+                <Link to="/home">{t("Home")}</Link>
             </Breadcrumb.Item>,
         ].concat(extraBreadcrumbItems);
 
@@ -32,4 +34,4 @@ class Bread extends React.Component {
         return breadContent
     }
 }
-export default withRouter(Bread)
+export default withNamespaces()(withRouter(Bread))

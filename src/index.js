@@ -41,27 +41,27 @@ ReactDOM.render(
                     <Homepage />
                 </Layout>
             </Route>
-            <Route path="/dashboard" >
+            <Route path="/businessorder" >
                 <Layout>
                     <Dashboard />
                 </Layout>
             </Route>
-            <Route path="/orderconfirm" >
+            <Route path="/ordermgt" >
                 <Layout>
                     <Orderconfirm />
                 </Layout>
             </Route>
-            <Route path="/ordermanage" >
+            <Route path="/businessmgt" >
                 <Layout>
                     <Ordermanage />
                 </Layout>
             </Route>
-            <Route exact path="/ordermonitor" >
+            <Route exact path="/businessmonitor" >
                 <Layout>
                     <Ordermonitor />
                 </Layout>
             </Route>
-            <Route path="/ordermonitor/detail" >
+            <Route path="/businessmonitor/detail" >
                 <Layout>
                     <Dashboard />
                 </Layout>

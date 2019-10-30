@@ -62,8 +62,8 @@ class Ordermonitor extends React.Component {
         return (
             <div>
                 <p>
-                    <Link to='/dashboard'><Button type="primary">Jump to dashboard</Button></Link>
-                    <Link to='/ordermonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
+                    <Link to='/businessorder'><Button type="primary">Jump to dashboard</Button></Link>
+                    <Link to='/businessmonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
                 </p>
                 <Table
                     loading={tableData.get('loading')}

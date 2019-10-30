@@ -1,4 +1,10 @@
 {
     "Home": "首页",
-    "Dashboard": "仪表盘"
+    "Project Title": "5G网络切片商城",
+    "Dashboard": "仪表盘",
+    "Slicing Business Order": "切片业务订购",
+    "Slicing Order Management": "切片订单管理",
+    "Slicing Business Management": "切片业务管理",
+    "Slicing Business Monitor": "切片业务监控",
+    "Order Monitor Detail": "切片监控详情"
 }

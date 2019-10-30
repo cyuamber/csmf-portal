@@ -1,8 +1,8 @@
 export const ROUTER = {
     '/home': 'Home',
-    '/dashboard': 'Dashboard',
-    '/orderconfirm': 'Order Confirm',
-    '/ordermanage': 'Order Manage',
-    '/ordermonitor': 'Order Monitor',
-    '/ordermonitor/detail': 'Order Monitor Detail',
+    '/businessorder': 'Slicing Business Order',
+    '/ordermgt': 'Slicing Order Management',
+    '/businessmgt': 'Slicing Business Management',
+    '/businessmonitor': 'Slicing Business Monitor',
+    '/businessmonitor/detail': 'Order Monitor Detail',
 }

@@ -42,7 +42,7 @@ class Appheader extends React.Component {
         const { currentMenu, currentLanguage } = this.state;
         return (
             <Header className="layout_header">
-                <div className="layout_header__logo" >5G网络切片商城</div>
+                <div className="layout_header__logo" >{t('Project Title')}</div>
                 <Menu
                     theme="dark"
                     mode="horizontal"
@@ -51,10 +51,10 @@ class Appheader extends React.Component {
                     className="layout_header__menu"
                 >
                     <Menu.Item key="home">{t('Home')}</Menu.Item>
-                    <Menu.Item key="dashboard" >Dashboard</Menu.Item>
-                    <Menu.Item key="orderconfirm" >Order Confirm</Menu.Item>
-                    <Menu.Item key="ordermanage">Order Manage</Menu.Item>
-                    <Menu.Item key="ordermonitor">Order Monitor</Menu.Item>
+                    <Menu.Item key="businessorder" >{t('Slicing Business Order')}</Menu.Item>
+                    <Menu.Item key="ordermgt" >{t('Slicing Order Management')}</Menu.Item>
+                    <Menu.Item key="businessmgt">{t('Slicing Business Management')}</Menu.Item>
+                    <Menu.Item key="businessmonitor">{t('Slicing Business Monitor')}</Menu.Item>
                 </Menu>
                 <div className="layout_header__operation" >
                     <span><Icon type="user" style={{ marginRight: 5 }} />Admin</span>
