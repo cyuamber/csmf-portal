@@ -12,7 +12,7 @@ const { Content } = Layout;
 class Layoutframe extends React.Component {
     render() {
         return (
-            <Layout className="layout">
+            <Layout className="layout" style={{ background: "#fff" }}>
                 <Appheader />
                 <Content className="layout_content">
                     <div className="layout_content__bread">
@@ -20,7 +20,7 @@ class Layoutframe extends React.Component {
                     </div>
                     <div className="layout_content__body">{this.props.children}</div>
                 </Content>
-                <Appfooter />
+                {/* <Appfooter /> */}
             </Layout>
         );
     }

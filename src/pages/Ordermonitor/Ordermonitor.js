@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import { Button, Table, Avatar } from 'antd';
-import { HashRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';

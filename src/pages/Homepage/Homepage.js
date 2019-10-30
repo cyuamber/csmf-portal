@@ -15,39 +15,9 @@ class Homepage extends React.Component {
                 <div>
                     <p>Homepage</p>
                     <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-
                     <Button type="primary" onClick={this.jumpTodashboard}>Jump to dashboard</Button>
                     <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
-                    <p>Homepage</p>
                 </div>
-
             </div>
         );
     }

@@ -6,7 +6,7 @@ const { Footer } = Layout;
 class Appfooter extends React.Component {
     render() {
         return (
-            <Footer style={{ textAlign: 'center' }}>CMCC ©2019 Created by China Mobile</Footer>
+            <Footer style={{ textAlign: 'center', background: "#fff" }}>CMCC ©2019 Created by China Mobile</Footer>
         );
     }
 }

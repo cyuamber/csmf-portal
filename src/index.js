@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, compose } from 'redux';
 import rootReducer from './reducers';
 
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import Layout from './components/Layout/Layoutframe';
 import Homepage from './pages/Homepage/Homepage';
@@ -29,7 +29,12 @@ const store = storeFactory()(rootReducer);
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-            <Route path="/" exact component={Homepage} />
+            <Redirect from="/" to="/home" />
+            <Route path="/home" exact >
+                <Layout>
+                    <Homepage />
+                </Layout>
+            </Route>
             <Route path="/dashboard" >
                 <Layout>
                     <Dashboard />

@@ -1,9 +1,12 @@
 import React from 'react';
-import { HashRouter as Router, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import { ROUTER } from 'constant/router.js';
 
 class Bread extends React.Component {
+    state = {
+        showBread: false
+    }
     handelBreaditem() {
         console.log(this.props.location, "=====>handelBreaditem")
     }
@@ -20,12 +23,13 @@ class Bread extends React.Component {
         });
         const breadcrumbItems = [
             <Breadcrumb.Item key="home">
-                <Link to="/">Home</Link>
+                <Link to="/home">Home</Link>
             </Breadcrumb.Item>,
         ].concat(extraBreadcrumbItems);
-        return (
-            <Breadcrumb separator=">" style={{ margin: '16px 0' }}>{breadcrumbItems}</Breadcrumb>
-        );
+
+        const breadContent = extraBreadcrumbItems.length > 1 ? <Breadcrumb separator=">">{breadcrumbItems}</Breadcrumb> : null;
+
+        return breadContent
     }
 }
 export default withRouter(Bread)

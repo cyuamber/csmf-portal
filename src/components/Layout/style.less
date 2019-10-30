@@ -1,12 +1,14 @@
 .layout{
     height: 100%;
+
     .layout_header{
         display: flex;
         justify-content: space-between;
+        align-items: center;
         color: #fff;
         font-weight: bold;
         .layout_header__logo{
-        
+            min-width: 105px;
         }
         .layout_header__menu{
             line-height: 50px;
@@ -15,18 +17,23 @@
                 color:rgb(13, 170, 226) ;
             }
         }
-        .layout_header__icon{
-            margin-left: 20px;
-            margin-right: 5px;
+        .layout_header__operation{
+            min-width: 175px;
+
         }
     }
     .ant-layout-header{
         height: 50px;
         line-height: 50px;
+        padding: 0 30px;
     }
     .layout_content{
         .layout_content__bread{
             margin-left: 20px;
+            .ant-breadcrumb{
+                margin: 16px 0;
+                font-size: 15px;
+            }
             .ant-breadcrumb > span:last-child a{
                 color: #0DAAE2;
             }
@@ -38,5 +45,8 @@
             overflow: auto;
         }
     }
+}
+.ant-layout{
+    background: #fff;
 }
 
