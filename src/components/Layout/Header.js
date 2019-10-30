@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Icon, Button } from 'antd';
+import { Layout, Menu, Icon, Button, Dropdown } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 
@@ -37,9 +37,19 @@ class Appheader extends React.Component {
         }
         this.setState({ currentMenu: item.key })
     }
+    handleLogout() {
+        console.log("=====logout")
+        this.props.history.push('/login');
+    }
     render() {
         const { t } = this.props;
         const { currentMenu, currentLanguage } = this.state;
+        const menu =
+            <Menu>
+                <Menu.Item>
+                    <span onClick={() => this.handleLogout()}><Icon type="logout" />{t('Log out')}</span>
+                </Menu.Item>
+            </Menu>
         return (
             <Header className="layout_header">
                 <div className="layout_header__logo" >{t('Project Title')}</div>
@@ -57,8 +67,11 @@ class Appheader extends React.Component {
                     <Menu.Item key="businessmonitor">{t('Slicing Business Monitor')}</Menu.Item>
                 </Menu>
                 <div className="layout_header__operation" >
-                    <span><Icon type="user" style={{ marginRight: 5 }} />Admin</span>
-                    <Icon type="logout" style={{ marginLeft: 25 }} />
+                    <Dropdown overlay={menu} placement="bottomCenter">
+                        <span style={{ cursor: 'pointer' }}>
+                            <Icon type="user" style={{ marginRight: 5 }} /><span>Admin</span>
+                        </span>
+                    </Dropdown>
                     <Button size="small" style={{ marginLeft: 25 }} onClick={() => this.handleLanguage()}>{currentLanguage === 'ch' ? "中文" : "English"}</Button>
                 </div>
             </Header>

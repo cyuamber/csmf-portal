@@ -6,6 +6,7 @@ import rootReducer from './reducers';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import Layout from './components/Layout/Layoutframe';
+import Login from './pages/Login/Log';
 import Homepage from './pages/Homepage/Homepage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Orderconfirm from './pages/Orderconfirm/Orderconfirm';
@@ -29,7 +30,7 @@ const store = storeFactory()(rootReducer);
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-
+            <Route path="/login" exact component={Login} />
             <Route path="/" exact >
                 <Layout>
                     <Homepage />

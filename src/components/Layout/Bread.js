@@ -16,7 +16,6 @@ class Bread extends React.Component {
         let pathSnippets = location.pathname.split('/').filter(i => i);
         const extraBreadcrumbItems = pathSnippets.map((_, index) => {
             const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-            console.log(ROUTER[url], "===>ROUTER[url]")
             return (
                 <Breadcrumb.Item key={url} onClick={() => this.handelBreaditem}>
                     <Link to={url} >{t(ROUTER[url])}</Link>
