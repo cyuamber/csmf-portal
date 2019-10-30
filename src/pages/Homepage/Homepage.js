@@ -43,7 +43,7 @@ class Homepage extends React.Component {
             <div className="homepage">
                 <div style={{ position: 'relative' }}>
                     <img alt="header" src={HeaderPicture} />
-                    <div className="homepage_text">
+                    <div className="homepage_text animated fadeInDown delay-0.8s">
                         <p className="homepage_text__main">5G网络切片服务</p>
                         <hr className="homepage_text__divid" />
                         <p className="homepage_text__sub">助力企业数字化转型</p>
