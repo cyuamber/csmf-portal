@@ -71,7 +71,7 @@ class Appheader extends React.Component {
                             <Icon type="user" style={{ marginRight: 5 }} /><span>Admin</span>
                         </span>
                     </Dropdown>
-                    <Button size="small" style={{ marginLeft: 25 }} onClick={() => this.handleLanguage()}>{currentLanguage === 'ch' ? "中文" : "English"}</Button>
+                    <Button size="small" ghost style={{ marginLeft: 25 }} onClick={() => this.handleLanguage()}>{currentLanguage === 'ch' ? "中文" : "English"}</Button>
                 </div>
             </Header>
         );

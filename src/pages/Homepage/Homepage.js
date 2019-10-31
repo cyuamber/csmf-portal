@@ -41,11 +41,11 @@ class Homepage extends React.Component {
         return (
             <div className="homepage">
                 <div style={{ position: 'relative' }}>
-                    <img alt="header" src={HeaderPicture} />
-                    <div className="homepage_text animated fadeInDown delay-0.8s">
-                        <p className="homepage_text__main">{t('Picture Title')}</p>
-                        <hr className="homepage_text__divid" />
-                        <p className="homepage_text__sub">{t('Picture Sub Title')}</p>
+                    <img className="homepage_img" alt="header" src={HeaderPicture} />
+                    <div className="homepage_text">
+                        <p className="homepage_text__main animated fadeInDown delay-0.5s">{t('Picture Title')}</p>
+                        <hr className="homepage_text__divid animated fadeInLeft delay-1s" />
+                        <p className="homepage_text__sub animated fadeInDown delay-1s">{t('Picture Sub Title')}</p>
                     </div>
                 </div>
                 <div className="homepage_entry">

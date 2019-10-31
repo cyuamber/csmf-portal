@@ -27,6 +27,15 @@ class Quickcard extends React.Component {
     render() {
         const { sourceData } = this.props;
         return (
+            // <div className="homepage_card" onClick={() => this.jumpToPage(sourceData.link)}>
+            //     <div className="homepage_card__top">
+            //         <img alt="order" src={sourceData.img} />
+            //         <p className="title">{sourceData.title}</p>
+            //     </div>
+            //     <div className="homepage_card__bottom">
+            //         <p className="desp">{sourceData.desp}</p>
+            //     </div>
+            // </div>
             <div className="homepage_card" onClick={() => this.jumpToPage(sourceData.link)}>
                 <div className="homepage_card__top">
                     <img alt="order" src={sourceData.img} />
