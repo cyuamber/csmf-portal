@@ -1,39 +1,46 @@
-.homepage{
+.homepage {
     width: 100%;
     height: 100%;
     background: #ffffff;
-    .homepage_img{
-        
-    }
-    .homepage_text{
+    user-select: none;
+
+    .homepage_img {}
+
+    .homepage_text {
         position: absolute;
-        top:20%;
+        top: 20%;
         left: 15%;
         color: #ffffff;
-       
-        .homepage_text__main{
+
+        .homepage_text__main {
             font-size: 34px;
             font-weight: bold;
         }
-        .homepage_text__divid{
+
+        .homepage_text__divid {
             margin-top: -30px;
         }
-        .homepage_text__sub{
+
+        .homepage_text__sub {
             font-size: 16px;
         }
     }
-    img{
+
+    img {
         width: 100%;
     }
-    .homepage_entry{
+
+    .homepage_entry {
         width: 100%;
         padding: 15px;
-        .homepage_card{
+
+        .homepage_card {
             height: 90%;
             margin: 15px;
             background: rgba(250, 250, 250, 1);
-            box-shadow:5px 5px 20px rgba(0, 0, 0, 0.1);
-            .homepage_card__top{
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+
+            .homepage_card__top {
                 height: 75%;
                 display: flex;
                 flex-direction: column;
@@ -41,38 +48,43 @@
                 align-items: center;
                 padding: 30px 45px;
                 background: #ffffff;
-                img{
+
+                img {
                     // width: inherit;
-                   
+
                 }
-                .title{
+
+                .title {
                     margin: 30px 0 0;
                     color: #3D508D;
-                    font-weight:700;
-                    font-size: 20px;  
-                    text-align: center; 
+                    font-weight: 700;
+                    font-size: 20px;
+                    text-align: center;
                 }
             }
-            .homepage_card__bottom{
+
+            .homepage_card__bottom {
                 display: flex;
                 align-items: flex-start;
                 height: 25%;
                 min-height: 45px;
                 padding: 20px;
-                border-top:1px solid rgba(228, 228, 228, .3);
+                border-top: 1px solid rgba(228, 228, 228, .3);
                 overflow: auto;
-                .desp{
+
+                .desp {
                     margin-bottom: 0;
-                    font-size:16px;
+                    font-size: 16px;
                     font-weight: 402;
                     line-height: 22px;
-                    color:#A2ABCE;
+                    color: #A2ABCE;
                 }
             }
         }
-        .homepage_card:hover{
+
+        .homepage_card:hover {
             cursor: pointer;
-            box-shadow:5px 5px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
         }
     }
 }

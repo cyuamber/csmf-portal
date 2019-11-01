@@ -5,4 +5,5 @@ export const ROUTER = {
     '/businessmgt': 'Slicing Business Management',
     '/businessmonitor': 'Slicing Business Monitor',
     '/businessmonitor/detail': 'Order Monitor Detail',
+    '/businessorder/detail': 'Create Slicing Order'
 }

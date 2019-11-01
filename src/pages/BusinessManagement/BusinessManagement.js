@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Ordermanage extends React.Component {
+class BusinessManagement extends React.Component {
 
     render() {
         return (
@@ -16,4 +16,4 @@ class Ordermanage extends React.Component {
     }
 }
 
-export default Ordermanage
+export default BusinessManagement

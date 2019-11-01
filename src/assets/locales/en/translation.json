@@ -14,5 +14,13 @@
     "Slicing Business Management Desp": "On-demand for slice activation and deactivation to achieve the most cost-effective way to use slices",
     "Slicing Business Monitor": "Slicing Business Monitor",
     "Slicing Business Monitor Desp": "Real-time monitoring of the operation of the slicing service, access to users, and the health of the slices",
-    "Order Monitor Detail": "Order Monitor Detail"
+    "Order Monitor Detail": "Order Monitor Detail",
+    "Create Slicing Order": "Create Slicing Business Order",
+    "Purchase": "Purchase",
+    "Slicing Order First Title": "eMBB Slicing",
+    "Slicing Order First Desp": "For 4K/8K ultra-high definition video, holographic technology, augmented reality/virtual reality applications, etc., the network bandwidth and speed requirements are high.",
+    "Slicing Order Second Title": "mMTC Slicing",
+    "Slicing Order Second Desp": "Massive IoT sensors are deployed in measurement, construction, agriculture, logistics, smart cities, homes, etc. These sensors are very dense, large, and mostly static, with low latency and mobility requirements.",
+    "Slicing Order Third Title": "uRLLC Slicing",
+    "Slicing Order Third Desp": "Mainly used in the fields of driverless, car networking, automatic factory, telemedicine, etc., requiring ultra-low latency and high reliability."
 }

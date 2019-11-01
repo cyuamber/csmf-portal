@@ -14,5 +14,13 @@
     "Slicing Business Management Desp": "On-demand进行切片激活和去激活，达到最省钱方式使用切片。",
     "Slicing Business Monitor": "切片业务监控",
     "Slicing Business Monitor Desp": "实时监控切片业务的运行情况，接入用户，以及切片的健康状态。",
-    "Order Monitor Detail": "切片监控详情"
+    "Order Monitor Detail": "切片监控详情",
+    "Create Slicing Order": "创建切片业务订单",
+    "Purchase": "立即购买",
+    "Slicing Order First Title": "移动宽带（eMBB）切片",
+    "Slicing Order First Desp": "面向4K/8K超高清视频、全息技术、增强现实/虚拟现实等应用，对网络带宽和速率要求较高。",
+    "Slicing Order Second Title": "物联网（mMTC）切片",
+    "Slicing Order Second Desp": "海量的物联网传感器部署于测量、建筑、农业、物流、智慧城市、家庭等领域，这些传感器设备是非常密集的，规模庞大，且大部分是静止的，对时延和移动性要求不高。",
+    "Slicing Order Third Title": "关键任务型物联网（uRLLC）切片",
+    "Slicing Order Third Desp": "主要应用于无人驾驶、车联网、自动工厂、远程医疗等领域，要求超低时延和高可靠性。"
 }

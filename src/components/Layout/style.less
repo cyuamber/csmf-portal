@@ -1,59 +1,69 @@
-.layout{
+.layout {
     height: 100%;
     min-width: 850px;
-    user-select: none;
-    .layout_header{
+
+    .layout_header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         color: #fff;
         font-weight: bold;
         background: #2b3863;
-        .layout_header__logo{
+
+        .layout_header__logo {
             font-size: 20px;
             min-width: 150px;
         }
-        .layout_header__menu{
+
+        .layout_header__menu {
             line-height: 50px;
             max-width: 70%;
             background: #2b3863;
-            .ant-menu-item{
+
+            .ant-menu-item {
                 color: #ffffff;
             }
-            .ant-menu-item-selected{
+
+            .ant-menu-item-selected {
                 background: inherit;
-                color:rgb(13, 170, 226) ;
+                color: rgb(13, 170, 226);
             }
         }
-        .layout_header__operation{
+
+        .layout_header__operation {
             min-width: 175px;
 
         }
     }
-    .ant-layout-header{
+
+    .ant-layout-header {
         height: 50px;
         line-height: 50px;
         padding: 0 30px;
     }
-    .layout_content{
-        .layout_content__bread{
+
+    .layout_content {
+        .layout_content__bread {
             margin-left: 20px;
-            .ant-breadcrumb{
+
+            .ant-breadcrumb {
                 margin: 16px 0;
                 font-size: 15px;
             }
-            .ant-breadcrumb > span:last-child a{
+
+            .ant-breadcrumb>span:last-child a {
                 color: #0DAAE2;
             }
         }
-        .layout_content__body{
+
+        .layout_content__body {
             height: 100%;
             background: #fff;
             overflow: auto;
         }
     }
 }
-.ant-layout{
+
+.ant-layout {
     background: #fff;
 }
-

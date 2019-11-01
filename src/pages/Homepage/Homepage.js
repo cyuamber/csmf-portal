@@ -1,5 +1,4 @@
 import React from 'react';
-import { createHashHistory } from 'history';
 import { withNamespaces } from 'react-i18next';
 import { Row, Col } from 'antd';
 import './style.less';
@@ -12,7 +11,6 @@ import OrdermanagePicture from 'src/assets/image/ordermanage.png';
 import BusinessmanagePicture from 'src/assets/image/businessmanage.png';
 import BusinessmonitorPicture from 'src/assets/image/businessmonitor.png';
 
-const history = createHashHistory();
 
 class Homepage extends React.Component {
 
@@ -53,14 +51,10 @@ class Homepage extends React.Component {
                     <Row type="flex" justify="space-around">
                         {
                             cardList.map((item, index) =>
-                                <Col span={6}> <Qiuckcard key={index + 1} sourceData={item} /></Col>
+                                <Col key={index + 1} span={6}> <Qiuckcard key={index + 1} sourceData={item} /></Col>
 
                             )
                         }
-                        {/* <Col span={4}>col-4</Col>
-                        <Col span={4}>col-4</Col>
-                        <Col span={4}>col-4</Col>
-                        <Col span={4}>col-4</Col> */}
                     </Row>
                     {/* {
                         cardList.map((item, index) =>

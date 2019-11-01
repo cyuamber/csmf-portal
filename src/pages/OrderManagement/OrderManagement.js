@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Orderconfirm extends React.Component {
+class OrderManagement extends React.Component {
 
     render() {
         return (
@@ -18,4 +18,4 @@ class Orderconfirm extends React.Component {
     }
 }
 
-export default Orderconfirm
+export default OrderManagement

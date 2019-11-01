@@ -2,7 +2,7 @@
 
 module.exports = {
     'primary-color': 'rgb(43, 56, 99)', // 全局主色
-    'link-color': 'rgb(43, 56, 99)', // 链接色
+    'link-color': 'rgba(43, 56, 99,.8)', // 链接色
     'success-color': '#52c41a', // 成功色
     'warning-color': '#faad14', // 警告色
     'error-color': '#f5222d', // 错误色

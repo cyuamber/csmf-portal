@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-class Ordermonitor extends React.Component {
+class BusinessMonitor extends React.Component {
     state = {}
 
     componentDidMount() {
@@ -77,4 +77,4 @@ class Ordermonitor extends React.Component {
 export default connect(
     state => ({ ordermonitor: state.ordermonitor }),
     mapDispatchToProps
-)(Ordermonitor)
+)(BusinessMonitor)

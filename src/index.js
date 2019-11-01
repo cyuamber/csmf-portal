@@ -8,10 +8,12 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layoutframe';
 import Login from './pages/Login/Log';
 import Homepage from './pages/Homepage/Homepage';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Orderconfirm from './pages/Orderconfirm/Orderconfirm';
-import Ordermanage from './pages/Ordermanage/Ordermanage';
-import Ordermonitor from './pages/Ordermonitor/Ordermonitor';
+import BusinessOrder from './pages/BusinessOrder/BusinessOrder';
+import BusinessOrderDetail from './pages/BusinessOrder/BusinessOrderDetail';
+
+import Orderconfirm from './pages/OrderManagement/OrderManagement';
+import Ordermanage from './pages/BusinessManagement/BusinessManagement';
+import BusinessMonitor from './pages/BusinessMonitor/BusinessMonitor';
 
 import './index.css';
 import './i18n';
@@ -42,9 +44,14 @@ ReactDOM.render(
                     <Homepage />
                 </Layout>
             </Route>
-            <Route path="/businessorder" >
+            <Route exact path="/businessorder" >
                 <Layout>
-                    <Dashboard />
+                    <BusinessOrder />
+                </Layout>
+            </Route>
+            <Route path="/businessorder/detail" >
+                <Layout>
+                    <BusinessOrderDetail />
                 </Layout>
             </Route>
             <Route path="/ordermgt" >
@@ -59,12 +66,12 @@ ReactDOM.render(
             </Route>
             <Route exact path="/businessmonitor" >
                 <Layout>
-                    <Ordermonitor />
+                    <BusinessMonitor />
                 </Layout>
             </Route>
             <Route path="/businessmonitor/detail" >
                 <Layout>
-                    <Dashboard />
+                    <BusinessOrder />
                 </Layout>
             </Route>
         </Router>
