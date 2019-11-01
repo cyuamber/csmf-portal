@@ -25,6 +25,7 @@ class LoginForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login">
+                <h2>Welcome to CSMF Portal</h2>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <Form.Item>
                         {getFieldDecorator('username', {
