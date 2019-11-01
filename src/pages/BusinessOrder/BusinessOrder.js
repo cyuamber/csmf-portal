@@ -46,7 +46,7 @@ class BusinessOrder extends React.Component {
                 </div>
                 <div className="businessorder_content__right">
                     {_.ifPurchasable ?
-                        <Link to={_.purchase_router}> <Button type="primary">{t('Purchase')}</Button></Link>
+                        <Link to={_.purchase_router}> <Button block type="primary">{t('Purchase')}</Button></Link>
                         : null
                     }
                 </div>
