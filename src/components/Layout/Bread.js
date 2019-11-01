@@ -28,7 +28,7 @@ class Bread extends React.Component {
             </Breadcrumb.Item>,
         ].concat(extraBreadcrumbItems);
 
-        const breadContent = extraBreadcrumbItems.length > 1 ? <Breadcrumb separator=">">{breadcrumbItems}</Breadcrumb> : null;
+        const breadContent = location.pathname !== "/home" ? <Breadcrumb separator=">">{breadcrumbItems}</Breadcrumb> : null;
 
         return breadContent
     }

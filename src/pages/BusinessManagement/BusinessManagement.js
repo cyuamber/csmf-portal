@@ -5,12 +5,7 @@ class BusinessManagement extends React.Component {
     render() {
         return (
             <div>
-                <p>Ordermanage</p>
-                <p>Ordermanage</p>
-                <p>Ordermanage</p>
-                <p>Ordermanage</p>
-                <p>Ordermanage</p>
-                <p>Ordermanage</p>
+                <p>切片业务管理</p>
             </div>
         );
     }

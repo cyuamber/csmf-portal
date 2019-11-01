@@ -5,14 +5,7 @@ class OrderManagement extends React.Component {
     render() {
         return (
             <div>
-                <p>Orderconfirm</p>
-                <p>Orderconfirm</p>
-                <p>Orderconfirm</p>
-                <p>Orderconfirm</p>
-                <p>Orderconfirm</p>
-                <p>Orderconfirm</p>
-                <p>Orderconfirm</p>
-
+                <p>切片订单管理</p>
             </div>
         );
     }
