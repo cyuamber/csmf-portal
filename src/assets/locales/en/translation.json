@@ -1,13 +1,18 @@
 {
     "Home": "Home",
+    "Log in": "Log in",
     "Log out": "Log out",
-    "Project Title": "5G Slice Mall",
-    "Picture Title": "5G Slice Service",
+    "Project Title": "5G Network Slice Mall",
+    "Picture Title": "5G Network Slice Service",
     "Picture Sub Title": "Aiding Enterprises Digital Transformation",
     "Dashboard": "Dashboard",
     "Slicing Business Order": "Slicing Business Order",
+    "Slicing Business Order Desp": "Meet all kinds of network interconnection needs fast and conveniently, provide one-stop completion of network slicing service ordering",
     "Slicing Order Management": "Slicing Order Management",
+    "Slicing Order Management Desp": "Order inquiry, order cancellation, order renewal and other services",
     "Slicing Business Management": "Slicing Business Management",
+    "Slicing Business Management Desp": "On-demand for slice activation and deactivation to achieve the most cost-effective way to use slices",
     "Slicing Business Monitor": "Slicing Business Monitor",
+    "Slicing Business Monitor Desp": "Real-time monitoring of the operation of the slicing service, access to users, and the health of the slices",
     "Order Monitor Detail": "Order Monitor Detail"
 }

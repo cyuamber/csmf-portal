@@ -6,18 +6,7 @@ class Dashboard extends React.Component {
         const { t } = this.props;
         return (
             <div>
-                <p>{t("Dashboard")}</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
-                <p>Dashboard</p>
+                <p>{t('Slicing Business Order')}</p>
             </div>
         );
     }

@@ -27,12 +27,10 @@
     }
     .homepage_entry{
         width: 100%;
-        display: flex;
-        justify-content: space-around;
         padding: 15px;
         .homepage_card{
-            flex:1;
-            margin: 0 15px;
+            height: 90%;
+            margin: 15px;
             background: rgba(250, 250, 250, 1);
             box-shadow:5px 5px 20px rgba(0, 0, 0, 0.1);
             .homepage_card__top{
@@ -41,8 +39,12 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                padding: 30px 40px;
+                padding: 30px 45px;
                 background: #ffffff;
+                img{
+                    // width: inherit;
+                   
+                }
                 .title{
                     margin: 30px 0 0;
                     color: #3D508D;
@@ -61,7 +63,7 @@
                 overflow: auto;
                 .desp{
                     margin-bottom: 0;
-                    font-size:15px;
+                    font-size:16px;
                     font-weight: 402;
                     line-height: 22px;
                     color:#A2ABCE;
