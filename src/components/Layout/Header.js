@@ -3,7 +3,7 @@ import { Layout, Menu, Icon, Button, Dropdown } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 
-import { testHeadmenu } from 'utils/util';
+import { testHeadmenu, getCurrentUser } from 'utils/util';
 
 const { Header } = Layout;
 
@@ -68,7 +68,7 @@ class Appheader extends React.Component {
                 <div className="layout_header__operation" >
                     <Dropdown overlay={menu} placement="bottomCenter">
                         <span style={{ cursor: 'pointer' }}>
-                            <Icon type="user" style={{ marginRight: 5 }} /><span>Admin</span>
+                            <Icon type="user" style={{ marginRight: 5 }} /><span>{getCurrentUser()}</span>
                         </span>
                     </Dropdown>
                     <Button size="small" ghost style={{ marginLeft: 25 }} onClick={() => this.handleLanguage()}>{currentLanguage === 'ch' ? "中文" : "English"}</Button>

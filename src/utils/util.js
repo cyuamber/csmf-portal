@@ -9,3 +9,9 @@ export const testHeadmenu = (currentUrl, seperator = "/") => {
     }
     return newarr
 }
+
+export const getCurrentUser = () => {
+    let user = window.localStorage.getItem("username");
+    return user
+}
+
