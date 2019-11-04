@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import ordermonitor from './pages/Ordermonitor/reducer'
+import businessmonitor from './pages/BusinessMonitor/reducer'
 
 
 
 export default combineReducers({
-    ordermonitor
+    businessmonitor
 })

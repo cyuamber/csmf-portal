@@ -58,7 +58,7 @@ class BusinessMonitor extends React.Component {
             key: 'phone',
         },
         ]
-        const tableData = this.props.ordermonitor.get('table')
+        const tableData = this.props.businessmonitor.get('table')
         return (
             <div>
                 <p>
@@ -75,6 +75,6 @@ class BusinessMonitor extends React.Component {
     }
 }
 export default connect(
-    state => ({ ordermonitor: state.ordermonitor }),
+    state => ({ businessmonitor: state.businessmonitor }),
     mapDispatchToProps
 )(BusinessMonitor)
