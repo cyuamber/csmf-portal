@@ -1,6 +1,10 @@
-export const changeTable = (data, bool) => {
-    return { type: 'GET_BASIC_DATA', data, bool };
-}
-export const tableLoading = (bool) => {
-    return { type: 'TABLE_LOADING', bool };
+export const actions = (dispatch) => {
+    return {
+        changeTable: (data = {}, bool = true) => {
+            dispatch({ type: 'GET_BASIC_DATA', data, bool })
+        },
+        tableLoading: (bool = false) => {
+            dispatch({ type: 'TABLE_LOADING', bool })
+        }
+    }
 }

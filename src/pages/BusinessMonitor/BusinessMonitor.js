@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from './actions';
+import { actions } from './actions';
 import { Button, Table, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -8,15 +8,6 @@ import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
 
 import "./style.less"
-
-const mapDispatchToProps = dispatch => ({
-    changeTable: (data = {}, bool = true) => {
-        dispatch(actions.changeTable(data, bool))
-    },
-    tableLoading: (bool = false) => {
-        dispatch(actions.tableLoading(bool))
-    }
-})
 
 
 class BusinessMonitor extends React.Component {
@@ -76,5 +67,5 @@ class BusinessMonitor extends React.Component {
 }
 export default connect(
     state => ({ businessmonitor: state.businessmonitor }),
-    mapDispatchToProps
+    actions
 )(BusinessMonitor)
