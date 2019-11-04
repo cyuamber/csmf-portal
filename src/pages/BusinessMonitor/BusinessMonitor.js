@@ -49,7 +49,7 @@ class BusinessMonitor extends React.Component {
             key: 'phone',
         },
         ]
-        const tableData = this.props.businessmonitor.get('table')
+        const tableData = this.props.businessmonitor.get('table').toJS();
         return (
             <div>
                 <p>
@@ -57,9 +57,9 @@ class BusinessMonitor extends React.Component {
                     <Link to='/businessmonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
                 </p>
                 <Table
-                    loading={tableData.get('loading')}
+                    loading={tableData.loading}
                     rowKey={(record, index) => index}
-                    dataSource={tableData.get('data').toJS ? tableData.get('data').toJS() : tableData.get('data')}
+                    dataSource={tableData.data}
                     columns={columns} />
             </div>
         );
