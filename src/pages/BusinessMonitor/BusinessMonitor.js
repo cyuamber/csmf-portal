@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actions } from './actions';
-import { Button, Table, Avatar } from 'antd';
-import { Link } from 'react-router-dom';
+import { Row, Col, Table, Avatar } from 'antd';
 
 import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
 
-import "./style.less"
+import { chartConfig, chartStyle, singleLineconfig } from './constants';
+import StackLine from 'components/charts/stackLines';
 
+import "./style.less"
 
 class BusinessMonitor extends React.Component {
     state = {}
@@ -51,11 +52,19 @@ class BusinessMonitor extends React.Component {
         ]
         const tableData = this.props.businessmonitor.get('table').toJS();
         return (
-            <div>
-                <p>
-                    <Link to='/businessorder'><Button type="primary">Jump to dashboard</Button></Link>
-                    <Link to='/businessmonitor/detail' style={{ marginLeft: 10 }}><Button type="primary" onClick={() => this.showDetail}>Jump to detail</Button></Link>
-                </p>
+            <div className="businessmonitor">
+                <Row type="flex" gutter={16} justify="space-around" style={{ width: '100%', marginBottom: 20 }}>
+                    <Col span={8}>
+                        <StackLine chartConfig={singleLineconfig} lineStyle={chartStyle} />
+                    </Col>
+                    <Col span={8}>
+                        <StackLine chartConfig={chartConfig} lineStyle={chartStyle} />
+                    </Col>
+                    <Col span={8}>
+                        <StackLine chartConfig={chartConfig} lineStyle={chartStyle} />
+                    </Col>
+                </Row>
+
                 <Table
                     loading={tableData.loading}
                     rowKey={(record, index) => index}

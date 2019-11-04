@@ -1,7 +1,6 @@
 import React from 'react';
 
 class BusinessManagement extends React.Component {
-
     render() {
         return (
             <div>
