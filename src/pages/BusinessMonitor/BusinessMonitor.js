@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actions } from './actions';
-import { Row, Col, Table, Avatar } from 'antd';
+import { Row, Col, Table, Avatar, DatePicker } from 'antd';
 
 import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
@@ -53,7 +53,8 @@ class BusinessMonitor extends React.Component {
         const tableData = this.props.businessmonitor.get('table').toJS();
         return (
             <div className="businessmonitor">
-                <Row type="flex" gutter={16} justify="space-around" style={{ width: '100%', marginBottom: 20 }}>
+                <DatePicker showTime />
+                <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={8}>
                         <StackLine chartConfig={singleLineconfig} lineStyle={chartStyle} />
                     </Col>
