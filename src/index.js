@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ import './i18n';
 const storeFactory = (initialState) => {
     return (rootReducer) => {
         const store = createStore(rootReducer, initialState, compose(
+            applyMiddleware(thunk),
             window.devToolsExtension ? window.devToolsExtension() : f => f
         ));
         return store;

@@ -8,7 +8,13 @@ function resolvePath(url) {
     return path;
 }
 const APIS = {
-    testapi: resolvePath('/home')
+    testapi: resolvePath('/home'),
+    getProvinceApi: resolvePath('/province'),
+    getCityApi: resolvePath('/city'),
+    getCountyApi: resolvePath('/county'),
+    createOrder(userId){
+        return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing`)
+    }
 }
 
 export default APIS
