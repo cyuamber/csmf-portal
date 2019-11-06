@@ -25,14 +25,6 @@ class Appheader extends React.Component {
         this.setState({
             currentLanguage: currentLanguage === 'ch' ? 'en' : 'ch'
         })
-        let orignalSetItem = window.localStorage.setItem;
-        window.localStorage.setItem = function (key, newValue) {
-            let setItemEvent = new Event("setItemEvent");
-            setItemEvent.key = key;
-            setItemEvent.newValue = newValue;
-            window.dispatchEvent(setItemEvent);
-            orignalSetItem.apply(this, arguments);
-        };
 
         window.localStorage.setItem("currentLng", currentLanguage);
         this.props.i18n.changeLanguage(currentLanguage);
