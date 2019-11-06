@@ -4,7 +4,11 @@ import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import enUS from 'antd/es/locale/en_US';
+import zhCN from 'antd/es/locale/zh_CN';
+import { ConfigProvider } from 'antd';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import { getCurrentLng } from 'utils/util';
 
 import Layout from './components/Layout/Layoutframe';
 import { Login } from './pages/Login/Log';
@@ -30,52 +34,58 @@ const storeFactory = (initialState) => {
 }
 
 const store = storeFactory()(rootReducer);
+let storageLng = getCurrentLng();
+
+console.log(storageLng)
+const locale = storageLng === 'en' ? enUS : zhCN;
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
-            <Route path="/login" exact component={Login} />
-            <Route path="/" exact >
-                <Layout>
-                    <Homepage />
-                </Layout>
-                <Redirect exact from="/" to="/home" />
-            </Route>
-            <Route path="/home" exact >
-                <Layout>
-                    <Homepage />
-                </Layout>
-            </Route>
-            <Route exact path="/businessorder" >
-                <Layout>
-                    <BusinessOrder />
-                </Layout>
-            </Route>
-            <Route path="/businessorder/detail" >
-                <Layout>
-                    <BusinessOrderDetail />
-                </Layout>
-            </Route>
-            <Route path="/ordermgt" >
-                <Layout>
-                    <Orderconfirm />
-                </Layout>
-            </Route>
-            <Route path="/businessmgt" >
-                <Layout>
-                    <Ordermanage />
-                </Layout>
-            </Route>
-            <Route exact path="/businessmonitor" >
-                <Layout>
-                    <BusinessMonitor />
-                </Layout>
-            </Route>
-            <Route path="/businessmonitor/detail" >
-                <Layout>
-                    <BusinessOrder />
-                </Layout>
-            </Route>
-        </Router>
+        <ConfigProvider locale={locale}>
+            <Router>
+                <Route path="/login" exact component={Login} />
+                <Route path="/" exact >
+                    <Layout>
+                        <Homepage />
+                    </Layout>
+                    <Redirect exact from="/" to="/home" />
+                </Route>
+                <Route path="/home" exact >
+                    <Layout>
+                        <Homepage />
+                    </Layout>
+                </Route>
+                <Route exact path="/businessorder" >
+                    <Layout>
+                        <BusinessOrder />
+                    </Layout>
+                </Route>
+                <Route path="/businessorder/detail" >
+                    <Layout>
+                        <BusinessOrderDetail />
+                    </Layout>
+                </Route>
+                <Route path="/ordermgt" >
+                    <Layout>
+                        <Orderconfirm />
+                    </Layout>
+                </Route>
+                <Route path="/businessmgt" >
+                    <Layout>
+                        <Ordermanage />
+                    </Layout>
+                </Route>
+                <Route exact path="/businessmonitor" >
+                    <Layout>
+                        <BusinessMonitor />
+                    </Layout>
+                </Route>
+                <Route path="/businessmonitor/detail" >
+                    <Layout>
+                        <BusinessOrder />
+                    </Layout>
+                </Route>
+            </Router>
+        </ConfigProvider>
     </Provider>
     , document.getElementById('root'));

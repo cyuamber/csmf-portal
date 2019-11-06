@@ -15,3 +15,11 @@ export const getCurrentUser = () => {
     return user
 }
 
+export const getCurrentLng = () => {
+    window.addEventListener("setItemEvent", function (e) {
+        if (e.key === 'currentLng') {
+            return e.newValue;
+        }
+    });
+}
+
