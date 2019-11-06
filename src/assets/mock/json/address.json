@@ -1,31 +1,107 @@
 {
     "code": 200,
     "info": "Successfully",
-    "data": [
-        {
-            "id": 1,
-            "user": "John Brown",
-            "address": " New York No. 1 Lake Park"
-        },
-        {
-            "id": 2,
-            "user": "Jim Green",
-            "address": "London No. 1 Lake Park"
-        },
-        {
-            "id": 3,
-            "user": "Joe Black",
-            "address": "Sidney No. 1 Lake Park"
-        },
-        {
-            "id": 4,
-            "user": "Jim Green",
-            "address": "Sidney No. 1 Lake Park"
-        },
-        {
-            "id": 5,
-            "user": "Joe Black",
-            "address": "Sidney No. 1 Lake Park"
-        }
-    ]
+    "data": {
+        "province": [{
+                "id": 1,
+                "name": "北京",
+                "city": [{
+                    "id": 101,
+                    "name": "北京市",
+                    "country": [{
+                            "id": 1001,
+                            "name": "海淀区"
+                        },
+                        {
+                            "id": 1002,
+                            "name": "西城区"
+                        },
+                        {
+                            "id": 1003,
+                            "name": "昌平区"
+                        }
+                    ]
+                }]
+            },
+            {
+                "id": 2,
+                "province": "上海",
+                "city": [{
+                    "id": 201,
+                    "city": "上海市",
+                    "country": [{
+                            "id": 2001,
+                            "county": "普陀区"
+                        },
+                        {
+                            "id": 2002,
+                            "county": "静安区"
+                        }
+                    ]
+                }]
+            },
+            {
+                "id": 3,
+                "province": "江苏省",
+                "city": [{
+                    "id": 301,
+                    "city": "南京市",
+                    "country": [{
+                            "id": 3001,
+                            "county": "玄武区"
+                        },
+                        {
+                            "id": 3002,
+                            "county": "秦淮区"
+                        },
+                        {
+                            "id": 3003,
+                            "county": "鼓楼区"
+                        }
+                    ]
+                }]
+            }
+        ],
+        "city_list": [{
+                "name": "上海市",
+                "id": "1"
+            },
+            {
+                "name": "杭州市",
+                "id": "2"
+            },
+            {
+                "name": "北京市",
+                "id": "3"
+            },
+            {
+                "name": "广州市",
+                "id": "4"
+            },
+            {
+                "name": "荆州市",
+                "id": "100"
+            },
+            {
+                "name": "吉林市",
+                "id": "101"
+            },
+            {
+                "name": "泉州市",
+                "id": "102"
+            },
+            {
+                "name": "鞍山市",
+                "id": "96"
+            },
+            {
+                "name": "上饶市",
+                "id": "97"
+            },
+            {
+                "name": "桂林市",
+                "id": "98"
+            }
+        ]
+    }
 }

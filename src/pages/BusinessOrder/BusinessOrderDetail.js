@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import {actions} from './actions'
-import { Card, Form, Col, Input, Select, Radio, Button, Row,} from "antd";
+import { actions } from './actions'
+import { Card, Form, Col, Input, Select, Radio, Button, Row, } from "antd";
 import { OrderCreateform } from '../../constant/constants'
 import { axiospost } from '../../utils/http'
 import APIS from '../../constant/apis'
@@ -13,10 +13,10 @@ import './BusinessOrderDetail.less';
 class BusinessOrderDetail extends Component {
     state = {}
 
-    getRules = (message, initialValue) => ({ rules:[ {required: true, message}], initialValue})
+    getRules = (message, initialValue) => ({ rules: [{ required: true, message }], initialValue })
 
     getFormItem = () => {
-        const { form: {getFieldDecorator} } = this.props;
+        const { form: { getFieldDecorator } } = this.props;
         const { entries } = this.props.businessorder._root;
         const [provinceList, cityList, countyList] = entries.map(item => {
             return Array.isArray(item[1]) ? item[1] : []
@@ -25,7 +25,7 @@ class BusinessOrderDetail extends Component {
         const { Option } = Select
 
         return OrderCreateform.map(item => {
-            if(item.options){
+            if (item.options) {
                 return (
                     <Col span={12} key={item.key}>
                         <Item label={item.title}>
@@ -37,52 +37,52 @@ class BusinessOrderDetail extends Component {
                         </Item>
                     </Col>
                 )
-            }else if(item.key === 'businessName'){
+            } else if (item.key === 'businessName') {
                 return (
                     <Col span={12} key={item.key}>
                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, this.getRules(`${item.title} is required`))(<Input/>)}
+                            {getFieldDecorator(item.key, this.getRules(`${item.title} is required`))(<Input />)}
                         </Item>
                     </Col>
                 )
-            }else if(item.key === 'area'){
+            } else if (item.key === 'area') {
                 return (
-                    <Col key={item.key}  span={12}>
+                    <Col key={item.key} span={12}>
                         <Col span={12}>
-                            <Item label={item.title} labelCol={{span: 10,offset: 2}} wrapperCol={{span: 10, offset: 2}}>
+                            <Item label={item.title} labelCol={{ span: 10, offset: 2 }} wrapperCol={{ span: 10, offset: 2 }}>
                                 {getFieldDecorator('province', this.getRules('Please select a region'))(
                                     <Select placeholder="省" onChange={this.changeProvince}>
-                                        {provinceList.map( item => <Option key={item.id} value={item.province}>{item.province}</Option>)}
-                                    </Select>
-                                )}
-                                </Item>
-                            </Col>
-                        <Col span={6}>
-                            <Item wrapperCol={{span: 20, offset: 2}}>
-                                {getFieldDecorator('city', this.getRules('Please select a region'))(
-                                    <Select placeholder="市" onChange={this.changeCity}>
-                                        {cityList.map( item => <Option key={item.id} value={item.city}>{item.city}</Option>)}
+                                        {provinceList.map(item => <Option key={item.id} value={item.province}>{item.province}</Option>)}
                                     </Select>
                                 )}
                             </Item>
                         </Col>
                         <Col span={6}>
-                            <Item wrapperCol={{span: 20, offset: 0}}>  
-                                {getFieldDecorator('county', this.getRules('Please select a region'))(
-                                    <Select placeholder="区" >
-                                        {countyList.map( item => <Option key={item.id} value={item.county}>{item.county}</Option>)}
+                            <Item wrapperCol={{ span: 20, offset: 2 }}>
+                                {getFieldDecorator('city', this.getRules('Please select a region'))(
+                                    <Select placeholder="市" onChange={this.changeCity}>
+                                        {cityList.map(item => <Option key={item.id} value={item.city}>{item.city}</Option>)}
                                     </Select>
                                 )}
-                            </Item>     
+                            </Item>
+                        </Col>
+                        <Col span={6}>
+                            <Item wrapperCol={{ span: 20, offset: 0 }}>
+                                {getFieldDecorator('county', this.getRules('Please select a region'))(
+                                    <Select placeholder="区" >
+                                        {countyList.map(item => <Option key={item.id} value={item.county}>{item.county}</Option>)}
+                                    </Select>
+                                )}
+                            </Item>
                         </Col>
                     </Col>
                 )
-            }else {
+            } else {
                 return (
-                    <Col key={item.key}  span={12}>
-                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, this.getRules(`${item.key} is required` ))(
-                                <Radio.Group onChange={this.changeShareLevel} >
+                    <Col key={item.key} span={12}>
+                        <Item label={item.title}>
+                            {getFieldDecorator(item.key, this.getRules(`${item.key} is required`, "share"))(
+                                <Radio.Group>
                                     <Radio value="share"> 共享 &nbsp;&nbsp; </Radio>
                                     <Radio value="self"> 独占</Radio>
                                 </Radio.Group>
@@ -94,38 +94,37 @@ class BusinessOrderDetail extends Component {
         })
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getProvinceList()
     }
 
     changeProvince = (value) => {
-        const provinceList = this.props.businessorder._root.entries[0][1]
+        const provinceList = this.props.businessorder._root.entries[0][1];
         let id = ''
-        provinceList.forEach( item => {
-            if(value === item.province){
+        provinceList.forEach(item => {
+            if (value === item.province) {
                 id = item.id
             }
         })
         this.props.getCityList(id)
         this.props.form.resetFields(['city', 'county'])
-
     }
 
     changeCity = (value) => {
         const cityList = this.props.businessorder._root.entries[1][1]
-        let id = ''
-        cityList.forEach( item => {
-            if(value === item.city){
+        let id = '';
+        cityList.forEach(item => {
+            if (value === item.city) {
                 id = item.id
             }
         })
-        this.props.getCountyList(id)
-        this.props.form.resetFields(['county'])
+        this.props.getCountyList(id);
+        this.props.form.resetFields(['county']);
     }
 
     handleSubmit = () => {
         this.props.form.validateFields((error, values) => {
-            if(!error){
+            if (!error) {
                 // 模拟请求
                 // let userId = 'admin'
                 // let slicing_order_info = {}
@@ -134,14 +133,18 @@ class BusinessOrderDetail extends Component {
                 //         console.log('创建成功')
                 //     }
                 // }) 
-                this.props.history.push('/ordermgt')
+                this.props.history.push('/ordermgt');
             }
         })
     }
 
+    handleOrderCancel = () => {
+        this.props.history.goBack();
+    }
+
     render() {
         const { t } = this.props
-        const formItemLayout = { labelCol: {span: 5, offset: 1},wrapperCol: {span: 8, offset: 1}}
+        const formItemLayout = { labelCol: { span: 5, offset: 1 }, wrapperCol: { span: 8, offset: 1 } }
         return (
             <div className="orderdetail">
                 <Card title={t('Create Slicing Order')}>
@@ -149,8 +152,8 @@ class BusinessOrderDetail extends Component {
                         <Row className="orderdetail_formItem__margin">
                             {this.getFormItem()}
                         </Row>
-                        <Form.Item wrapperCol={{span: 16, offset: 9}}>
-                            <Button className='orderdetail_button__margin orderdetail_button__padding'>取消</Button>
+                        <Form.Item wrapperCol={{ span: 16, offset: 9 }}>
+                            <Button onClick={this.handleOrderCancel} className='orderdetail_button__margin orderdetail_button__padding'>取消</Button>
                             <Button type='primary' onClick={this.handleSubmit} className='orderdetail_button__padding'>确认</Button>
                         </Form.Item>
                     </Form>
@@ -161,6 +164,6 @@ class BusinessOrderDetail extends Component {
 }
 
 export default withNamespaces()(Form.create({})(connect(
-        state => ({businessorder: state.businessorder}),
-        actions
-    )(withRouter(BusinessOrderDetail))));
+    state => ({ businessorder: state.businessorder }),
+    actions
+)(withRouter(BusinessOrderDetail))));

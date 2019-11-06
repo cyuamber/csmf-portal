@@ -11,7 +11,7 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import { getCurrentLng } from 'utils/util';
 
 import Layout from './components/Layout/Layoutframe';
-import { Login } from './pages/Login/Log';
+import Login from './pages/Login/Log';
 import Homepage from './pages/Homepage/Homepage';
 import BusinessOrder from './pages/BusinessOrder/BusinessOrder';
 import BusinessOrderDetail from './pages/BusinessOrder/BusinessOrderDetail';
