@@ -14,14 +14,28 @@ class Chartbox extends Component {
     componentDidMount() {
         this.initEchart(this.state.lineId);
     }
+    componentDidUpdate() {
+        this.initEchart(this.state.lineId);
+    }
     initEchart(id) {
-        const { chartConfig } = this.props;
+        const { chartConfig, pieExtraConfig } = this.props;
         let myChart = echarts.getInstanceByDom(document.getElementById(id));
         if (myChart === undefined) {
             myChart = echarts.init(document.getElementById(id));
         }
-        let option = chartConfig;
-        myChart.setOption(option);
+        myChart.setOption(chartConfig);
+        if (pieExtraConfig) {
+            myChart.setOption({
+                legend: {
+                    data: pieExtraConfig.arr
+                },
+                series: [
+                    {
+                        data: pieExtraConfig.value
+                    }
+                ]
+            });
+        }
     }
     render() {
         const { chartStyle, chartName } = this.props;

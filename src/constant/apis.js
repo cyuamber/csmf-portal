@@ -11,6 +11,7 @@ const APIS = {
     testapi: resolvePath('/home'),
     bandwidth: resolvePath('/bandwidth'),
     traffic: resolvePath('/traffic'),
+    onlineUsers: resolvePath('/onlineUsers'),
 }
 
 export default APIS
