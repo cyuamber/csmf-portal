@@ -87,14 +87,14 @@ class OrderManagementDetail extends Component {
                 dataIndex: 'end',
                 render: (text,record) => {
                     let isDisable = record.service_status === 'normal'? true : false
-                    return <Button icon='poweroff' shape='circle' disabled={isDisable} onClick={() => this.handleServiceEnd(record)}></Button>
+                    return <Button icon='poweroff' shape='circle' disabled={isDisable} onClick={() => this.handleServiceEnd(record.service_id)}></Button>
                 }
             }
         ]
         const tableData = this.props.ordermgt.get('orderDetail').toJS()
         return (
             <Modal
-                title={t('Slicing Business Management')}
+                title={t('Slicing Order Management')}
                 visible={visible}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}

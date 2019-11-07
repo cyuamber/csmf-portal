@@ -24,7 +24,7 @@ export const actions = dispatch => {
                 let {result_body, result_header: {result_code}} = res
                 if(result_code === '200'){
                     let tableData = result_body.map((item, index) => {
-                        item.index = index+1
+                        item.index = pageNum ? (pageNum-1)*pageSize + index+1 : index+1
                         return item
                     })
                     dispatch(setTableData(tableData,res.total))

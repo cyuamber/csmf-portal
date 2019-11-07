@@ -1,5 +1,4 @@
-export const ORDER_CREATE_FORM = [
-    {
+export const ORDER_CREATE_FORM = [{
         title: '切片业务名称',
         key: 'businessName'
     },
@@ -41,4 +40,19 @@ export const ORDER_CREATE_FORM = [
         key: 'serviceKey',
         options: ['钻石套餐', '黄金套餐', '白银套餐']
     },
+]
+
+export const SELECT_OPTIONS = [
+    {
+        name: '全部',
+        key: 'all'
+    }, 
+    {
+        name: '进行中',
+        key: 'carryOut'
+    }, 
+    {
+        name: '已终止',
+        key: 'Terminated'
+    }
 ]

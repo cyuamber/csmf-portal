@@ -24,43 +24,43 @@ module.exports = {
     province: [
         { 
             id: 1,
-            province: '±±¾©'
+            province: 'ï¿½ï¿½ï¿½ï¿½'
         },
         {
             id: 2,
-            province: 'ÉÏº£'
+            province: 'ï¿½Ïºï¿½'
         }, 
         {
             id: 3,
-            province: '½­ËÕÊ¡'
+            province: 'ï¿½ï¿½ï¿½ï¿½Ê¡'
         }
     ],
     city: [
         {
             id: 1,
-            city: 'ÄÏ¾©ÊÐ'
+            city: 'ï¿½Ï¾ï¿½ï¿½ï¿½'
         },
         {
             id: 2,
-            city: 'ËÕÖÝÊÐ'
+            city: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'
         },
         {
             id: 3,
-            city: 'ÄÏÍ¨ÊÐ'
+            city: 'ï¿½ï¿½Í¨ï¿½ï¿½'
         }
     ],
     county: [
         {
             id: 1,
-            county: 'ÐþÎäÇø',
+            county: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
         },
         {
             id: 2,
-            county: 'ÇØ»´Çø'
+            county: 'ï¿½Ø»ï¿½ï¿½ï¿½'
         },
         {
             id: 3,
-            county: '¹ÄÂ¥Çø'
+            county: 'ï¿½ï¿½Â¥ï¿½ï¿½'
         }
     ],
     orders: {
@@ -109,5 +109,21 @@ module.exports = {
             result_code: '200',
             result_message: '5G slicing order query result.',
         },
+    },
+    business: {
+        result_header: {
+            result_code: '200',
+            result_message: '5G slicing order query result.',
+        },
+        total: 50,
+        result_body: _.times (10, function (n) {
+            return {
+                service_id: 'service1',
+                service_creation_time: '20190101',
+                service_enable_time: '20190201',
+                service_description: 'service1 description',
+                service_status: n%2 ? 'normal' : 'terminate'
+            }
+        }) 
     }
 }

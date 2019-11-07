@@ -4,6 +4,7 @@ import { Select, Table } from 'antd';
 import { connect } from 'react-redux'
 import { actions } from './actions'
 import OrderManagementDetail from './OrderManagementDetail'
+import { SELECT_OPTIONS } from '../../constant/constants'
 
 import './OrderManagement.less'
 
@@ -11,7 +12,7 @@ class OrderManagement extends React.Component {
     state = { orderId: ''}
     
     selectStatus = (status) => {
-        console.log(status)
+        this.props.changeTableLoading(true)
         this.props.getTableData({status})
     }
 
@@ -21,23 +22,21 @@ class OrderManagement extends React.Component {
     }
 
     handleOpenDetail = (orderId,e) => {
-        // this.props.showModal(true)
         this.props.getOrderDetail(orderId)
         this.setState ({orderId})
         e.preventDefault()
     }
     pageChange = (pageNum, pageSize) => {
+        this.props.changeTableLoading(true)
         this.props.getTableData({pageNum, pageSize})
     }
-    pageSizeChange = (current, pageSize) => {
-        console.log(current, pageSize, 'pageSizeChange')
+    pageSizeChange = (pageNum, pageSize) => {
+        this.props.changeTableLoading(true)
+        this.props.getTableData({pageNum, pageSize})
     }
 
     render() {
         const { t } = this.props;
-        // 可以提成常量
-        const selectOption = [{name: '全部', key: 'all'}, {name: '进行中', key: 'carryOut'}, {name: '已终止', key: 'Terminated'}]
-        // const tableData = []
         const tableData = this.props.ordermgt.get('tableData').toJS()
 
         const columns = [
@@ -86,7 +85,7 @@ class OrderManagement extends React.Component {
         return (
             <div className='ordermgt'>
                 <h2 className='ordermgt_title'>
-                    {t('Slicing Business Management')}
+                    {t('Slicing Order Management')}
                 </h2>
                 <div className='ordermgt_content'>
                     <div className='ordermgt_query'>
@@ -96,7 +95,7 @@ class OrderManagement extends React.Component {
                           defaultValue='all' 
                           onChange={this.selectStatus}
                         >
-                            {selectOption.map(item => {
+                            {SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
                                             {item.name}
                                         </Select.Option>

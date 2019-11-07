@@ -33,7 +33,8 @@ const APIS = {
     getOrderDetail: resolvePath('/detail'),
     enable: resolvePath('/enable'),
     disable: resolvePath('/disable'),
-    terminate: resolvePath('/terminate')
+    terminate: resolvePath('/terminate'),
+    getBusinessList: resolvePath('/business')
 }
 
 export default APIS
