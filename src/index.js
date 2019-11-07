@@ -30,11 +30,8 @@ const storeFactory = (initialState) => {
         return store;
     };
 }
-
 const store = storeFactory()(rootReducer);
 let storageLng = getCurrentLng();
-
-console.log(storageLng)
 const locale = storageLng === 'en' ? enUS : zhCN;
 
 ReactDOM.render(

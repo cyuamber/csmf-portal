@@ -1,19 +1,49 @@
+import React from 'react';
+import { Avatar } from 'antd';
 
-export const singleLineconfig = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
+export const pieChartconfig = {
     tooltip: {
-        trigger: 'axis'
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line'
-    }]
+    legend: {
+        x: 'center',
+        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+    },
+    series: [
+        {
+            name: '切片使用流量',
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: false,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data: [
+                { value: 335, name: '直接访问' },
+                { value: 310, name: '邮件营销' },
+                { value: 234, name: '联盟广告' },
+                { value: 135, name: '视频广告' },
+                { value: 1548, name: '搜索引擎' }
+            ]
+        }
+    ]
 }
 
 export const chartConfig = {
@@ -84,3 +114,23 @@ export const chartStyle = {
     height: '400px',
 }
 
+export const tableColumns = [{
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+}, {
+    title: '头像',
+    dataIndex: 'avatar',
+    key: 'avatar',
+    render: text => <Avatar alt="avatar" src={text} size="large" />,
+}, {
+    title: '姓名',
+    dataIndex: 'name',
+    key: 'name',
+},
+{
+    title: '电话',
+    dataIndex: 'phone',
+    key: 'phone',
+},
+]

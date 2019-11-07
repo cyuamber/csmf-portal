@@ -7,6 +7,9 @@ const initialState = I.fromJS({
     table: {
         data: [],
         loading: false,
+    },
+    bandwidth: {
+        data: []
     }
 });
 
@@ -19,6 +22,9 @@ export default function reducer(state = initialState, action) {
         case 'TABLE_LOADING':
             return state
                 .setIn(['table', 'loading'], action.bool)
+        case 'FETCH_BANDWIDTH_DATA':
+            return state
+                .setIn(['bandwidth', 'data'], I.fromJS(action.data))
         default:
             return state;
     }

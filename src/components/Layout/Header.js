@@ -21,13 +21,12 @@ class Appheader extends React.Component {
 
     handleLanguage() {
         const { currentLanguage } = this.state;
-
         this.setState({
             currentLanguage: currentLanguage === 'ch' ? 'en' : 'ch'
         })
-
         window.localStorage.setItem("currentLng", currentLanguage);
         this.props.i18n.changeLanguage(currentLanguage);
+        this.props.history.go(0);
     }
     handleMenu(item) {
         // console.log(item, "==>item")

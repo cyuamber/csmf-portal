@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import echarts from 'echarts';
+import './style.less';
 
-class StackLine extends Component {
+class Chartbox extends Component {
     constructor(props) {
         super(props);
         let id = ('_' + Math.random()).replace('.', '_');
@@ -23,12 +24,15 @@ class StackLine extends Component {
         myChart.setOption(option);
     }
     render() {
-        const { lineStyle } = this.props;
+        const { chartStyle, chartName } = this.props;
 
         return (
-            <div id={this.state.lineId} style={lineStyle}></div>
+            <div className="chartArea">
+                <p className="chartArea_title">{chartName}</p>
+                <div className="chartArea_chart" id={this.state.lineId} style={chartStyle}></div>
+            </div>
         )
     }
 }
 
-export default StackLine;
+export default Chartbox;

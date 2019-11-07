@@ -5,6 +5,9 @@ export const actions = (dispatch) => {
         },
         tableLoading: (bool = false) => {
             dispatch({ type: 'TABLE_LOADING', bool })
+        },
+        fetchBandwidthData: (data = {}) => {
+            dispatch({ type: 'FETCH_BANDWIDTH_DATA', data })
         }
     }
 }

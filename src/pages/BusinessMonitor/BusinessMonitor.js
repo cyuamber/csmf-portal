@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actions } from './actions';
-import { Row, Col, Table, Avatar, DatePicker } from 'antd';
+import { Row, Col, Table, DatePicker, message } from 'antd';
 
 import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
 
-import { chartConfig, chartStyle, singleLineconfig } from './constants';
-import StackLine from 'components/charts/stackLines';
+import { chartConfig, chartStyle, pieChartconfig, tableColumns } from './constants';
+import Chartbox from 'components/charts/chartbox';
 
 import "./style.less"
 
@@ -19,58 +19,54 @@ class BusinessMonitor extends React.Component {
     }
 
     fetchData() {
-        const { changeTable, tableLoading } = this.props;
+        const { changeTable, tableLoading, fetchBandwidthData } = this.props;
         tableLoading(true);
         axiosget(APIS.testapi).then(res => {
             changeTable(res, false)
         })
-    }
-    showDetail() {
-        console.log("===detail")
+        axiosget(APIS.traffic).then(res => {
+            if (res.result_header && +res.result_header.result_code === 200) {
+                fetchBandwidthData(res.result_body);
+            } else {
+                message.error('wrong');
+            }
+        })
     }
 
     render() {
-        const columns = [{
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-        }, {
-            title: '头像',
-            dataIndex: 'avatar',
-            key: 'avatar',
-            render: text => <Avatar alt="avatar" src={text} size="large" />,
-        }, {
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: '电话',
-            dataIndex: 'phone',
-            key: 'phone',
-        },
-        ]
         const tableData = this.props.businessmonitor.get('table').toJS();
+        const pieData = this.props.businessmonitor.get('bandwidth').toJS();
+        // console.log(pieChartconfig, "===>pieChartconfig", pieData, "==>pieData");
+        let pieLegendArr = [];
+        pieData.data.filter(item => pieLegendArr.push(item.service_id));
+        let pieSeriesArr = [];
+        pieData.data.filter(item => pieSeriesArr.push({ value: item.traffic_data, name: item.service_id }))
+
+        // pieChartconfig.series[0].data = pieSeriesArr;
+        // pieChartconfig.legend.data = pieLegendArr;
+
+        console.log(pieChartconfig, "==>pieLegendArr")
         return (
             <div className="businessmonitor">
                 <DatePicker showTime />
                 <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={8}>
-                        <StackLine chartConfig={singleLineconfig} lineStyle={chartStyle} />
+                        <Chartbox chartConfig={pieChartconfig} chartName={"切片使用流量"} chartStyle={chartStyle} />
                     </Col>
                     <Col span={8}>
-                        <StackLine chartConfig={chartConfig} lineStyle={chartStyle} />
+                        <Chartbox chartConfig={chartConfig} chartName={"在线用户数量"} chartStyle={chartStyle} />
                     </Col>
                     <Col span={8}>
-                        <StackLine chartConfig={chartConfig} lineStyle={chartStyle} />
+                        <Chartbox chartConfig={chartConfig} chartName={"切片总带宽"} chartStyle={chartStyle} />
                     </Col>
                 </Row>
 
                 <Table
+                    className="businessmonitor_table"
                     loading={tableData.loading}
                     rowKey={(record, index) => index}
                     dataSource={tableData.data}
-                    columns={columns} />
+                    columns={tableColumns} />
             </div>
         );
     }

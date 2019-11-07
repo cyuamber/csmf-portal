@@ -8,7 +8,9 @@ function resolvePath(url) {
     return path;
 }
 const APIS = {
-    testapi: resolvePath('/home')
+    testapi: resolvePath('/home'),
+    bandwidth: resolvePath('/bandwidth'),
+    traffic: resolvePath('/traffic'),
 }
 
 export default APIS
