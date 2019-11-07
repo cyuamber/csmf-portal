@@ -34,6 +34,32 @@ export function axiosget(url, data) {
         });
     })
 }
+export function axiosput (url, data) {
+    axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+    return new Promise ((resolve, reject) => {
+        axios.put(url, data, {
+            headers: getHeaders(),
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+export function axiosdelete(url, data) {
+    return new Promise((resolve, reject) => {
+        axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        axios.delete(url, {
+            params: data,
+            headers: getHeaders(),
+        }).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        });
+    })
+}
+
 export function axiosmock(url, param, data) {
     return new Promise((resolve) => {
         console.log('%ccurrenturl', 'padding: 3px; background: #009fff; color: #fff; border-radius: 3px;', url)

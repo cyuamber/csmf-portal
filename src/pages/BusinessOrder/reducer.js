@@ -10,11 +10,11 @@ const initialState = I.fromJS({
 export default function reducer (state = initialState, action){
     switch(action.type){
         case 'GET_PROVINCE':
-            return state.setIn(['provinceList'], action.provinceList);
+            return state.setIn(['provinceList'], I.fromJS(action.provinceList));
         case 'GET_CITY':
-            return state.setIn(['cityList'], action.cityList);
+            return state.setIn(['cityList'], I.fromJS(action.cityList));
         case 'GET_COUNTY':
-            return state.setIn(['countyList'], action.countyList)
+            return state.setIn(['countyList'], I.fromJS(action.countyList))
         default:
             return state
     }

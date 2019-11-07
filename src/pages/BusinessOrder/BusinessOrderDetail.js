@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { actions } from './actions'
 import { Card, Form, Col, Input, Select, Radio, Button, Row, } from "antd";
-import { OrderCreateform } from '../../constant/constants'
+import { ORDER_CREATE_FORM } from '../../constant/constants'
 import { axiospost } from '../../utils/http'
 import APIS from '../../constant/apis'
 
@@ -17,14 +17,13 @@ class BusinessOrderDetail extends Component {
 
     getFormItem = () => {
         const { form: { getFieldDecorator } } = this.props;
-        const { entries } = this.props.businessorder._root;
-        const [provinceList, cityList, countyList] = entries.map(item => {
-            return Array.isArray(item[1]) ? item[1] : []
-        })
+        const provinceList = this.props.businessorder.get('provinceList').toJS()
+        const cityList = this.props.businessorder.get('cityList').toJS()
+        const countyList = this.props.businessorder.get('countyList').toJS()
         const { Item } = Form
         const { Option } = Select
 
-        return OrderCreateform.map(item => {
+        return ORDER_CREATE_FORM.map(item => {
             if (item.options) {
                 return (
                     <Col span={12} key={item.key}>

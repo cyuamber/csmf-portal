@@ -1,4 +1,4 @@
-export const OrderCreateform = [
+export const ORDER_CREATE_FORM = [
     {
         title: '切片业务名称',
         key: 'businessName'
