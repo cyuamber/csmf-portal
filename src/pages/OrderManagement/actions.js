@@ -17,9 +17,10 @@ export const actions = dispatch => {
             // })
             // 模拟
             let resBody = {}
-            if ( status ) resBody.status = status
-            if ( pageNum ) resBody.pageNum = pageNum  
-            if ( pageSize ) resBody.pageSize = pageSize  
+            if ( status ) resBody.order_status = status
+            if ( pageNum ) resBody.page_no = pageNum  
+            if ( pageSize ) resBody.page_size = pageSize  
+            let userId = window.localStorage.getItem('username')
             axiosget(APIS.getOrders, resBody).then(res => {
                 let {result_body, result_header: {result_code}} = res
                 if(result_code === '200'){
@@ -28,19 +29,6 @@ export const actions = dispatch => {
                         return item
                     })
                     dispatch(setTableData(tableData,res.total))
-                }
-            })
-        },
-        showModal (bool = false) {
-            dispatch({type: 'SHOW_MODAL', bool})
-        },
-        getOrderDetail (orderId) {
-            let userId = window.localStorage.getItem('username')
-            // axiosget(APIS.getOrderDetail(orderId,userId)).then(res => {})
-            axiosget(APIS.getOrderDetail).then(res => {
-                let {result_body, result_header: {result_code}} = res
-                if(result_code === '200'){
-                    dispatch({type: 'GET_ORDER_DETAIL', data: result_body, bool: true})
                 }
             })
         },

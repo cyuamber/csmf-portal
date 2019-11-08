@@ -1,15 +1,18 @@
 import React from 'react';
 import { withNamespaces } from 'react-i18next';
-import { Select, Table } from 'antd';
+import { Select, Table, Modal } from 'antd';
 import { connect } from 'react-redux'
 import { actions } from './actions'
-import OrderManagementDetail from './OrderManagementDetail'
+import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
 import { SELECT_OPTIONS } from '../../constant/constants'
 
 import './OrderManagement.less'
 
 class OrderManagement extends React.Component {
-    state = { orderId: ''}
+    state = { 
+        orderId: '',
+        visible: false
+    }
     
     selectStatus = (status) => {
         this.props.changeTableLoading(true)
@@ -22,7 +25,8 @@ class OrderManagement extends React.Component {
     }
 
     handleOpenDetail = (orderId,e) => {
-        this.props.getOrderDetail(orderId)
+        this.setState({visible: true})
+        // this.props.getOrderDetail(orderId)
         this.setState ({orderId})
         e.preventDefault()
     }
@@ -35,9 +39,15 @@ class OrderManagement extends React.Component {
         this.props.getTableData({pageNum, pageSize})
     }
 
+    // modal
+    handleCancel = () => {
+        this.setState({visible: false})
+    }
+
     render() {
         const { t } = this.props;
         const tableData = this.props.ordermgt.get('tableData').toJS()
+        const {visible} = this.state
 
         const columns = [
             {
@@ -110,7 +120,17 @@ class OrderManagement extends React.Component {
                       pagination={{showSizeChanger: true, total: tableData.total, onChange: this.pageChange, onShowSizeChange: this.pageSizeChange}}
                     />
                 </div>
-                <OrderManagementDetail orderId={orderId}/>
+                <Modal
+                    title={t('Slicing Order Management')}
+                    visible={visible}
+                    onCancel={this.handleCancel}
+                    centered
+                    width={1000}
+                    bodyStyle={{height: '400px'}}
+                    footer={null}
+                >
+                    <BusinessMGTTable orderId={orderId} />
+                </Modal>
             </div>
         );
     }
