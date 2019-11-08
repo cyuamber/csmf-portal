@@ -9,9 +9,9 @@ function resolvePath(url) {
 }
 const APIS = {
     testapi: resolvePath('/home'),
-    bandwidth: resolvePath('/bandwidth'),
     traffic: resolvePath('/traffic'),
     onlineUsers: resolvePath('/onlineUsers'),
+    bandwidth: resolvePath('/bandwidth'),
     getProvinceApi: resolvePath('/province'),
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),

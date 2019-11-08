@@ -18,7 +18,7 @@ class Chartbox extends Component {
         this.initEchart(this.state.lineId);
     }
     initEchart(id) {
-        const { chartConfig, pieExtraConfig } = this.props;
+        const { chartConfig, pieExtraConfig,lineExtraConfig } = this.props;
         let myChart = echarts.getInstanceByDom(document.getElementById(id));
         if (myChart === undefined) {
             myChart = echarts.init(document.getElementById(id));
@@ -31,9 +31,21 @@ class Chartbox extends Component {
                 },
                 series: [
                     {
+                        name:pieExtraConfig.legendName,
                         data: pieExtraConfig.value
                     }
                 ]
+            });
+        }
+        if(lineExtraConfig){
+            myChart.setOption({
+                legend: {
+                    data: lineExtraConfig.legend
+                },
+                xAxis:{
+                    data:lineExtraConfig.xAxis
+                },
+                series: lineExtraConfig.value
             });
         }
     }

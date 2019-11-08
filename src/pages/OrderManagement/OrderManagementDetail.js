@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, Table, Switch, Icon } from 'antd'
+import { Modal, Button, Table, Switch } from 'antd'
 import { withNamespaces } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -15,7 +15,7 @@ class OrderManagementDetail extends Component {
         orderId: PropTypes.string.isRequired
     }
 
-    state = { 
+    state = {
         loading: false
     }
 
@@ -27,25 +27,25 @@ class OrderManagementDetail extends Component {
         const { orderId, getOrderDetail } = this.props
         // axiosdelete(APIS.terminate(serviceId))
         axiosdelete(APIS.terminate).then(res => {
-            let {result_header: {result_code}} = res
-            if(result_code === '200'){
+            let { result_header: { result_code } } = res
+            if (result_code === '200') {
                 getOrderDetail(orderId)
-            }    
+            }
         })
     }
     changeStatus = (serviceId, checked) => {
-        this.setState({loading: true})
+        this.setState({ loading: true })
         const url = checked ? APIS.disable : APIS.enable
-        const { orderId, getOrderDetail} = this.props
+        const { orderId, getOrderDetail } = this.props
         // axiosput(url(serviceId))
         axiosput(url).then(res => {
-            let {result_header: {result_code}} = res
-            if(result_code === '200'){
+            let { result_header: { result_code } } = res
+            if (result_code === '200') {
                 setTimeout(() => {
-                    this.setState({loading: false})
+                    this.setState({ loading: false })
                     getOrderDetail(orderId)
-                },2000)
-            }    
+                }, 2000)
+            }
         })
     }
 
@@ -72,21 +72,21 @@ class OrderManagementDetail extends Component {
             {
                 title: '状态',
                 dataIndex: 'service_status',
-                render: (text) => text === 'normal'? '已激活': '未激活'
+                render: (text) => text === 'normal' ? '已激活' : '未激活'
             },
             {
                 title: '激活',
                 dataIndex: 'activation',
-                render: (text,record) => {
-                    let isChecked = record.service_status === 'normal'? true : false
-                    return <Switch defaultChecked={isChecked} size='small' onChange={(checked) => this.changeStatus(record.service_id, checked)} loading={this.state.loading}/>
+                render: (text, record) => {
+                    let isChecked = record.service_status === 'normal' ? true : false
+                    return <Switch defaultChecked={isChecked} size='small' onChange={(checked) => this.changeStatus(record.service_id, checked)} loading={this.state.loading} />
                 }
             },
             {
                 title: '终止',
                 dataIndex: 'end',
-                render: (text,record) => {
-                    let isDisable = record.service_status === 'normal'? true : false
+                render: (text, record) => {
+                    let isDisable = record.service_status === 'normal' ? true : false
                     return <Button icon='poweroff' shape='circle' disabled={isDisable} onClick={() => this.handleServiceEnd(record.service_id)}></Button>
                 }
             }
@@ -100,14 +100,14 @@ class OrderManagementDetail extends Component {
                 onCancel={this.handleCancel}
                 centered
                 width={1000}
-                bodyStyle={{height: '400px'}}
+                bodyStyle={{ height: '400px' }}
                 footer={null}
             >
-                <Table 
-                  columns={columns}
-                  dataSource={tableData}
-                  rowKey={(record, index) => index}
-                  pagination={false}
+                <Table
+                    columns={columns}
+                    dataSource={tableData}
+                    rowKey={(record, index) => index}
+                    pagination={false}
                 />
             </Modal>
         )
@@ -115,6 +115,6 @@ class OrderManagementDetail extends Component {
 }
 
 export default withNamespaces()(connect(
-    state => ({ordermgt: state.ordermgt}),
+    state => ({ ordermgt: state.ordermgt }),
     actions
 )(OrderManagementDetail))

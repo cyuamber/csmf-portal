@@ -62,7 +62,27 @@
                     "online_users": 100
                 }
             ]
+        }, {
+            "service_id": "service4",
+            "online_user_list": [{
+                    "timestamp": "2019-01-01 01:01:01",
+                    "online_users": 300
+                },
+                {
+                    "timestamp": "2019-01-01 02:01:01",
+                    "online_users": 500
+                },
+                {
+                    "timestamp": "2019-01-01 03:01:01",
+                    "online_users": 100
+                },
+                {
+                    "timestamp": "2019-01-01 04:01:01",
+                    "online_users": 180
+                }
+            ]
         }
+
 
     ]
 }

@@ -18,4 +18,3 @@ export const getCurrentUser = () => {
 export const getCurrentLng = () => {
     return window.localStorage.getItem("currentLng");
 }
-
