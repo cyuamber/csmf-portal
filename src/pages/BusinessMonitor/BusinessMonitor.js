@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withNamespaces } from 'react-i18next';
 import { actions } from './actions';
 import { Row, Col, Table, DatePicker, message } from 'antd';
 import { axiosget } from 'utils/http';
@@ -62,11 +63,12 @@ class BusinessMonitor extends React.Component {
         })
     }
     processPieData = (chartData, chartName = "traffic") => {
+        const { t } = this.props;
         let trafficLegendArr = [];
         let trafficSeriesArr = [];
         let trafficName = "";
         if (chartName === "traffic") {
-            trafficName = "切片使用流量";
+            trafficName = t("Slicing Traffic");
             chartData.data.forEach(item => {
                 trafficLegendArr.push(item.service_id);
                 trafficSeriesArr.push({ value: item.traffic_data, name: item.service_id });
@@ -123,6 +125,7 @@ class BusinessMonitor extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
         const tableData = this.props.businessmonitor.get('table').toJS();
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
@@ -132,19 +135,19 @@ class BusinessMonitor extends React.Component {
         let onlineusersConfig = this.processLineData(onlineusersData, "onlineusers");
         let bandwidthConfig = this.processLineData(bandwidthData, "bandwidth");
 
-        console.log(onlineusersConfig, bandwidthConfig)
+        // console.log(onlineusersConfig, bandwidthConfig)
         return (
             <div className="businessmonitor">
                 <DatePicker showTime />
                 <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={6}>
-                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={"切片使用流量"} chartStyle={chartStyle} />
+                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} />
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={"在线用户数量"} chartStyle={chartStyle} />
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} />
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={"切片总带宽"} chartStyle={chartStyle} />
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} />
                     </Col>
                 </Row>
 
@@ -158,7 +161,7 @@ class BusinessMonitor extends React.Component {
         );
     }
 }
-export default connect(
+export default withNamespaces()(connect(
     state => ({ businessmonitor: state.businessmonitor }),
     actions
-)(BusinessMonitor)
+)(BusinessMonitor))
