@@ -72,6 +72,16 @@ server.post(`/*`, (req, res, next) => {
     next();
 })
 
+server.put(`/*`, (req, res, next) => {
+    req.method = 'GET'
+    next();
+})
+
+server.delete(`/*`, (req, res, next) => {
+    req.method = 'GET'
+    next();
+})
+
 server.listen(4002, () => {
     console.log('React Mock Server is successfully running on port 4002 😁')
 });

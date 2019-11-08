@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import enUS from 'antd/es/locale/en_US';
 import zhCN from 'antd/es/locale/zh_CN';
@@ -10,7 +11,7 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import { getCurrentLng } from 'utils/util';
 
 import Layout from './components/Layout/Layoutframe';
-import { Login } from './pages/Login/Log';
+import Login from './pages/Login/Log';
 import Homepage from './pages/Homepage/Homepage';
 import BusinessOrder from './pages/BusinessOrder/BusinessOrder';
 import BusinessOrderDetail from './pages/BusinessOrder/BusinessOrderDetail';
@@ -25,6 +26,7 @@ import './i18n';
 const storeFactory = (initialState) => {
     return (rootReducer) => {
         const store = createStore(rootReducer, initialState, compose(
+            applyMiddleware(thunk),
             window.devToolsExtension ? window.devToolsExtension() : f => f
         ));
         return store;

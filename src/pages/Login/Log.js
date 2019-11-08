@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
 import { createHashHistory } from 'history';
 
 import { getCurrentUser } from 'utils/util';
@@ -9,14 +8,14 @@ import './style.less';
 
 const history = createHashHistory();
 
-class LoginForm extends React.Component {
+class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                window.localStorage.setItem("username", values.username)
-                history.push('/home');
+                window.localStorage.setItem("username", values.username);
+                history.goBack();
             }
         });
     };
@@ -64,6 +63,4 @@ class LoginForm extends React.Component {
     }
 }
 
-export const Login = Form.create({ name: 'login' })(LoginForm);
-
-ReactDOM.render(<Login />, document.getElementById('root'));
+export default Form.create({ name: 'login' })(Login)
