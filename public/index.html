@@ -14,6 +14,7 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link href="./index.css" rel="stylesheet" type="text/css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.3.0/echarts.common.min.js"></script>
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -29,6 +30,16 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="appLoading">
+    <div class="loading-container">
+      <div id="loading-center">
+        <div id="loading-center-absolute">
+          <div class='sk-spinner sk-spinner-pulse'></div>
+          <div class='sk-spinner reverse-sk-spinner-pulse'></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="root"></div>
   <!--
       This HTML file is a template.

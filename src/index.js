@@ -85,4 +85,8 @@ ReactDOM.render(
             </Router>
         </ConfigProvider>
     </Provider>
-    , document.getElementById('root'));
+    , document.getElementById('root')
+);
+
+document.getElementById("root").style.display = "block";
+document.getElementById("appLoading").style.display = "none";
