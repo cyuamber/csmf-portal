@@ -6,8 +6,9 @@ module.exports = {
     'province': fakeData.province,  
     'city': fakeData.city,
     'county': fakeData.county,
-    // 'api/usecaseui/csmf/userId/admin/5gSlicing/orders': fakeData.orders
-    'orders': fakeData.orders,
+    'street': fakeData.street,
+    'api_usecaseui_csmf_userId_admin_5gSlicing_orders': fakeData.orders,
+    // 'orders': fakeData.orders,
     'detail': fakeData.detail,
     'enable': fakeData.enable,
     'disable': fakeData.disable,

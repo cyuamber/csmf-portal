@@ -24,43 +24,53 @@ module.exports = {
     province: [
         { 
             id: 1,
-            province: '����'
+            province: '北京'
         },
         {
             id: 2,
-            province: '�Ϻ�'
+            province: '上海'
         }, 
         {
             id: 3,
-            province: '����ʡ'
+            province: '江苏省'
         }
     ],
     city: [
         {
             id: 1,
-            city: '�Ͼ���'
+            city: '南京市'
         },
         {
             id: 2,
-            city: '������'
+            city: '苏州市'
         },
         {
             id: 3,
-            city: '��ͨ��'
+            city: '南通市'
         }
     ],
     county: [
         {
             id: 1,
-            county: '������',
+            county: '玄武区',
         },
         {
             id: 2,
-            county: '�ػ���'
+            county: '鼓楼区'
         },
         {
             id: 3,
-            county: '��¥��'
+            county: '秦淮区'
+        }
+    ],
+    street: [
+        {
+            id: 1,
+            street: '珠江路'
+        },
+        {
+            id: 2,
+            street: '龙蟠中路'
         }
     ],
     orders: {

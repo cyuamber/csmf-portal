@@ -12,12 +12,13 @@ const APIS = {
     getProvinceApi: resolvePath('/province'),
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),
+    getStreetApi: resolvePath('/street'),
     createOrder(userId){
         return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing`)
     },
-    // getOrders(userId){
-    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orders`)
-    // }
+    getOrders(userId){
+        return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orders`)
+    },
     // getOrderDetail(userId, orderId){
     //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/${orderId}/services`)
     // },
@@ -28,8 +29,11 @@ const APIS = {
     //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/disable`)
     // },
     // terminate = (servceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
+    // getBusinessList (userId) => {
+    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/services`)
+    // }
     // 模拟
-    getOrders: resolvePath('/orders'),
+    // getOrders: resolvePath('/orders'),
     getOrderDetail: resolvePath('/detail'),
     enable: resolvePath('/enable'),
     disable: resolvePath('/disable'),

@@ -2,19 +2,44 @@ import I from 'immutable'
 
 const initialState = I.fromJS({
     provinceList: [],
-    cityList: [],
-    countyList: []
+    formItem: [
+        {
+            id: 1,
+            cityList: [],
+            countyList: [],
+            streetList: []
+        }
+    ]
 
 });
 
 export default function reducer (state = initialState, action){
     switch(action.type){
+        case 'ADD_FORM_ITEM': 
+            return state.setIn(['formItem'], state.getIn(['formItem']).push(I.fromJS(action.item)))
+        case 'DELETE_FORM_ITEM':
+            return state.setIn(['formItem'], state.get('formItem').splice(action.index, 1))
         case 'GET_PROVINCE':
             return state.setIn(['provinceList'], I.fromJS(action.provinceList));
         case 'GET_CITY':
-            return state.setIn(['cityList'], I.fromJS(action.cityList));
+            return state
+                    .setIn(['formItem'],state.get('formItem').update( action.index, item => {
+                        return item
+                                .setIn(['cityList'],action.cityList)
+                                .setIn(['countyList'], I.fromJS([]))
+                                .setIn(['streetList'], I.fromJS([]))
+                    }))
         case 'GET_COUNTY':
-            return state.setIn(['countyList'], I.fromJS(action.countyList))
+            return state
+                    .setIn(['formItem'],state.get('formItem').update( action.index, item => {
+                        return item
+                                .setIn(['countyList'],action.countyList)
+                                .setIn(['streetList'], I.fromJS([]))
+                    }))
+        case 'GET_STREET':
+            return state.setIn(['formItem'],state.get('formItem').update( action.index, item => {
+                return item.setIn(['streetList'],action.streetList)
+             }))
         default:
             return state
     }
