@@ -173,7 +173,7 @@ class BusinessOrderDetail extends Component {
     }
 
     changeCity = (value, index, itemId) => {
-        const cityList = this.props.businessorder.get('cityList').toJS();
+        const cityList = this.props.businessorder.getIn(['formItem', index]).toJS().cityList;
         let id = '';
         cityList.forEach(item => {
             if (value === item.city) {
@@ -185,10 +185,10 @@ class BusinessOrderDetail extends Component {
     }
 
     changeCounty= (value, index, itemId) => {
-        const cityList = this.props.businessorder.get('countyList').toJS();
+        const countyList = this.props.businessorder.getIn(['formItem', index]).toJS().countyList;
         let id = '';
-        cityList.forEach(item => {
-            if (value === item.city) {
+        countyList.forEach(item => {
+            if (value === item.county) {
                 id = item.id
             }
         })

@@ -1,19 +1,44 @@
+import React from 'react';
+import { Avatar } from 'antd';
 
-export const singleLineconfig = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
+export const pieChartconfig = {
     tooltip: {
-        trigger: 'axis'
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line'
-    }]
+    legend: {
+        x: 'center',
+        data: []
+    },
+    series: [
+        {
+            name: '',
+            type: 'pie',
+            radius: '70%',
+            center: ['50%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: false,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data: [
+            ]
+        }
+    ]
 }
 
 export const chartConfig = {
@@ -24,7 +49,7 @@ export const chartConfig = {
         trigger: 'axis'
     },
     legend: {
-        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+        data: []
     },
     grid: {
         left: '3%',
@@ -40,43 +65,11 @@ export const chartConfig = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        data: []
     },
     yAxis: {
         type: 'value'
     },
-    series: [
-        {
-            name: '邮件营销',
-            type: 'line',
-            stack: '总量',
-            data: [120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-            name: '联盟广告',
-            type: 'line',
-            stack: '总量',
-            data: [220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-            name: '视频广告',
-            type: 'line',
-            stack: '总量',
-            data: [150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-            name: '直接访问',
-            type: 'line',
-            stack: '总量',
-            data: [320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-            name: '搜索引擎',
-            type: 'line',
-            stack: '总量',
-            data: [820, 932, 901, 934, 1290, 1330, 1320]
-        }
-    ]
 }
 
 export const chartStyle = {
@@ -84,3 +77,23 @@ export const chartStyle = {
     height: '400px',
 }
 
+export const tableColumns = [{
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+}, {
+    title: '头像',
+    dataIndex: 'avatar',
+    key: 'avatar',
+    render: text => <Avatar alt="avatar" src={text} size="large" />,
+}, {
+    title: '姓名',
+    dataIndex: 'name',
+    key: 'name',
+},
+{
+    title: '电话',
+    dataIndex: 'phone',
+    key: 'phone',
+},
+]

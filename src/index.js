@@ -32,11 +32,8 @@ const storeFactory = (initialState) => {
         return store;
     };
 }
-
 const store = storeFactory()(rootReducer);
 let storageLng = getCurrentLng();
-
-console.log(storageLng)
 const locale = storageLng === 'en' ? enUS : zhCN;
 
 ReactDOM.render(
@@ -88,4 +85,8 @@ ReactDOM.render(
             </Router>
         </ConfigProvider>
     </Provider>
-    , document.getElementById('root'));
+    , document.getElementById('root')
+);
+
+document.getElementById("root").style.display = "block";
+document.getElementById("appLoading").style.display = "none";

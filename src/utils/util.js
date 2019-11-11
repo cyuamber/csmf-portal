@@ -16,10 +16,5 @@ export const getCurrentUser = () => {
 }
 
 export const getCurrentLng = () => {
-    window.addEventListener("setItemEvent", function (e) {
-        if (e.key === 'currentLng') {
-            return e.newValue;
-        }
-    });
+    return window.localStorage.getItem("currentLng");
 }
-

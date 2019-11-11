@@ -9,16 +9,19 @@ function resolvePath(url) {
 }
 const APIS = {
     testapi: resolvePath('/home'),
+    traffic: resolvePath('/traffic'),
+    onlineUsers: resolvePath('/onlineUsers'),
+    bandwidth: resolvePath('/bandwidth'),
     getProvinceApi: resolvePath('/province'),
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),
     getStreetApi: resolvePath('/street'),
-    createOrder(userId){
+    createOrder(userId) {
         return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing`)
     },
-    getOrders(userId){
-        return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orders`)
-    },
+    // getOrders(userId){
+    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orders`)
+    // },
     // getOrderDetail(userId, orderId){
     //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/${orderId}/services`)
     // },
@@ -33,7 +36,7 @@ const APIS = {
     //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/services`)
     // }
     // 模拟
-    // getOrders: resolvePath('/orders'),
+    getOrders: resolvePath('/orders'),
     getOrderDetail: resolvePath('/detail'),
     enable: resolvePath('/enable'),
     disable: resolvePath('/disable'),
