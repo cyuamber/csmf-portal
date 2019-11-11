@@ -8,11 +8,14 @@ import APIS from 'constant/apis';
 
 import { chartConfig, chartStyle, pieChartconfig, tableColumns } from './constants';
 import Chartbox from 'components/charts/chartbox';
+import Loading from 'components/Loading/Loading'
 
 import "./style.less"
 
 class BusinessMonitor extends React.Component {
-    state = {}
+    state = {
+        showLoading: false
+    }
 
     componentDidMount() {
         this.fetchTableData();
@@ -20,6 +23,7 @@ class BusinessMonitor extends React.Component {
 
     fetchTableData() {
         const { changeTable, tableLoading } = this.props;
+        this.setState({ showLoading: true });
         tableLoading(true);
         axiosget(APIS.testapi).then(res => {
             if (res) {
@@ -30,6 +34,9 @@ class BusinessMonitor extends React.Component {
             } else {
                 message.error("system error")
             }
+            setTimeout(() => {
+                this.setState({ showLoading: false })
+            }, 2000)
         })
     }
     fetchTrafficData() {
@@ -126,6 +133,8 @@ class BusinessMonitor extends React.Component {
 
     render() {
         const { t } = this.props;
+        const { showLoading } = this.state;
+
         const tableData = this.props.businessmonitor.get('table').toJS();
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
@@ -157,6 +166,8 @@ class BusinessMonitor extends React.Component {
                     rowKey={(record, index) => index}
                     dataSource={tableData.data}
                     columns={tableColumns} />
+
+                <Loading showLoading={showLoading} />
             </div>
         );
     }
