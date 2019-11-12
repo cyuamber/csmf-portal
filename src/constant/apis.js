@@ -10,8 +10,17 @@ function resolvePath(url) {
 const APIS = {
     testapi: resolvePath('/home'),
     traffic: resolvePath('/traffic'),
+    // traffic(queryTimestamp){
+    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/trafficData`)
+    // },
     onlineUsers: resolvePath('/onlineUsers'),
+    // onlineUsers(queryTimestamp, queryNumber) {
+    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/onlineUsers`)
+    // },
     bandwidth: resolvePath('/bandwidth'),
+    // bandwidth (queryTimestamp, queryNumber) {
+    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/bandwidth`)
+    // },
     getProvinceApi: resolvePath('/province'),
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),

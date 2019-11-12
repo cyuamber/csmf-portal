@@ -16,7 +16,11 @@ const initialState = I.fromJS({
     },
     bandwidth: {
         data: []
-    }
+    },
+    tableData: {
+        data: [],
+    },
+    page_size: 10
 });
 
 export default function reducer(state = initialState, action) {
@@ -37,6 +41,12 @@ export default function reducer(state = initialState, action) {
         case 'SET_BANDWIDTH_DATA':
             return state
                 .setIn(['bandwidth', 'data'], I.fromJS(action.data))
+        case 'SET_TOTAL': 
+            return state
+                    .setIn(['page_size'], action.page_size)
+        case 'SET_TABLE_DATA':
+            return state
+                    .setIn(['tableData', 'data'], I.fromJS(action.data))
         default:
             return state;
     }

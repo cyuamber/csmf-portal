@@ -34,26 +34,29 @@ class BusinessMGTTable extends Component {
     }
 
     pageChange = (page_no, page_size) => {
-        let { status, getTableData, getPages } = this.props
-        getTableData({status, page_no, page_size})
-        getPages(page_no, page_size)
+        let { status = 'all', getTableData, getChartsData } = this.props
+        getTableData({status, page_no, page_size}, getChartsData)
     }
 
     pageSizeChange = (page_no, page_size) => {
-        let { status, getTableData, getPages } = this.props
-        getTableData({status, page_no, page_size})
-        getPages(page_no, page_size)
+        let { status = 'all', getTableData, getChartsData } = this.props
+        getTableData({status, page_no, page_size}, getChartsData)
     }
 
     componentDidMount(){
-        const { getTableData, status, orderId, businesmgtTable } = this.props
-        if(status){
+        const { getTableData, status, orderId, businesmgtTable, getChartsData } = this.props
+        if (orderId) {
+            getTableData(orderId)
+        }else {
             const page_no = businesmgtTable.get('page_no')
             const page_size = businesmgtTable.get('page_size')
-            getTableData({status, page_no, page_size})
-        }else {
-            getTableData(orderId)
+            if ( status ){
+                getTableData({ status, page_no, page_size }) 
+            }else {
+                getTableData({ status: 'all', page_no, page_size })
+            }
         }
+
     }
 
     componentWillReceiveProps(nextProps){
@@ -133,9 +136,13 @@ class BusinessMGTTable extends Component {
                 }
             }
         ]
-        const { orderId, businesmgtTable } = this.props
+        const { orderId, businesmgtTable, getChartsData } = this.props
         if(!orderId){
             columns.unshift({title: '序号', dataIndex: 'index'})
+        }
+        if(getChartsData){
+            columns.pop()
+            columns.pop()
         }
         const tableData = businesmgtTable.get('tableData').toJS()
         const pagination = orderId ? false : {

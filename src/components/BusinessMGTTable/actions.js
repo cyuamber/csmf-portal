@@ -5,7 +5,7 @@ const changeLoading = bool => ({type: 'CHANGE_LOADING', bool})
 
 export const actions = dispatch => {
     return {
-        getTableData (params = {}) {
+        getTableData (params = {}, cb) {
             dispatch(changeLoading(true))
             const userId = window.localStorage.getItem('username')
             // const url = typeof params === 'string' ? APIS.getOrderDetail(userId, params) : APIS.getBusinessList(userId)
@@ -24,19 +24,17 @@ export const actions = dispatch => {
                 if(result_code === '200'){
                     let tableData = null
                     if(typeof params === 'object'){
+                        const { page_no, page_size } = params
                         tableData = result_body.map((item, index) => {
-                            const { page_no, page_size } = params
                             item.index = page_no ? (page_no-1)*page_size + index+1 : index+1
                             return item
                         })
-                        dispatch({type: 'SET_TOTAL', total:res.total})
+                        dispatch({type: 'SET_TOTAL', total:res.total, page_no, page_size})
+                        cb && typeof cb === 'function' && cb()
                     }else tableData = result_body
                     dispatch({type: 'SET_TABLE_DATA', data: tableData, bool: false})
                 }
             })
-        },
-        getPages (pageNum, pageSize) {
-            dispatch ({type: 'GET_PAGE', pageNum, pageSize})
         }
     }
 }

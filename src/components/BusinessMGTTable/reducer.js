@@ -17,15 +17,14 @@ export default function reducer(state = initData, action){
                     .setIn(['tableData', 'loading'], action.bool)
                     .setIn(['tableData', 'data'], I.fromJS([]))
         case 'SET_TOTAL': 
-            return state.setIn(['tableData', 'total'], action.total)
+            return state
+                    .setIn(['tableData', 'total'], action.total)
+                    .setIn(['page_no'], action.page_no)
+                    .setIn(['page_size'], action.page_size)
         case 'SET_TABLE_DATA':
             return state
                     .setIn(['tableData', 'data'], I.fromJS(action.data))
                     .setIn(['tableData', 'loading'], action.bool)
-        case 'GET_PAGE':
-            return state
-                    .setIn(['pageNum'], action.pageNum)
-                    .setIn(['pageSize'], action.pageSize)
         default: 
             return state
     }
