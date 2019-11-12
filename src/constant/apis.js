@@ -10,17 +10,27 @@ function resolvePath(url) {
 const APIS = {
     testapi: resolvePath('/home'),
     traffic: resolvePath('/traffic'),
+    // traffic(queryTimestamp){
+    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/trafficData`)
+    // },
     onlineUsers: resolvePath('/onlineUsers'),
+    // onlineUsers(queryTimestamp, queryNumber) {
+    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/onlineUsers`)
+    // },
     bandwidth: resolvePath('/bandwidth'),
+    // bandwidth (queryTimestamp, queryNumber) {
+    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/bandwidth`)
+    // },
     getProvinceApi: resolvePath('/province'),
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),
+    getStreetApi: resolvePath('/street'),
     createOrder(userId) {
         return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing`)
     },
     // getOrders(userId){
     //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orders`)
-    // }
+    // },
     // getOrderDetail(userId, orderId){
     //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/${orderId}/services`)
     // },
@@ -31,6 +41,9 @@ const APIS = {
     //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/disable`)
     // },
     // terminate = (servceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
+    // getBusinessList (userId) => {
+    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/services`)
+    // }
     // 模拟
     getOrders: resolvePath('/orders'),
     getOrderDetail: resolvePath('/detail'),

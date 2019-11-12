@@ -21,64 +21,22 @@ module.exports = {
             avatar: faker.internet.avatar()
         }
     }),
-    province: [
-        {
-            id: 1,
-            province: '����'
-        },
-        {
-            id: 2,
-            province: '�Ϻ�'
-        },
-        {
-            id: 3,
-            province: '����ʡ'
-        }
-    ],
-    city: [
-        {
-            id: 1,
-            city: '�Ͼ���'
-        },
-        {
-            id: 2,
-            city: '������'
-        },
-        {
-            id: 3,
-            city: '��ͨ��'
-        }
-    ],
-    county: [
-        {
-            id: 1,
-            county: '������',
-        },
-        {
-            id: 2,
-            county: '�ػ���'
-        },
-        {
-            id: 3,
-            county: '��¥��'
-        }
-    ],
-    orders: {
-        result_header: {
-            result_code: '200',
-            result_message: '5G slicing order query result.',
-        },
-        total: 50,
-        result_body: _.times(10, function (n) {
-            return {
-                order_id: 'order' + n,
-                order_creation_time: '20190101',
-                service_expiration_time: '20191231',
-                order_description: `order${n} description`,
-                order_status: n % 2 ? 'normal' : 'terminate'
-            }
-        })
-    },
+    // orders: {
+    //     result_header: {
+    //         result_code: '200',
+    //         result_message: '5G slicing order query result.',
+    //     },
+    //     total: 50,
+    //     result_body: _.times(10, function (n) {
+    //         return {
+    //             order_id: 'order' + n,
+    //             order_creation_time: '20190101',
+    //             service_expiration_time: '20191231',
+    //             order_description: `order${n} description`,
+    //             order_status: n % 2 ? 'normal' : 'terminate'
+    //         }
+    //     })
+    // },
     detail: {
         result_header: {
             result_code: '200',

@@ -6,8 +6,6 @@ const initData = I.fromJS({
         data: [],
         total: 0
     },
-    showModal: false,
-    orderDetail: []
 })
 
 export default function reducer(state = initData, action){
@@ -19,13 +17,6 @@ export default function reducer(state = initData, action){
                     .setIn(['tableData', 'total'], action.total)
         case 'CHANGE_TABLE_LOADING': 
             return state.setIn(['tableData','loading'], action.bool)
-        case 'SHOW_MODAL':
-            return state.setIn(['showModal'], action.bool)
-        case 'GET_ORDER_DETAIL':
-            return state
-                    .setIn(['orderDetail'], I.fromJS(action.data))
-                    .setIn(['showModal'], action.bool)
-
         default:
             return state
     }
