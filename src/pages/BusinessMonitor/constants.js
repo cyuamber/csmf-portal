@@ -1,5 +1,3 @@
-import React from 'react';
-import { Avatar } from 'antd';
 
 export const pieChartconfig = {
     tooltip: {
@@ -76,24 +74,3 @@ export const chartStyle = {
     width: '100%',
     height: '400px',
 }
-
-export const tableColumns = [{
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-}, {
-    title: '头像',
-    dataIndex: 'avatar',
-    key: 'avatar',
-    render: text => <Avatar alt="avatar" src={text} size="large" />,
-}, {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-},
-{
-    title: '电话',
-    dataIndex: 'phone',
-    key: 'phone',
-},
-]

@@ -7,7 +7,7 @@ import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
 import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
 
-import { chartConfig, chartStyle, pieChartconfig, tableColumns } from './constants';
+import { chartConfig, chartStyle, pieChartconfig } from './constants';
 import Chartbox from 'components/charts/chartbox';
 import Loading from 'components/Loading/Loading'
 
@@ -18,35 +18,6 @@ class BusinessMonitor extends React.Component {
     state = {
         showLoading: false
     }
-
-    // componentDidMount() {
-    //     this.fetchTableData();
-    // }
-
-    componentDidUpdate() {
-        const tableList = this.props.businessmonitor.get('tableData').toJS().data
-        const trafficList = this.props.businessmonitor.get('traffic').toJS().data
-        const onlineuserList = this.props.businessmonitor.get('onlineusers').toJS().data
-        const bandwidthList = this.props.businessmonitor.get('bandwidth').toJS().data
-        if (tableList.length && !trafficList.length && !onlineuserList.length && !bandwidthList.length) {
-            this.getChartsData()
-        }
-    }
-
-    // fetchTableData() {
-    //     const { changeTable, tableLoading } = this.props;
-    //     tableLoading(true);
-    //     axiosget(APIS.testapi).then(res => {
-    //         if (res) {
-    //             changeTable(res, false)
-    //             this.fetchTrafficData();
-    //             this.fetchOnlineusersData();
-    //             this.fetchBandwidthData();
-    //         } else {
-    //             message.error("system error")
-    //         }
-    //     })
-    // }
 
     getChartsData = (time = new Date().getTime()) => {
         let serviceList = [];
@@ -59,7 +30,7 @@ class BusinessMonitor extends React.Component {
         this.fetchBandwidthData(serviceList, time);
     }
 
-    fetchTrafficData(serviceList, time) {
+    fetchTrafficData = (serviceList, time) => {
         const { setTrafficData } = this.props;
         // url中的参数
         // APIS.traffic(time)
@@ -122,13 +93,15 @@ class BusinessMonitor extends React.Component {
                 if (lineName === "onlineusers") {
                     LegendxAxis.push(item.online_user_list.forEach(_ => {
                         if (typeof (_.timestamp) === "string") {
-                            LegendxAxis.push(_.timestamp)
+                            LegendxAxis.push(moment(_.timestamp).format('hh:mm'))
+
                         }
                     }));
                 } else if (lineName === "bandwidth") {
                     LegendxAxis.push(item.total_bandwidth_list.forEach(_ => {
                         if (typeof (_.timestamp) === "string") {
-                            LegendxAxis.push(_.timestamp)
+                            LegendxAxis.push(moment(_.timestamp).format('hh:mm'))
+
                         }
                     }));
                 }
@@ -183,12 +156,20 @@ class BusinessMonitor extends React.Component {
         }
     }
 
+    componentDidUpdate() {
+        const tableList = this.props.businessmonitor.get('tableData').toJS().data
+        const trafficList = this.props.businessmonitor.get('traffic').toJS().data
+        const onlineuserList = this.props.businessmonitor.get('onlineusers').toJS().data
+        const bandwidthList = this.props.businessmonitor.get('bandwidth').toJS().data
+        if (tableList.length && !trafficList.length && !onlineuserList.length && !bandwidthList.length) {
+            this.getChartsData()
+        }
+    }
 
     render() {
         const { t } = this.props;
         const { showLoading } = this.state;
 
-        const tableData = this.props.businessmonitor.get('table').toJS();
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
         const bandwidthData = this.props.businessmonitor.get('bandwidth').toJS();
@@ -197,7 +178,6 @@ class BusinessMonitor extends React.Component {
         let onlineusersConfig = this.processLineData(onlineusersData, "onlineusers");
         let bandwidthConfig = this.processLineData(bandwidthData, "bandwidth");
 
-        // console.log(onlineusersConfig, bandwidthConfig)
         return (
             <div className="businessmonitor">
                 <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate} />
@@ -213,14 +193,8 @@ class BusinessMonitor extends React.Component {
                     </Col>
                 </Row>
 
-                {/* <Table
-                    className="businessmonitor_table"
-                    loading={tableData.loading}
-                    rowKey={(record, index) => index}
-                    dataSource={tableData.data}
-                    columns={tableColumns} /> */}
                 <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} />
-                <Loading />
+                <Loading/>
             </div>
         );
     }
