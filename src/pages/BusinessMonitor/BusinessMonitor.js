@@ -9,13 +9,15 @@ import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable
 
 import { chartConfig, chartStyle, pieChartconfig, tableColumns } from './constants';
 import Chartbox from 'components/charts/chartbox';
+import Loading from 'components/Loading/Loading'
 
 import "./style.less"
 import moment from 'moment';
 
 class BusinessMonitor extends React.Component {
-
-    state = {}
+    state = {
+        showLoading: false
+    }
 
     // componentDidMount() {
     //     this.fetchTableData();
@@ -26,7 +28,7 @@ class BusinessMonitor extends React.Component {
         const trafficList = this.props.businessmonitor.get('traffic').toJS().data
         const onlineuserList = this.props.businessmonitor.get('onlineusers').toJS().data
         const bandwidthList = this.props.businessmonitor.get('bandwidth').toJS().data
-        if(tableList.length && !trafficList.length && !onlineuserList.length && !bandwidthList.length){
+        if (tableList.length && !trafficList.length && !onlineuserList.length && !bandwidthList.length) {
             this.getChartsData()
         }
     }
@@ -47,9 +49,9 @@ class BusinessMonitor extends React.Component {
     // }
 
     getChartsData = (time = new Date().getTime()) => {
-        let serviceList = []
+        let serviceList = [];
         const tableList = this.props.businessmonitor.get('tableData').toJS().data
-        tableList.forEach (item => {
+        tableList.forEach(item => {
             serviceList.push(item.service_id)
         })
         this.fetchTrafficData(serviceList, time);
@@ -61,7 +63,7 @@ class BusinessMonitor extends React.Component {
         const { setTrafficData } = this.props;
         // url中的参数
         // APIS.traffic(time)
-        axiosget(APIS.traffic, {serviceList}).then(res => {
+        axiosget(APIS.traffic, { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setTrafficData(res.result_body);
             } else {
@@ -74,7 +76,7 @@ class BusinessMonitor extends React.Component {
         // url中的参数
         // const page_size = this.props.businessmonitor.get('page_size')
         // APIS.onlineUsers(time, page_size)
-        axiosget(APIS.onlineUsers, {serviceList}).then(res => {
+        axiosget(APIS.onlineUsers, { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setOnlineusersData(res.result_body);
             } else {
@@ -87,7 +89,7 @@ class BusinessMonitor extends React.Component {
         // url中的参数
         // const page_size = this.props.businessmonitor.get('page_size')
         // APIS.bandwidth(time, page_size)
-        axiosget(APIS.bandwidth, {serviceList}).then(res => {
+        axiosget(APIS.bandwidth, { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setBandwidthData(res.result_body);
             } else {
@@ -167,14 +169,14 @@ class BusinessMonitor extends React.Component {
         // clear
         if (this.dateObj && !date) {
             this.getChartsData()
-        } 
+        }
         this.dateObj = date
     }
     selectedDate = status => {
-        if(!status){
+        if (!status) {
             const { dateObj, getChartsData } = this
             console.log(dateObj)
-            if(dateObj){
+            if (dateObj) {
                 console.log(111)
                 getChartsData(dateObj.valueOf())
             }
@@ -184,6 +186,8 @@ class BusinessMonitor extends React.Component {
 
     render() {
         const { t } = this.props;
+        const { showLoading } = this.state;
+
         const tableData = this.props.businessmonitor.get('table').toJS();
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
@@ -196,7 +200,7 @@ class BusinessMonitor extends React.Component {
         // console.log(onlineusersConfig, bandwidthConfig)
         return (
             <div className="businessmonitor">
-                <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate}/>
+                <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate} />
                 <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={6}>
                         <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} />
@@ -215,7 +219,8 @@ class BusinessMonitor extends React.Component {
                     rowKey={(record, index) => index}
                     dataSource={tableData.data}
                     columns={tableColumns} /> */}
-                <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData}/>
+                <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} />
+                <Loading />
             </div>
         );
     }
