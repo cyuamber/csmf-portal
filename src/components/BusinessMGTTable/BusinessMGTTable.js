@@ -1,26 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { actions } from './actions'
-import { Button, Table, Switch } from 'antd'
+import { Button, Table, Switch, Popconfirm } from 'antd'
 import { axiosput, axiosdelete } from '../../utils/http'
 import APIS from '../../constant/apis'
 
 class BusinessMGTTable extends Component {
 
-    state = {
-        loading: false
-    }
-
     changeStatus = (serviceId, checked) => {
-        this.setState({loading: true})
         const url = checked ? APIS.enable : APIS.disable 
-        const { orderId, getTableData, status, businesmgtTable} = this.props
+        const { orderId, getTableData, status, businesmgtTable, getStatusLoading} = this.props
+        getStatusLoading(serviceId, true)
         // axiosput(url(serviceId))
         axiosput(url).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
                 setTimeout(() => {
-                    this.setState({loading: false})
                     if(!status){
                         getTableData(orderId)
                     }else {
@@ -88,6 +83,8 @@ class BusinessMGTTable extends Component {
     }
 
     render() {
+        const btnText = 'Are you sure you want to terminate this task?'
+        const switchText = 'Are you sure you want to perform this task?'
         const columns = [
             {
                 title: '业务列表',
@@ -114,12 +111,20 @@ class BusinessMGTTable extends Component {
                 title: '激活',
                 dataIndex: 'activation',
                 render: (text,record) => {
-                    let isChecked = record.service_status === 'normal'? true : false
-                    return <Switch 
-                            defaultChecked={isChecked} 
-                            size='small' 
-                            onChange={(checked) => this.changeStatus(record.service_id, checked)} loading={this.state.loading}
-                           />
+                    return (
+                        <Popconfirm 
+                          placement="top" 
+                          title={switchText} 
+                          onConfirm={() => this.changeStatus(record.service_id, !text)} 
+                          okText="Yes" cancelText="No">
+                            <Switch 
+                                defaultChecked={text} 
+                                checked={record.checked}
+                                size='small' 
+                                loading={record.loading}
+                            />
+                        </Popconfirm>
+                    )
                 }
             },
             {
@@ -127,12 +132,15 @@ class BusinessMGTTable extends Component {
                 dataIndex: 'end',
                 render: (text,record) => {
                     let isDisable = record.service_status === 'normal'? true : false
-                    return <Button 
-                            icon='poweroff' 
-                            shape='circle' 
-                            disabled={isDisable} 
-                            onClick={() => this.handleServiceEnd(record.service_id)}
-                           />
+                    return (
+                        <Popconfirm placement="top" title={btnText} onConfirm={() => this.handleServiceEnd(record.service_id)} okText="Yes" cancelText="No">
+                            <Button 
+                                icon='poweroff' 
+                                shape='circle' 
+                                disabled={isDisable} 
+                            />
+                        </Popconfirm>
+                    )
                 }
             }
         ]
@@ -151,7 +159,6 @@ class BusinessMGTTable extends Component {
             onChange: this.pageChange, 
             onShowSizeChange: this.pageSizeChange
         } 
-        // const tableLoading = orderId ? false : tableData.loading
         return (
             <Table 
                 loading={tableData.loading}

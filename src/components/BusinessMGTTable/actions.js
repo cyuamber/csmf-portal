@@ -27,14 +27,20 @@ export const actions = dispatch => {
                         const { page_no, page_size } = params
                         tableData = result_body.map((item, index) => {
                             item.index = page_no ? (page_no-1)*page_size + index+1 : index+1
+                            item.activation = item.checked= item.service_status === 'normal'? true : false
+                            item.loading = false
                             return item
                         })
                         dispatch({type: 'SET_TOTAL', total:res.total, page_no, page_size})
                         cb && typeof cb === 'function' && cb()
                     }else tableData = result_body
+
                     dispatch({type: 'SET_TABLE_DATA', data: tableData, bool: false})
                 }
             })
+        },
+        getStatusLoading (serviceId, bool) {
+            dispatch({type: 'SET_STATUS_LOADING', serviceId, bool})
         }
     }
 }

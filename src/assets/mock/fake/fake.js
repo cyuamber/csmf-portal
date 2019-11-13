@@ -76,7 +76,7 @@ module.exports = {
         total: 50,
         result_body: _.times(10, function (n) {
             return {
-                service_id: 'service1',
+                service_id: 'service'+n,
                 service_creation_time: '20190101',
                 service_enable_time: '20190201',
                 service_description: 'service1 description',

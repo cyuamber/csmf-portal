@@ -25,6 +25,18 @@ export default function reducer(state = initData, action){
             return state
                     .setIn(['tableData', 'data'], I.fromJS(action.data))
                     .setIn(['tableData', 'loading'], action.bool)
+        case 'SET_STATUS_LOADING':
+            let index = 0
+            state.getIn(['tableData']).toJS().data.forEach((item, i) => {
+                if(item.service_id === action.serviceId){
+                    index = i
+                }
+            });
+            return state.setIn(['tableData', 'data'], state.getIn(['tableData', 'data']).update(index, item => {
+                return item
+                        .setIn(['loading'], action.bool)
+                        .setIn(['checked'], !item.getIn(['checked']))
+            }))
         default: 
             return state
     }
