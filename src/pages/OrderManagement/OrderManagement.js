@@ -19,11 +19,6 @@ class OrderManagement extends React.Component {
         this.props.getTableData({status})
     }
 
-    componentDidMount(){
-        this.props.changeTableLoading(true)
-        this.props.getTableData()
-    }
-
     handleOpenDetail = (orderId,e) => {
         this.setState({visible: true})
         // this.props.getOrderDetail(orderId)
@@ -44,6 +39,10 @@ class OrderManagement extends React.Component {
         this.setState({visible: false})
     }
 
+    componentDidMount(){
+        this.props.changeTableLoading(true)
+        this.props.getTableData()
+    }
     render() {
         const { t } = this.props;
         const tableData = this.props.ordermgt.get('tableData').toJS()

@@ -156,10 +156,6 @@ class BusinessOrderDetail extends Component {
         })
     }
 
-    componentDidMount() {
-        this.props.getProvinceList()
-    }
-
     changeProvince = (value, index, itemId) => {
         const provinceList = this.props.businessorder.get('provinceList').toJS();
         let id = ''
@@ -217,6 +213,10 @@ class BusinessOrderDetail extends Component {
         this.props.history.goBack();
     }
 
+    componentDidMount() {
+        this.props.getProvinceList()
+    }
+    
     render() {
         const { t } = this.props
         const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 }}

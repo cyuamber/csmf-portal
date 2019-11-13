@@ -38,33 +38,6 @@ class BusinessMGTTable extends Component {
         getTableData({status, page_no, page_size}, getChartsData)
     }
 
-    componentDidMount(){
-        const { getTableData, status, orderId, businesmgtTable, getChartsData } = this.props
-        if (orderId) {
-            getTableData(orderId)
-        }else {
-            const page_no = businesmgtTable.get('page_no')
-            const page_size = businesmgtTable.get('page_size')
-            if ( status ){
-                getTableData({ status, page_no, page_size }) 
-            }else {
-                getTableData({ status: 'all', page_no, page_size })
-            }
-        }
-
-    }
-
-    componentWillReceiveProps(nextProps){
-        const { getTableData, status, businesmgtTable, orderId } = this.props
-        if(orderId !== nextProps.orderId){
-            getTableData(nextProps.orderId)
-        }else if(status && status !== nextProps.status){
-            const page_no = businesmgtTable.get('page_no')
-            const page_size = businesmgtTable.get('page_size')
-            getTableData({status: nextProps.status, page_no, page_size})
-        }
-    }
-
     handleServiceEnd = (serviceId) => {
         const { businesmgtTable, getTableData, orderId, status } = this.props
         // axiosdelete(APIS.terminate(serviceId))
@@ -80,6 +53,31 @@ class BusinessMGTTable extends Component {
                 }
             }    
         })
+    }
+
+    componentDidMount(){
+        const { getTableData, status, orderId } = this.props
+        if (orderId) {
+            getTableData(orderId)
+        }else {
+            if ( status ){
+                getTableData({ status, page_no: 1, page_size: 10 }) 
+            }else {
+                getTableData({ status: 'all', page_no: 1, page_size: 10 })
+            }
+        }
+    }
+
+    shouldComponentUpdate(nextProps){
+        const { getTableData, status, businesmgtTable, orderId } = this.props
+        if(orderId !== nextProps.orderId){
+            getTableData(nextProps.orderId)
+        }else if(status && status !== nextProps.status){
+            const page_no = businesmgtTable.get('page_no')
+            const page_size = businesmgtTable.get('page_size')
+            getTableData({status: nextProps.status, page_no, page_size})
+        }
+        return true
     }
 
     render() {
