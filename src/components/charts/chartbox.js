@@ -8,7 +8,7 @@ class Chartbox extends Component {
         let id = ('_' + Math.random()).replace('.', '_');
         this.state = {
             lineId: 'line' + id
-        }
+        }   
     }
 
     componentDidMount() {
@@ -18,16 +18,30 @@ class Chartbox extends Component {
         this.initEchart(this.state.lineId);
     }
     initEchart(id) {
-        const { chartConfig, pieExtraConfig,lineExtraConfig } = this.props;
+        const { chartConfig, pieExtraConfig,lineExtraConfig,chartName } = this.props;
         let myChart = echarts.getInstanceByDom(document.getElementById(id));
         if (myChart === undefined) {
             myChart = echarts.init(document.getElementById(id));
+        }
+        myChart.showLoading({
+            text: 'loading...',
+            x: 'center'
+        })
+        if(pieExtraConfig && pieExtraConfig.value.length){
+            myChart.hideLoading()
+        }else if(lineExtraConfig && lineExtraConfig.legend.length) {
+            if(chartName === '在线用户数量' || chartName === 'Onlines Users'){
+                myChart.hideLoading()
+            }else {
+                myChart.hideLoading()
+            }
         }
         myChart.setOption(chartConfig);
         if (pieExtraConfig) {
             myChart.setOption({
                 legend: {
-                    data: pieExtraConfig.arr
+                    data: pieExtraConfig.arr,
+                    type: 'scroll'
                 },
                 series: [
                     {
@@ -40,7 +54,8 @@ class Chartbox extends Component {
         if(lineExtraConfig){
             myChart.setOption({
                 legend: {
-                    data: lineExtraConfig.legend
+                    data: lineExtraConfig.legend,
+                    type: 'scroll'
                 },
                 xAxis:{
                     data:lineExtraConfig.xAxis
@@ -48,6 +63,9 @@ class Chartbox extends Component {
                 series: lineExtraConfig.value
             });
         }
+        window.addEventListener('resize', () =>{
+            myChart.resize()
+        }) 
     }
     render() {
         const { chartStyle, chartName } = this.props;
