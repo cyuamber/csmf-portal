@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withNamespaces } from 'react-i18next';
 import { actions } from './actions';
-import { Row, Col, Table, DatePicker, message } from 'antd';
+import { Row, Col, DatePicker, message } from 'antd';
 import { axiosget } from 'utils/http';
 import APIS from 'constant/apis';
 import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
@@ -55,6 +55,7 @@ class BusinessMonitor extends React.Component {
             }
         })
     }
+
     fetchBandwidthData(serviceList, time) {
         const { setBandwidthData } = this.props;
         // url中的参数
@@ -169,6 +170,7 @@ class BusinessMonitor extends React.Component {
     render() {
         const { t } = this.props;
         const { showLoading } = this.state;
+        const pageSizeOptions = ['6', '8' ,'10']
 
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
@@ -177,7 +179,7 @@ class BusinessMonitor extends React.Component {
         let trafficConfig = this.processPieData(trafficData, "traffic");
         let onlineusersConfig = this.processLineData(onlineusersData, "onlineusers");
         let bandwidthConfig = this.processLineData(bandwidthData, "bandwidth");
-
+        
         return (
             <div className="businessmonitor">
                 <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate} />
@@ -193,7 +195,7 @@ class BusinessMonitor extends React.Component {
                     </Col>
                 </Row>
 
-                <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} />
+                <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} pageSizeOptions={pageSizeOptions}/>
                 <Loading/>
             </div>
         );

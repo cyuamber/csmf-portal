@@ -9,8 +9,9 @@ class BusinessMGTTable extends Component {
 
     changeStatus = (serviceId, checked) => {
         const url = checked ? APIS.enable : APIS.disable 
-        const { orderId, getTableData, status, businesmgtTable, getStatusLoading} = this.props
-        getStatusLoading(serviceId, true)
+        const { orderId, getTableData, status, businesmgtTable, changeLoading} = this.props
+        // getStatusLoading(serviceId, true)
+        changeLoading(true)
         // axiosput(url(serviceId))
         axiosput(url).then(res => {
             let {result_header: {result_code}} = res
@@ -39,8 +40,9 @@ class BusinessMGTTable extends Component {
     }
 
     handleServiceEnd = (serviceId) => {
-        const { businesmgtTable, getTableData, orderId, status } = this.props
+        const { businesmgtTable, getTableData, orderId, status, changeLoading } = this.props
         // axiosdelete(APIS.terminate(serviceId))
+        changeLoading(true)
         axiosdelete(APIS.terminate).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
@@ -63,7 +65,7 @@ class BusinessMGTTable extends Component {
             if ( status ){
                 getTableData({ status, page_no: 1, page_size: 10 }) 
             }else {
-                getTableData({ status: 'all', page_no: 1, page_size: 10 })
+                getTableData({ status: 'all', page_no: 1, page_size: 6 })
             }
         }
     }
@@ -117,7 +119,7 @@ class BusinessMGTTable extends Component {
                           okText="Yes" cancelText="No">
                             <Switch 
                                 defaultChecked={text} 
-                                checked={record.checked}
+                                checked={text}
                                 size='small' 
                                 loading={record.loading}
                             />
@@ -151,11 +153,14 @@ class BusinessMGTTable extends Component {
             columns.pop()
         }
         const tableData = businesmgtTable.get('tableData').toJS()
+        const { pageSizeOptions } = this.props
         const pagination = orderId ? false : {
             showSizeChanger: true, 
             total: tableData.total, 
             onChange: this.pageChange, 
-            onShowSizeChange: this.pageSizeChange
+            onShowSizeChange: this.pageSizeChange,
+            pageSizeOptions: pageSizeOptions || ['10', '20', '30', '40'],
+            defaultPageSize: pageSizeOptions ? 6 : 10
         } 
         return (
             <Table 

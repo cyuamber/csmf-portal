@@ -73,8 +73,8 @@ module.exports = {
             result_code: '200',
             result_message: '5G slicing order query result.',
         },
-        total: 50,
-        result_body: _.times(10, function (n) {
+        total: 20,
+        result_body: _.times(6, function (n) {
             return {
                 service_id: 'service'+n,
                 service_creation_time: '20190101',
