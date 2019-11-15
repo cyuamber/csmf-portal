@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { actions } from './actions'
 import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover, Icon } from "antd";
 import { ORDER_CREATE_FORM } from '../../constant/constants'
+import Address from './Address'
 import { axiospost, axiosget } from '../../utils/http'
 import APIS from '../../constant/apis'
 
@@ -14,30 +15,11 @@ class BusinessOrderDetail extends Component {
 
     getRules = title => ({required: true, message: `请输入${title}`})
 
-    handleAddArea = () => {
-        const formItem = this.props.businessorder.get('formItem').toJS()
-        if(formItem.length === 10){
-            return
-        }
-        this.id++
-        this.props.addFormItem(this.id)
-    }
-
-    handleReduceArea = (id) => {
-        // let formItem = [...this.state.formItem]
-        // formItem.splice(index,1)
-        // this.setState({formItem})
-        this.props.deleteFormItem(id)
-    }
-
     getFormItem = () => {
         const { form: { getFieldDecorator } } = this.props;
         const { Item } = Form
-        const { Option } = Select
-        const provinceList = this.props.businessorder.get('provinceList').toJS()
         const formItem = this.props.businessorder.get('formItem').toJS()
-
-
+        
         return ORDER_CREATE_FORM.map(item => {
             if (item.key === 'businessName') {
                 return (
@@ -86,9 +68,9 @@ class BusinessOrderDetail extends Component {
                 )
             } else if (item.key === 'area') {
                 return (
-                    formItem.map((it, index) => {
+                    formItem.map((ite, index) => {
                         let formItemLayout =null
-                        if(it === formItem[0]){
+                        if(ite === formItem[0]){
                             formItemLayout = {
                                 label: item.title,
                                 labelCol: {span: 10, offset: 0},
@@ -100,55 +82,8 @@ class BusinessOrderDetail extends Component {
                             }
                         }
                         return (
-                            <Col span={24} key={it.id}>
-                                {/* <Address formItemLayout={formItemLayout} index={index} data={ite}/> */}
-                                <Col span={8}>
-                                    <Item {...formItemLayout}>
-                                        {getFieldDecorator('province'+it.id, this.getRules('Please select a region'))(
-                                            <Select placeholder="省" onChange={(value) => this.changeProvince(value, index, it.id)}>
-                                                {provinceList.map(item => <Option key={item.id} value={item.province}>{item.province}</Option>)}
-                                            </Select>
-                                        )}
-                                    </Item>
-                                </Col>
-                                <Col span={4}>
-                                    <Item wrapperCol={{ span: 22, offset: 0 }}>
-                                        {getFieldDecorator('city'+it.id, this.getRules('Please select a region'))(
-                                            <Select placeholder="市" onChange={(value) => this.changeCity(value, index, it.id)}>
-                                                {it.cityList.map(item => <Option key={item.id} value={item.city}>{item.city}</Option>)}
-                                            </Select>
-                                        )}
-                                    </Item>
-                                </Col>
-                                <Col span={4}>
-                                    <Item wrapperCol={{ span: 22, offset: 0 }}>
-                                        {getFieldDecorator('county'+it.id, this.getRules('Please select a region'))(
-                                            <Select placeholder="区" onChange={(value) => this.changeCounty(value, index, it.id)}>
-                                                {it.countyList.map(item => <Option key={item.id} value={item.county}>{item.county}</Option>)}
-                                            </Select>
-                                        )}
-                                    </Item>
-                                </Col>
-                                <Col span={4}>
-                                    <Item wrapperCol={{ span: 22, offset: 0 }}>
-                                        {getFieldDecorator('street'+it.id, this.getRules('Please select a region'))(
-                                            <Select placeholder="街道" >
-                                                {it.streetList.map(item => <Option key={item.id} value={item.street}>{item.street}</Option>)}
-                                            </Select>
-                                        )}
-                                    </Item>
-                                </Col>
-                                {!index ? ( <Icon 
-                                                type="plus-square" 
-                                                theme="filled" 
-                                                className={formItem.length === 10 ? 'orderdetail_icon_disabled':"orderdetail_icon"}
-                                                onClick={this.handleAddArea}
-                                            />) : (<Icon
-                                                type="minus-square" 
-                                                theme="filled"
-                                                className="orderdetail_icon" 
-                                                onClick={() => this.handleReduceArea(it.id)}
-                                            />)}
+                            <Col span={24} key={ite.id}>
+                                <Address formItemLayout={formItemLayout} index={index} data={ite}/>
                             </Col>
                         )
                     })
@@ -178,41 +113,6 @@ class BusinessOrderDetail extends Component {
             }
         }
     }
-    changeProvince = (value, index, itemId) => {
-        const provinceList = this.props.businessorder.get('provinceList').toJS();
-        let id = ''
-        provinceList.forEach(item => {
-            if (value === item.province) {
-                id = item.id
-            }
-        })
-        this.props.getCityList(id, index)
-        this.props.form.resetFields(['city'+ itemId, 'county'+ itemId, 'street'+ itemId])
-    }
-
-    changeCity = (value, index, itemId) => {
-        const cityList = this.props.businessorder.getIn(['formItem', index]).toJS().cityList;
-        let id = '';
-        cityList.forEach(item => {
-            if (value === item.city) {
-                id = item.id
-            }
-        })
-        this.props.getCountyList(id, index);
-        this.props.form.resetFields(['county'+ itemId, 'street'+ itemId]);
-    }
-
-    changeCounty= (value, index, itemId) => {
-        const countyList = this.props.businessorder.getIn(['formItem', index]).toJS().countyList;
-        let id = '';
-        countyList.forEach(item => {
-            if (value === item.county) {
-                id = item.id
-            }
-        })
-        this.props.getStreetList(id, index);
-        this.props.form.resetFields(['street'+ itemId]);
-    }
 
     handleSubmit = () => {
         this.props.form.validateFields((error, values) => {
@@ -237,7 +137,6 @@ class BusinessOrderDetail extends Component {
 
     componentDidMount() {
         this.props.getProvinceList()
-        this.id = 1
     }
     
     render() {
