@@ -31,11 +31,11 @@ export const ORDER_CREATE_FORM = [{
         key: 'nomadic',
         options: ['不可游牧', '固定接入', '限定范围内可游牧', '自由游牧']
     },
-    {
-        title: '激活因子（%）',
-        key: 'factor',
-        content: '取值范围： 1-100'
-    },
+    // {
+    //     title: '激活因子（%）',
+    //     key: 'factor',
+    //     content: '取值范围： 1-100'
+    // },
     {
         title: '使用期限（月）',
         key: 'timeLimit',
@@ -59,5 +59,20 @@ export const SELECT_OPTIONS = [
     {
         name: '已终止',
         key: 'Terminated'
+    }
+]
+
+export const BUSINESS_SELECT_OPTIONS = [
+    {
+        name: '全部',
+        key: 'all'
+    },
+    {
+        name: '未激活',
+        key: 'notActivated',
+    },
+    {
+        name: '已激活',
+        key: 'normal'
     }
 ]

@@ -87,7 +87,7 @@ class BusinessMGTTable extends Component {
         const switchText = 'Are you sure you want to perform this task?'
         const columns = [
             {
-                title: '业务列表',
+                title: '切片业务ID',
                 dataIndex: 'service_id'
             },
             {
@@ -99,7 +99,7 @@ class BusinessMGTTable extends Component {
                 dataIndex: 'service_enable_time'
             },
             {
-                title: '标签',
+                title: '切片业务名称',
                 dataIndex: 'service_description'
             },
             {

@@ -2,7 +2,7 @@ import React from 'react';
 import { withNamespaces } from 'react-i18next'
 import { Select } from 'antd'
 import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
-import { SELECT_OPTIONS } from '../../constant/constants'
+import { BUSINESS_SELECT_OPTIONS } from '../../constant/constants'
 
 import './BusinessManagement.less'
 
@@ -32,7 +32,7 @@ class BusinessManagement extends React.Component {
                           defaultValue='all' 
                           onChange={this.selectStatus}
                         >
-                            {SELECT_OPTIONS.map(item => {
+                            {BUSINESS_SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
                                             {item.name}
                                         </Select.Option>
