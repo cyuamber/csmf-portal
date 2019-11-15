@@ -133,7 +133,14 @@ class BusinessMGTTable extends Component {
                 render: (text,record) => {
                     let isDisable = record.service_status === 'normal'? true : false
                     return (
-                        <Popconfirm placement="top" title={btnText} onConfirm={() => this.handleServiceEnd(record.service_id)} okText="Yes" cancelText="No">
+                        <Popconfirm 
+                          placement="topLeft" 
+                          title={btnText} 
+                          onConfirm={() => this.handleServiceEnd(record.service_id)} 
+                          okText="Yes" 
+                          cancelText="No"
+                          disabled={isDisable}
+                        >
                             <Button 
                                 icon='poweroff' 
                                 shape='circle' 
