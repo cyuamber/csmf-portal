@@ -12,23 +12,23 @@ import './BusinessOrderDetail.less';
 
 class BusinessOrderDetail extends Component {
 
-    getRules = (message, initialValue) => ({ rules: [{ required: true, message }], initialValue })
+    getRules = title => ({required: true, message: `请输入${title}`})
 
     handleAddArea = () => {
         const formItem = this.props.businessorder.get('formItem').toJS()
         if(formItem.length === 10){
             return
         }
-        this.props.addFormItem(formItem.length+1)
+        this.id++
+        this.props.addFormItem(this.id)
     }
 
-    handleReduceArea = (index) => {
+    handleReduceArea = (id) => {
         // let formItem = [...this.state.formItem]
         // formItem.splice(index,1)
         // this.setState({formItem})
-        this.props.deleteFormItem(index)
+        this.props.deleteFormItem(id)
     }
-
 
     getFormItem = () => {
         const { form: { getFieldDecorator } } = this.props;
@@ -43,7 +43,7 @@ class BusinessOrderDetail extends Component {
                 return (
                     <Col span={12} key={item.key}>
                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, this.getRules(`${item.title} is required`))(<Input />)}
+                            {getFieldDecorator(item.key, { rules: [...item.rules, this.getRules(item.title)], validateFirst: true} )(<Input />)}
                         </Item>
                     </Col>
                 )
@@ -52,7 +52,9 @@ class BusinessOrderDetail extends Component {
                     <Col span={12} key={item.key}>
                         <Item label={item.title}>
                             <Popover placement="right" content={item.content} trigger="click">
-                                {getFieldDecorator(item.key, this.getRules(`${item.title} is required`))(<Input />)}
+                                {getFieldDecorator(item.key, {
+                                    rules: [this.getRules(item.title), {validator: (rule, value, callback) => this.validator (item.content, rule, value, callback)}], 
+                                    validateFirst: true})(<Input />)}
                             </Popover>
                         </Item>
                     </Col>
@@ -61,11 +63,10 @@ class BusinessOrderDetail extends Component {
                 return (
                     <Col span={12} key={item.key}>
                             <Item label={item.title}>
-                                {getFieldDecorator(item.key, this.getRules(`${item.title} is required`, item.options[0]))(
+                                {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: item.options[0]})(
                                     <Select>
                                         {item.options.map(item => <Select.Option key={item}>{item}</Select.Option>)}
                                     </Select>
-                                
                                 )}
                         </Item>
                     </Col>
@@ -74,7 +75,7 @@ class BusinessOrderDetail extends Component {
                 return (
                     <Col key={item.key} span={12}>
                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, this.getRules(`${item.key} is required`, "share"))(
+                            {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: 'share'})(
                                 <Radio.Group>
                                     <Radio value="share"> 共享 &nbsp;&nbsp; </Radio>
                                     <Radio value="self"> 独占</Radio>
@@ -100,6 +101,7 @@ class BusinessOrderDetail extends Component {
                         }
                         return (
                             <Col span={24} key={it.id}>
+                                {/* <Address formItemLayout={formItemLayout} index={index} data={ite}/> */}
                                 <Col span={8}>
                                     <Item {...formItemLayout}>
                                         {getFieldDecorator('province'+it.id, this.getRules('Please select a region'))(
@@ -136,18 +138,17 @@ class BusinessOrderDetail extends Component {
                                         )}
                                     </Item>
                                 </Col>
-                                {it === formItem[0] ? (
-                                    <Icon 
-                                        type="plus-square" 
-                                        theme="filled" 
-                                        className={formItem.length === 10 ? 'orderdetail_icon_disabled':"orderdetail_icon"}
-                                        onClick={this.handleAddArea}
-                                    />) : (<Icon
-                                            type="minus-square" 
-                                            theme="filled"
-                                            className="orderdetail_icon" 
-                                            onClick={() => this.handleReduceArea(index)}
-                                        />)}
+                                {!index ? ( <Icon 
+                                                type="plus-square" 
+                                                theme="filled" 
+                                                className={formItem.length === 10 ? 'orderdetail_icon_disabled':"orderdetail_icon"}
+                                                onClick={this.handleAddArea}
+                                            />) : (<Icon
+                                                type="minus-square" 
+                                                theme="filled"
+                                                className="orderdetail_icon" 
+                                                onClick={() => this.handleReduceArea(it.id)}
+                                            />)}
                             </Col>
                         )
                     })
@@ -156,6 +157,27 @@ class BusinessOrderDetail extends Component {
         })
     }
 
+    validator = (content, rule, value, callback) => {
+        // 校验输入的必须为数字且不能以0开头
+        if (!/^\d*$/.test(value)) {
+            callback('只能输入数字')
+        } else if (!value.indexOf('0')){
+            callback(content)
+        } else {
+            // 限制取值范围
+            let confine = content.slice(6)
+            if (confine.indexOf('≥') === -1) {
+                confine = confine.split('-')
+                if ( value && (value*1 < confine[0] || value*1 > confine[1])) {
+                    callback(content)
+                }
+            } else {
+                if ( value && value*1 >= confine.slice(0)) {
+                    callback(connect)
+                }
+            }
+        }
+    }
     changeProvince = (value, index, itemId) => {
         const provinceList = this.props.businessorder.get('provinceList').toJS();
         let id = ''
@@ -215,6 +237,7 @@ class BusinessOrderDetail extends Component {
 
     componentDidMount() {
         this.props.getProvinceList()
+        this.id = 1
     }
     
     render() {

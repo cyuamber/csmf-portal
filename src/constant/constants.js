@@ -1,6 +1,12 @@
 export const ORDER_CREATE_FORM = [{
         title: '切片业务名称',
-        key: 'businessName'
+        key: 'businessName',
+        rules: [
+            {
+                len: 50,
+                message: '切片业务名称不能超过50个字符'
+            }
+        ]
     },
     {
         title: '连接规模数',
