@@ -8,9 +8,9 @@ import APIS from '../../constant/apis'
 class BusinessMGTTable extends Component {
 
     changeStatus = (serviceId, checked) => {
+        // const url = checked ? APIS.enableApi : APIS.disableApi 
         const url = checked ? APIS.enable : APIS.disable 
         const { orderId, getTableData, status, businesmgtTable, changeLoading} = this.props
-        // getStatusLoading(serviceId, true)
         changeLoading(true)
         // axiosput(url(serviceId))
         axiosput(url).then(res => {
@@ -20,23 +20,23 @@ class BusinessMGTTable extends Component {
                     if(!status){
                         getTableData(orderId)
                     }else {
-                        const page_no = businesmgtTable.get('page_no')
-                        const page_size = businesmgtTable.get('page_size')
-                        getTableData({status, page_no, page_size})
+                        const pageNo = businesmgtTable.get('page_no')
+                        const pageSize = businesmgtTable.get('page_size')
+                        getTableData({status, pageNo, pageSize})
                     }
                 },2000)
             }    
         })
     }
 
-    pageChange = (page_no, page_size) => {
+    pageChange = (pageNo, pageSize) => {
         let { status = 'all', getTableData, getChartsData } = this.props
-        getTableData({status, page_no, page_size}, getChartsData)
+        getTableData({status, pageNo, pageSize}, getChartsData)
     }
 
-    pageSizeChange = (page_no, page_size) => {
+    pageSizeChange = (pageNo, pageSize) => {
         let { status = 'all', getTableData, getChartsData } = this.props
-        getTableData({status, page_no, page_size}, getChartsData)
+        getTableData({status, pageNo, pageSize}, getChartsData)
     }
 
     handleServiceEnd = (serviceId) => {
@@ -49,9 +49,9 @@ class BusinessMGTTable extends Component {
                 if(orderId){
                     getTableData(orderId)
                 }else {
-                    const page_no = businesmgtTable.get('page_no')
-                    const page_size = businesmgtTable.get('page_size')
-                    getTableData({status, page_no, page_size})
+                    const pageNo = businesmgtTable.get('page_no')
+                    const pageSize = businesmgtTable.get('page_size')
+                    getTableData({status, pageNo, pageSize})
                 }
             }    
         })
@@ -63,9 +63,9 @@ class BusinessMGTTable extends Component {
             getTableData(orderId)
         }else {
             if ( status ){
-                getTableData({ status, page_no: 1, page_size: 10 }) 
+                getTableData({ status, pageNo: 1, pageSize: 10 }) 
             }else {
-                getTableData({ status: 'all', page_no: 1, page_size: 6 })
+                getTableData({ status: 'all', pageNo: 1, pageSize: 6 })
             }
         }
     }
@@ -75,9 +75,9 @@ class BusinessMGTTable extends Component {
         if(orderId !== nextProps.orderId){
             getTableData(nextProps.orderId)
         }else if(status && status !== nextProps.status){
-            const page_no = businesmgtTable.get('page_no')
-            const page_size = businesmgtTable.get('page_size')
-            getTableData({status: nextProps.status, page_no, page_size})
+            const pageNo = businesmgtTable.get('page_no')
+            const pageSize = businesmgtTable.get('page_size')
+            getTableData({status: nextProps.status, pageNo, pageSize})
         }
         return true
     }
@@ -100,7 +100,7 @@ class BusinessMGTTable extends Component {
             },
             {
                 title: '切片业务名称',
-                dataIndex: 'service_description'
+                dataIndex: 'service_name'
             },
             {
                 title: '状态',

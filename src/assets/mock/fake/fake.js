@@ -46,7 +46,7 @@ module.exports = {
             service_id: 'service1',
             service_creation_time: '20190101',
             service_enable_time: '20190201',
-            service_description: 'service1 description',
+            service_name: 'service1 name',
             service_status: 'disable'
         }]
     },
@@ -79,7 +79,7 @@ module.exports = {
                 service_id: 'service'+n,
                 service_creation_time: '20190101',
                 service_enable_time: '20190201',
-                service_description: 'service1 description',
+                service_name: `service${n} description`,
                 service_status: n % 2 ? 'normal' : 'terminate'
             }
         })

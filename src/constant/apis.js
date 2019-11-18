@@ -22,28 +22,28 @@ const APIS = {
     //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/bandwidth`)
     // },
     getProvinceApi: resolvePath('/province'),
+    getAddressApi: resolvePath('/address'),
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),
     getStreetApi: resolvePath('/street'),
-    createOrder(userId) {
-        return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing`)
+    createOrder: resolvePath(`/api/usecaseui/csmf/5gSlicing`),
+    getOrdersApi: ({status, pageNo, pageSize}) => {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/orders/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
     },
-    // getOrders(userId){
-    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orders`)
-    // },
-    // getOrderDetail(userId, orderId){
-    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/${orderId}/services`)
-    // },
-    // enable(servceId) {
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/enable`)
-    // },
-    // disable(servceId){
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/disable`)
-    // },
-    // terminate = (servceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
-    // getBusinessList (userId) => {
-    //     return resolvePath(`/api/usecaseui/csmf/userId/${userId}/5gSlicing/orderId/services`)
-    // }
+    getOrderDetailApi: (orderId) => {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/orderId/${orderId}/services`)
+    },
+    getBusinessListApi: ({status, pageNo, pageSize}) => {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
+    },
+    enableApi(serviceId) {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/enable`)
+    },
+    disableApi(serviceId){
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/disable`)
+    },
+    terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
+    
     // 模拟
     getOrders: resolvePath('/orders'),
     getOrderDetail: resolvePath('/detail'),

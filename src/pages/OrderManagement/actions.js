@@ -9,19 +9,15 @@ export const actions = dispatch => {
             dispatch({ type: 'CHANGE_TABLE_LOADING', bool })
         },
         getTableData({ status, pageNum, pageSize } = {}) {
-            // let userId = window.localStorage.getItem('username')
-            // axiosget(APIS.getOrders(userId)).then(res => {
-            //     if(res.result_header.result.code === '200'){
-            //         console.log(res.result_body)
-            //     }
-            // })
-            // 模拟
-            let resBody = {}
-            if ( status ) resBody.order_status = status
-            if ( pageNum ) resBody.page_no = pageNum  
-            if ( pageSize ) resBody.page_size = pageSize  
-            let userId = window.localStorage.getItem('username')
-            axiosget(APIS.getOrders, resBody).then(res => {
+            dispatch({ type: 'CHANGE_TABLE_LOADING', bool: true })
+            let resBody = {
+                status: status || 'all',
+                pageNo: pageNum || 1,
+                pageSize: pageSize || 10 
+            }
+            
+            // APIS.getOrdersApi(resBody)
+            axiosget(APIS.getOrders).then(res => {
                 let { result_body, result_header: { result_code } } = res
                 if (result_code === '200') {
                     let tableData = result_body.map((item, index) => {
@@ -31,6 +27,6 @@ export const actions = dispatch => {
                     dispatch(setTableData(tableData, res.total))
                 }
             })
-        },
+        }
     }
 }
