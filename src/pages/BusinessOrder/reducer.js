@@ -9,8 +9,8 @@ const initialState = I.fromJS({
             countyList: [],
             streetList: []
         }
-    ]
-
+    ],
+    address: []
 });
 
 export default function reducer (state = initialState, action){
@@ -39,7 +39,9 @@ export default function reducer (state = initialState, action){
         case 'GET_STREET':
             return state.setIn(['formItem'],state.get('formItem').update( action.index, item => {
                 return item.setIn(['streetList'],action.streetList)
-             }))
+            }))
+        case 'GET_ADDRESS': 
+            return state.setIn(['address'], I.fromJS(action.address))
         default:
             return state
     }

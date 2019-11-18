@@ -5,33 +5,24 @@ const changeLoading = bool => ({type: 'CHANGE_LOADING', bool})
 
 export const actions = dispatch => {
     return {
-        getTableData (params = {}, cb) {
+        getTableData (params, cb) {
             dispatch(changeLoading(true))
-            const userId = window.localStorage.getItem('username')
-            // const url = typeof params === 'string' ? APIS.getOrderDetail(userId, params) : APIS.getBusinessList(userId)
+            // 判断获取单条数据还是列表数据的接口
+            // const url = typeof params === 'string' ? APIS.getOrderDetailApi(params) : APIS.getBusinessListApi(params)
             const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
-            const resBody = {}
-            if(typeof params === 'object'){
-                const { status, page_no, page_size } = params
-                if ( status ) resBody.service_status = status
-                if ( page_no ) {
-                    resBody.page_no = page_no  
-                    resBody.page_size = page_size
-                }  
-            }
-            axiosget(url, resBody).then( res => {
+            axiosget(url).then( res => {
                 const {result_body, result_header: {result_code}} = res
                 if(result_code === '200'){
                     let tableData = null
                     if(typeof params === 'object'){
-                        const { page_no, page_size } = params
+                        const { pageNo, pageSize } = params
                         tableData = result_body.map((item, index) => {
-                            item.index = page_no ? (page_no-1)*page_size + index+1 : index+1
+                            item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1
                             item.activation = /* item.checked=  */item.service_status === 'normal'? true : false
                             // item.loading = false
                             return item
                         })
-                        dispatch({type: 'SET_TOTAL', total:res.total, page_no, page_size})
+                        dispatch({type: 'SET_TOTAL', total:res.total, page_no: pageNo, page_size: pageSize})
                         cb && typeof cb === 'function' && cb()
                     }else tableData = result_body
 

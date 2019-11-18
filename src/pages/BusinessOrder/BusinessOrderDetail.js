@@ -111,9 +111,9 @@ class BusinessOrderDetail extends Component {
             if (!error) {
                 let flag = this.areaList.every(item => item === null)
                 if(!flag){
-                    console.log(values, this.areaList)
                     // 模拟请求
-                    // let slicing_order_info = {}
+                    let slicing_order_info = {...values,coverageArea: JSON.stringify(this.areaList)}
+                    console.log(slicing_order_info)
                     // axiospost(APIS.createOrder,{slicing_order_info}).then(res => {
                     //     if(res.result_code === '200'){
                     //         console.log('创建成功')
@@ -130,7 +130,8 @@ class BusinessOrderDetail extends Component {
     }
 
     componentDidMount() {
-        this.props.getProvinceList()
+        // this.props.getProvinceList()
+        this.props.getAddressApi()
         this.areaList = []
     }
     

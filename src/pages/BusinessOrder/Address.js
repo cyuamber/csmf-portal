@@ -17,40 +17,42 @@ class Address extends Component {
     getRules = message => ({ rules: [{ required: true, message }]})
 
     changeProvince = value => {
-        const provinceList = this.props.businessorder.get('provinceList').toJS();
-        const { index } = this.props
-        let id = ''
-        provinceList.forEach( item => {
-            if (value === item.province) {
-                id = item.id
+        const { index, businessorder, getCityList, form } = this.props
+        const address = businessorder.get('address').toJS()
+        let cityList = []
+        address.forEach( item => {
+            if (value === item.name) {
+                cityList = item.city
             }
         })
-        this.props.getCityList(id, index)
-        this.props.form.resetFields(['city', 'county', 'street'])
+        getCityList(cityList, index)
+        form.resetFields(['city', 'county', 'street'])
+
     }
     changeCity = value => {
-        const { index } = this.props
-        const cityList = this.props.businessorder.getIn(['formItem', index]).toJS().cityList;
-        let id = ''
-        cityList.forEach(item => {
-            if (value === item.province) {
-                id = item.id
+        const { index, businessorder, getCountyList, form } = this.props
+        const cityList = businessorder.get('formItem').toJS()[index].cityList
+        let countyList = [];
+        cityList.forEach( item => {
+            if (value === item.name) {
+                countyList = item.county
             }
         })
-        this.props.getCountyList(id, index)
-        this.props.form.resetFields(['county', 'street'])
+        getCountyList(countyList, index)
+        form.resetFields(['county', 'street'])
+
     }
     changeCounty = value => {
-        const { index } = this.props
-        const countyList = this.props.businessorder.getIn(['formItem', index]).toJS().countyList;
-        let id = '';
-        countyList.forEach(item => {
-            if (value === item.county) {
-                id = item.id
+        const { index, businessorder, getStreetList, form } = this.props
+        const countyList = businessorder.get('formItem').toJS()[index].countyList
+        let streetList = []
+        countyList.forEach( item => {
+            if (value === item.name) {
+                streetList = item.street
             }
         })
-        this.props.getStreetList(id, index);
-        this.props.form.resetFields(['street']);
+        getStreetList(streetList, index);
+        form.resetFields(['street']);
     }
 
     handleSubmit = () => {
@@ -72,7 +74,8 @@ class Address extends Component {
         const { Item } = Form
         const { Option } = Select
         const { formItemLayout, index, businessorder, data, data: { id }, form: { getFieldDecorator } } = this.props
-        const provinceList = businessorder.get('provinceList').toJS()
+        // const provinceList = businessorder.get('provinceList').toJS()
+        const address = businessorder.get('address').toJS()
         const formItem = businessorder.get('formItem').toJS()
 
         return (
@@ -81,8 +84,10 @@ class Address extends Component {
                 <Col span={8}>
                     <Item {...formItemLayout}>
                         {getFieldDecorator('province', this.getRules('Please select a region'))(
-                            <Select placeholder="省" onChange={(value) => this.changeProvince(value, index)}>
-                                {provinceList.map(item => <Option key={item.id} value={item.province}>{item.province}</Option>)}
+                            // onChange={(value) => this.changeProvince(value, index)}
+                            <Select placeholder="省" onChange={this.changeProvince}>
+                                { address.map ( item => <Option key={item.id} value={item.name}>{item.name}</Option>) }
+                                {/* {provinceList.map(item => <Option key={item.id} value={item.province}>{item.province}</Option>)} */}
                             </Select>
                         )}
                     </Item>
@@ -90,17 +95,17 @@ class Address extends Component {
                 <Col span={4}>
                     <Item wrapperCol={{ span: 22, offset: 0 }}>
                         {getFieldDecorator('city', this.getRules('Please select a region'))(
-                            <Select placeholder="市" onChange={(value) => this.changeCity(value)}>
-                                {data.cityList.map(item => <Option key={item.id} value={item.city}>{item.city}</Option>)}
+                            <Select placeholder="市" onChange={this.changeCity}>
+                                {data.cityList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                             </Select>
                         )}
                     </Item>
-                </Col>
+                </Col> 
                 <Col span={4}>
                     <Item wrapperCol={{ span: 22, offset: 0 }}>
                         {getFieldDecorator('county', this.getRules('Please select a region'))(
-                            <Select placeholder="区" onChange={(value) => this.changeCounty(value)}>
-                                {data.countyList.map(item => <Option key={item.id} value={item.county}>{item.county}</Option>)}
+                            <Select placeholder="区" onChange={this.changeCounty}>
+                                {data.countyList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                             </Select>
                         )}
                     </Item>
@@ -109,7 +114,7 @@ class Address extends Component {
                     <Item wrapperCol={{ span: 22, offset: 0 }}>
                         {getFieldDecorator('street', this.getRules('Please select a region' ))(
                             <Select placeholder="街道" >
-                                {data.streetList.map(item => <Option key={item.id} value={item.street}>{item.street}</Option>)}
+                                {data.streetList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                             </Select>
                         )}
                     </Item>

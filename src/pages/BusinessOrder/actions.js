@@ -28,24 +28,42 @@ export const actions = dispatch => {
                 // }
             })
         },
-        getCityList: (province, index) => {
+
+        getAddressApi: () => {
+            axiosget(APIS.getAddressApi).then( res => {
+                const {result_body, result_header: {result_code}} = res
+                if(result_code === 200){
+                    dispatch({type: 'GET_ADDRESS', address: result_body.province})
+                }
+            })
+        },
+       /*  getCityList: (province, index) => {
             axiosget(APIS.getCityApi,{province}).then(res => {
                 // if(res.code === 200){
                     dispatch(setCityList(res, index))
                 // }
             })
+        }, */
+        getCityList: (cityList, index) => {
+            dispatch(setCityList(cityList, index))
         },
-        getCountyList: (city, index) => {
-            axiosget(APIS.getCountyApi, {city}).then(res => {
-                // if(res.code === 200){
-                    dispatch(setCountyList(res, index))
-                // }
-            })
+        // getCountyList: (city, index) => {
+        //     axiosget(APIS.getCountyApi, {city}).then(res => {
+        //         // if(res.code === 200){
+        //             dispatch(setCountyList(res, index))
+        //         // }
+        //     })
+        // },
+        getCountyList: (countyList, index) => {
+            dispatch(setCountyList(countyList, index))
         },
-        getStreetList: (county, index) => {
-            axiosget(APIS.getStreetApi, {county}).then( res => {
-                dispatch(setStreetList(res, index))
-            })
+        // getStreetList: (county, index) => {
+        //     axiosget(APIS.getStreetApi, {county}).then( res => {
+        //         dispatch(setStreetList(res, index))
+        //     })
+        // }
+        getStreetList: (streetList, index) => {
+            dispatch(setStreetList(streetList, index))
         }
     }
 }
