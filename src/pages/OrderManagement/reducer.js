@@ -6,6 +6,8 @@ const initData = I.fromJS({
         data: [],
         total: 0
     },
+    pageSize: 10,
+    pageNo: 1,
 })
 
 export default function reducer(state = initData, action){
@@ -15,6 +17,9 @@ export default function reducer(state = initData, action){
                     .setIn(['tableData','data'], I.fromJS(action.tableData))    
                     .setIn(['tableData','loading'], action.bool)
                     .setIn(['tableData', 'total'], action.total)
+                    .setIn(['pageNo'], action.pageNo)
+                    .setIn(['pageSize'], action.pageSize)
+
         case 'CHANGE_TABLE_LOADING': 
             return state.setIn(['tableData','loading'], action.bool)
         default:

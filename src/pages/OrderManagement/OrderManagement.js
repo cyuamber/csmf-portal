@@ -25,13 +25,13 @@ class OrderManagement extends React.Component {
         this.setState ({orderId})
         e.preventDefault()
     }
-    pageChange = (pageNum, pageSize) => {
+    pageChange = (pageNo, pageSize) => {
         this.props.changeTableLoading(true)
-        this.props.getTableData({pageNum, pageSize})
+        this.props.getTableData({pageNo, pageSize})
     }
-    pageSizeChange = (pageNum, pageSize) => {
+    pageSizeChange = (pageNo, pageSize) => {
         this.props.changeTableLoading(true)
-        this.props.getTableData({pageNum, pageSize})
+        this.props.getTableData({pageNo, pageSize})
     }
 
     // modal
@@ -40,7 +40,6 @@ class OrderManagement extends React.Component {
     }
 
     componentDidMount(){
-        this.props.changeTableLoading(true)
         this.props.getTableData()
     }
     render() {
@@ -91,6 +90,8 @@ class OrderManagement extends React.Component {
             }
         ]
         const { orderId } = this.state
+        const pageNo = this.props.ordermgt.get('pageNo')
+        const pageSize = this.props.ordermgt.get('pageSize')
         return (
             <div className='ordermgt'>
                 <h2 className='ordermgt_title'>
@@ -116,7 +117,14 @@ class OrderManagement extends React.Component {
                       dataSource={tableData.data}
                       rowKey={(record, index) => index}
                       loading={tableData.loading}
-                      pagination={{showSizeChanger: true, total: tableData.total, onChange: this.pageChange, onShowSizeChange: this.pageSizeChange}}
+                      pagination={{
+                        showSizeChanger: true, 
+                        total: tableData.total, 
+                        current: pageNo,
+                        pageSize: pageSize,
+                        onChange: this.pageChange, 
+                        onShowSizeChange: this.pageSizeChange
+                      }}
                     />
                 </div>
                 <Modal
