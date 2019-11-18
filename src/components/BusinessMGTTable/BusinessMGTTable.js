@@ -75,9 +75,7 @@ class BusinessMGTTable extends Component {
         if(orderId !== nextProps.orderId){
             getTableData(nextProps.orderId)
         }else if(status && status !== nextProps.status){
-            const pageNo = businesmgtTable.get('page_no')
-            const pageSize = businesmgtTable.get('page_size')
-            getTableData({status: nextProps.status, pageNo, pageSize})
+            getTableData({status: nextProps.status, pageNo: 1, pageSize: 10})
         }
         return true
     }
@@ -160,6 +158,8 @@ class BusinessMGTTable extends Component {
             columns.pop()
         }
         const tableData = businesmgtTable.get('tableData').toJS()
+        const pageNo = businesmgtTable.get('page_no')
+        const pageSize = businesmgtTable.get('page_size')
         const { pageSizeOptions } = this.props
         const pagination = orderId ? false : {
             showSizeChanger: true, 
@@ -167,14 +167,15 @@ class BusinessMGTTable extends Component {
             onChange: this.pageChange, 
             onShowSizeChange: this.pageSizeChange,
             pageSizeOptions: pageSizeOptions || ['10', '20', '30', '40'],
-            defaultPageSize: pageSizeOptions ? 6 : 10
+            current: pageNo,
+            pageSize: pageSize
         } 
         return (
             <Table 
                 loading={tableData.loading}
                 columns={columns}
                 dataSource={tableData.data}
-                rowKey={(record, index) => index}
+                rowKey={record=> record.service_id}
                 pagination={pagination}
             />
         )
