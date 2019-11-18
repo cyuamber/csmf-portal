@@ -1,9 +1,9 @@
 export const ORDER_CREATE_FORM = [{
         title: '切片业务名称',
-        key: 'businessName',
+        key: 'name',
         rules: [
             {
-                len: 50,
+                max: 50,
                 message: '切片业务名称不能超过50个字符'
             }
         ]
@@ -15,7 +15,7 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '用户下行带宽（Mbps）',
-        key: 'downstream',
+        key: 'expDataRateDL',
         content: '取值范围： 100-3000'
     },
     {
@@ -25,7 +25,7 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '用户上行带宽（Mbps）',
-        key: 'upstream',
+        key: 'expDataRateUL',
         content: '取值范围： 100-3000'
     },
     {

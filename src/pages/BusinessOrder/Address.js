@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Col, Select, Icon } from 'antd'
+import { Form, Row, Col, Select, Icon } from 'antd'
 import { connect } from 'react-redux'
 import { actions } from './actions'
 
@@ -18,18 +18,18 @@ class Address extends Component {
 
     changeProvince = value => {
         const provinceList = this.props.businessorder.get('provinceList').toJS();
-        const { index, data } = this.props
+        const { index } = this.props
         let id = ''
-        provinceList.forEach(item => {
+        provinceList.forEach( item => {
             if (value === item.province) {
                 id = item.id
             }
         })
         this.props.getCityList(id, index)
-        this.props.form.resetFields(['city'+ data.id, 'county'+ data.id, 'street'+ data.id])
+        this.props.form.resetFields(['city', 'county', 'street'])
     }
     changeCity = value => {
-        const { index, data } = this.props
+        const { index } = this.props
         const cityList = this.props.businessorder.getIn(['formItem', index]).toJS().cityList;
         let id = ''
         cityList.forEach(item => {
@@ -38,10 +38,10 @@ class Address extends Component {
             }
         })
         this.props.getCountyList(id, index)
-        this.props.form.resetFields(['county'+ data.id, 'street'+ data.id])
+        this.props.form.resetFields(['county', 'street'])
     }
     changeCounty = value => {
-        const { index, data } = this.props
+        const { index } = this.props
         const countyList = this.props.businessorder.getIn(['formItem', index]).toJS().countyList;
         let id = '';
         countyList.forEach(item => {
@@ -50,22 +50,34 @@ class Address extends Component {
             }
         })
         this.props.getStreetList(id, index);
-        this.props.form.resetFields(['street'+ data.id]);
+        this.props.form.resetFields(['street']);
+    }
+
+    handleSubmit = () => {
+        this.props.form.validateFields((error, values) => {
+            if(!error){
+                this.props.getValues(values)
+            }else {
+                this.props.getValues(null)
+            }
+        })
     }
 
     componentDidMount () {
+        this.props.addhandleSubmit(this.handleSubmit)
         this.id = 1
     }
 
     render() {
         const { Item } = Form
         const { Option } = Select
-        const { formItemLayout, index, businessorder, data, form: {getFieldDecorator} } = this.props
+        const { formItemLayout, index, businessorder, data, data: { id }, form: { getFieldDecorator } } = this.props
         const provinceList = businessorder.get('provinceList').toJS()
         const formItem = businessorder.get('formItem').toJS()
 
         return (
-            <div>
+            <Form onSubmit={this.handleSubmit} labelAlign='left'>
+                <Row>
                 <Col span={8}>
                     <Item {...formItemLayout}>
                         {getFieldDecorator('province', this.getRules('Please select a region'))(
@@ -113,7 +125,8 @@ class Address extends Component {
                             className={formItem.length === 10 ? 'orderdetail_icon_disabled':"orderdetail_icon"}
                             onClick={this.handleAddArea}
                         />) }
-            </div>
+                </Row>
+            </Form>
         )
     }
 }

@@ -3,7 +3,7 @@ import { withNamespaces } from 'react-i18next'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { actions } from './actions'
-import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover, Icon } from "antd";
+import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover } from "antd";
 import { ORDER_CREATE_FORM } from '../../constant/constants'
 import Address from './Address'
 import { axiospost, axiosget } from '../../utils/http'
@@ -18,10 +18,9 @@ class BusinessOrderDetail extends Component {
     getFormItem = () => {
         const { form: { getFieldDecorator } } = this.props;
         const { Item } = Form
-        const formItem = this.props.businessorder.get('formItem').toJS()
         
-        return ORDER_CREATE_FORM.map(item => {
-            if (item.key === 'businessName') {
+        return ORDER_CREATE_FORM.map( item => {
+            if (item.key === 'name') {
                 return (
                     <Col span={12} key={item.key}>
                         <Item label={item.title}>
@@ -66,28 +65,6 @@ class BusinessOrderDetail extends Component {
                         </Item>
                     </Col>
                 )
-            } else if (item.key === 'area') {
-                return (
-                    formItem.map((ite, index) => {
-                        let formItemLayout =null
-                        if(ite === formItem[0]){
-                            formItemLayout = {
-                                label: item.title,
-                                labelCol: {span: 10, offset: 0},
-                                wrapperCol: {span: 11, offset: 2}
-                            }
-                        }else{
-                            formItemLayout = {
-                                wrapperCol: {span: 11, offset: 12}
-                            }
-                        }
-                        return (
-                            <Col span={24} key={ite.id}>
-                                <Address formItemLayout={formItemLayout} index={index} data={ite}/>
-                            </Col>
-                        )
-                    })
-                )
             }
         })
     }
@@ -112,21 +89,38 @@ class BusinessOrderDetail extends Component {
                 }
             }
         }
+        callback()
+    }
+
+    getValues = areaObj => {
+        this.areaList.push(areaObj)
+    }
+
+    addhandleSubmit = event => {
+        if(!this.areaSubmitList) {
+            this.areaSubmitList = []
+        }
+        this.areaSubmitList.push(event)
     }
 
     handleSubmit = () => {
+        this.areaSubmitList.forEach( item => {
+            item()
+        })
         this.props.form.validateFields((error, values) => {
             if (!error) {
-                console.log(values)
-                // 模拟请求
-                // let userId = 'admin'
-                // let slicing_order_info = {}
-                // axiospost(APIS.createOrder(userId),{slicing_order_info}).then(res => {
-                //     if(res.result_code === '200'){
-                //         console.log('创建成功')
-                //     }
-                // }) 
-                this.props.history.push('/ordermgt');
+                let flag = this.areaList.every(item => item === null)
+                if(!flag){
+                    console.log(values, this.areaList)
+                    // 模拟请求
+                    // let slicing_order_info = {}
+                    // axiospost(APIS.createOrder,{slicing_order_info}).then(res => {
+                    //     if(res.result_code === '200'){
+                    //         console.log('创建成功')
+                    //     }
+                    // }) 
+                    // this.props.history.push('/ordermgt');
+                }
             }
         })
     }
@@ -137,11 +131,14 @@ class BusinessOrderDetail extends Component {
 
     componentDidMount() {
         this.props.getProvinceList()
+        this.areaList = []
     }
     
     render() {
         const { t } = this.props
         const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 }}
+        const formItem = this.props.businessorder.get('formItem').toJS()
+
         return (
             <div className="orderdetail">
                 <Card title={t('Create Slicing Order')}>
@@ -149,14 +146,37 @@ class BusinessOrderDetail extends Component {
                         <Row className="orderdetail_formItem__margin">
                             {this.getFormItem()}
                         </Row>
-                        <Form.Item wrapperCol={{ span: 16, offset: 9 }}>
-                            <Button onClick={this.handleOrderCancel} className='orderdetail_button__margin orderdetail_button__padding'>取消</Button>
-                            <Button type='primary' onClick={this.handleSubmit} className='orderdetail_button__padding'>确认</Button>
-                        </Form.Item>
                     </Form>
+                    {ORDER_CREATE_FORM.map(item => {
+                        if (item.key === 'area') {
+                            return (
+                                formItem.map((ite, index) => {
+                                    let formItemLayout = null
+                                    if(ite === formItem[0]){
+                                        formItemLayout = {
+                                            label: item.title,
+                                            labelCol: {span: 10, offset: 0},
+                                            wrapperCol: {span: 11, offset: 2}
+                                        }
+                                    }else{
+                                        formItemLayout = {
+                                            wrapperCol: {span: 11, offset: 12}
+                                        }
+                                    }
+                                    return (
+                                        <Address formItemLayout={formItemLayout} key={ite.id} index={index} data={ite} getValues={this.getValues} addhandleSubmit={this.addhandleSubmit}/>
+                                    )
+                                })
+                            )
+                        }}
+                    )}
+                    <div className="orderdetail_btns">
+                        <Button onClick={this.handleOrderCancel}>取消</Button>
+                        <Button type='primary' onClick={this.handleSubmit}>确认</Button>
+                    </div>
                 </Card>
             </div>
-        );
+        )
     }
 }
 
