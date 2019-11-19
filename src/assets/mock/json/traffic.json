@@ -1,7 +1,7 @@
 {
     "result_header": {
         "result_code": 200,
-        "result_message": "5G slicing service bandwidth query result."
+        "result_message": "5G slicing service traffic query result."
     },
     "result_body": [{
         "service_id": "service1",
