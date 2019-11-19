@@ -26,7 +26,7 @@ const APIS = {
     getCityApi: resolvePath('/city'),
     getCountyApi: resolvePath('/county'),
     getStreetApi: resolvePath('/street'),
-    createOrder: resolvePath(`/api/usecaseui/csmf/5gSlicing`),
+    createOrderApi: resolvePath(`/api/usecaseui/csmf/5gSlicing`),
     getOrdersApi: ({status, pageNo, pageSize}) => {
         return resolvePath(`/api/usecaseui/csmf/5gSlicing/orders/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
     },

@@ -109,19 +109,21 @@ class BusinessOrderDetail extends Component {
         })
         this.props.form.validateFields((error, values) => {
             if (!error) {
-                let flag = this.areaList.every(item => item === null)
+               
+                let flag = this.areaList.includes(null)
                 if(!flag){
                     // 模拟请求
                     let slicing_order_info = {...values,coverageArea: JSON.stringify(this.areaList)}
-                    console.log(slicing_order_info)
-                    // axiospost(APIS.createOrder,{slicing_order_info}).then(res => {
-                    //     if(res.result_code === '200'){
-                    //         console.log('创建成功')
-                    //     }
-                    // }) 
+                    axiospost(APIS.createOrderApi,{slicing_order_info}).then(res => {
+                        if(res.result_header.result_code === '200'){
+                            console.log('创建成功')
+                        }
+                    }) 
                     // this.props.history.push('/ordermgt');
                 }
+                
             }
+            this.areaList = []
         })
     }
 
