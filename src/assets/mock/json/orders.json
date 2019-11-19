@@ -3,79 +3,69 @@
         "result_code": "200",
         "result_message": "5G slicing order query result."
     },
-    "total": 50,
-    "result_body": [
-        {
-            "order_id": "order1",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "normal"
-        },
-        {
-            "order_id": "order2",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "terminate"
-        },
-        {
-            "order_id": "order3",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "terminate"
-        },
-        {
-            "order_id": "order4",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "terminate"
-        },
-        {
-            "order_id": "order5",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "normal"
-        },
-        {
-            "order_id": "order6",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "normal"
-        },
-        {
-            "order_id": "order7",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "terminate"
-        },
-        {
-            "order_id": "order8",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "normal"
-        },
-        {
-            "order_id": "order9",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "terminate"
-        },
-        {
-            "order_id": "order10",
-            "order_creation_time": "20190101",
-            "service_expiration_time": "20191231",
-            "order_description": "order1 description",
-            "order_status": "terminate"
-        }
-
-    ]
-    
+    "result_body": {
+        "record_number": "50",
+        "slicing_order_list": [
+            {
+                "order_id": "order1",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "6",
+                "order_status": "normal"
+            },
+            {
+                "order_id": "order2",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "3",
+                "order_status": "terminate"
+            },
+            {
+                "order_id": "order3",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "4",
+                "order_status": "terminate"
+            },
+            {
+                "order_id": "order4",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "6",
+                "order_status": "terminate"
+            },
+            {
+                "order_id": "order5",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "7",
+                "order_status": "normal"
+            },
+            {
+                "order_id": "order6",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "3",
+                "order_status": "normal"
+            },
+            {
+                "order_id": "order7",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "8",
+                "order_status": "terminate"
+            },
+            {
+                "order_id": "order8",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "12",
+                "order_status": "normal"
+            },
+            {
+                "order_id": "order9",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "9",
+                "order_status": "terminate"
+            },
+            {
+                "order_id": "order10",
+                "order_creation_time": "20190101",
+                "service_expiration_time": "7",
+                "order_status": "terminate"
+            }
+        ]
+    }
 }
