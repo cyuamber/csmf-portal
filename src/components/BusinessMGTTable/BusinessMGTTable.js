@@ -6,7 +6,6 @@ import { axiosput, axiosdelete } from '../../utils/http'
 import APIS from '../../constant/apis'
 
 class BusinessMGTTable extends Component {
-
     changeStatus = (serviceId, checked) => {
         // const url = checked ? APIS.enableApi : APIS.disableApi 
         const url = checked ? APIS.enable : APIS.disable 
@@ -89,35 +88,36 @@ class BusinessMGTTable extends Component {
                 dataIndex: 'service_id'
             },
             {
-                title: '购买时间',
-                dataIndex: 'service_creation_time'
-            },
-            {
-                title: '激活时间',
-                dataIndex: 'service_enable_time'
-            },
-            {
                 title: '切片业务名称',
                 dataIndex: 'service_name'
             },
             {
+                title: '切片类型',
+                dataIndex: 'service_type'
+            },
+            {
+                title: 'S-NSSAI',
+                dataIndex: 'service_snssai'
+            },
+            {
                 title: '状态',
                 dataIndex: 'service_status',
-                render: (text) => text === 'normal'? '已激活': '未激活'
+                render: (text) => text === 'activated'? '已激活': '未激活'
             },
             {
                 title: '激活',
                 dataIndex: 'activation',
-                render: (text,record) => {
+                render: (isActivate,record) => {
+                    // let isActivate = record.service_status === 'activated' ? true : false
                     return (
                         <Popconfirm 
                           placement="top" 
                           title={switchText} 
-                          onConfirm={() => this.changeStatus(record.service_id, !text)} 
+                          onConfirm={() => this.changeStatus(record.service_id, !isActivate)} 
                           okText="Yes" cancelText="No">
                             <Switch 
-                                defaultChecked={text} 
-                                checked={text}
+                                defaultChecked={isActivate} 
+                                checked={isActivate}
                                 size='small' 
                                 loading={record.loading}
                             />
@@ -129,7 +129,7 @@ class BusinessMGTTable extends Component {
                 title: '终止',
                 dataIndex: 'end',
                 render: (text,record) => {
-                    let isDisable = record.service_status === 'normal'? true : false
+                    let isDisable = record.activation
                     return (
                         <Popconfirm 
                           placement="topLeft" 

@@ -21,35 +21,6 @@ module.exports = {
             avatar: faker.internet.avatar()
         }
     }),
-    // orders: {
-    //     result_header: {
-    //         result_code: '200',
-    //         result_message: '5G slicing order query result.',
-    //     },
-    //     total: 50,
-    //     result_body: _.times(10, function (n) {
-    //         return {
-    //             order_id: 'order' + n,
-    //             order_creation_time: '20190101',
-    //             service_expiration_time: '20191231',
-    //             order_description: `order${n} description`,
-    //             order_status: n % 2 ? 'normal' : 'terminate'
-    //         }
-    //     })
-    // },
-    detail: {
-        result_header: {
-            result_code: '200',
-            result_message: '5G slicing order query result.',
-        },
-        result_body: [{
-            service_id: 'service1',
-            service_creation_time: '20190101',
-            service_enable_time: '20190201',
-            service_name: 'service1 name',
-            service_status: 'disable'
-        }]
-    },
     enable: {
         result_header: {
             result_code: '200',
@@ -73,15 +44,17 @@ module.exports = {
             result_code: '200',
             result_message: '5G slicing order query result.',
         },
-        total: 20,
-        result_body: _.times(6, function (n) {
-            return {
-                service_id: 'service'+n,
-                service_creation_time: '20190101',
-                service_enable_time: '20190201',
-                service_name: `service${n} description`,
-                service_status: n % 2 ? 'normal' : 'terminate'
-            }
-        })
+        result_body: {
+            record_number: "30",
+            slicing_service_list:  _.times(6, function (n) {
+                return {
+                    service_id: 'service'+n,
+                    service_name: `service${n} description`,
+                    service_type: "eMBB",
+                    service_snssai: "1-010102",
+                    service_status: n % 2 ? 'activated' : 'terminate'
+                }
+            })
+        }
     }
 }

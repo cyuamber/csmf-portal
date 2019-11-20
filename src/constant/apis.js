@@ -30,11 +30,13 @@ const APIS = {
     getOrdersApi: ({status, pageNo, pageSize}) => {
         return resolvePath(`/api/usecaseui/csmf/5gSlicing/orders/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
     },
-    getOrderDetailApi: (orderId) => {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/orderId/${orderId}/services`)
-    },
-    getBusinessListApi: ({status, pageNo, pageSize}) => {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
+    getOrderServiceApi: (params) => {
+        if(typeof params === 'string') {
+            return resolvePath(`/api/usecaseui/csmf/5gSlicing/orderId/${params}/services/status/pageNo/pageSize`)
+        }else {
+            const { status, pageNo, pageSize} = params
+            return resolvePath(`/api/usecaseui/csmf/order/5gSlicing/services/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
+        }
     },
     enableApi(serviceId) {
         return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/enable`)

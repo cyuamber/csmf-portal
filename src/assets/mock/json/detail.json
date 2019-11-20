@@ -1,0 +1,18 @@
+{
+    "result_header": {
+        "result_code": "200",
+        "result_message": "5G slicing order query result."
+    },
+    "result_body": {
+        "record_number": "1",
+        "slicing_service_list":  [
+            {
+                "service_id": "service1",
+                "service_name": "service1 name",
+                "service_type": "eMBB",
+                "service_snssai": "1-010102",
+                "service_status": "activated"
+            }
+        ]
+    }
+}
