@@ -1,30 +1,62 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { actions } from './actions'
-import { Button, Table, Switch, Popconfirm } from 'antd'
-import { axiosput, axiosdelete } from '../../utils/http'
+import { Button, Table, Switch, Popconfirm, Progress } from 'antd'
+import { axiosput, axiosdelete, axiosget } from '../../utils/http'
 import APIS from '../../constant/apis'
+
+import'./stype.less'
 
 class BusinessMGTTable extends Component {
     changeStatus = (serviceId, checked) => {
-        // const url = checked ? APIS.enableApi : APIS.disableApi 
+        this.props.getStatusLoading(serviceId, true, 'activate')
+        // const url = checked ? APIS.activateApi : APIS.deactivateApi 
         const url = checked ? APIS.enable : APIS.disable 
-        const { orderId, getTableData, status, businesmgtTable, changeLoading} = this.props
-        changeLoading(true)
         // axiosput(url(serviceId))
         axiosput(url).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
-                setTimeout(() => {
-                    if(!status){
-                        getTableData(orderId)
-                    }else {
-                        const pageNo = businesmgtTable.get('page_no')
-                        const pageSize = businesmgtTable.get('page_size')
-                        getTableData({status, pageNo, pageSize})
-                    }
-                },2000)
+                this.count = 0
+                this.getProgress(serviceId)
             }    
+        })
+    }
+
+    getProgress = (serviceId) => {
+        this.count ++
+        const {getProgress, businesmgtTable, orderId, getTableData, status} = this.props
+        let index = 0
+        businesmgtTable.getIn(['tableData']).toJS().data.forEach((item, i) => {
+            if(item.service_id === serviceId){
+                index = i
+            }
+        });
+        // APIS.getProgressApi(serviceId)
+        axiosget (APIS.getProgress).then ( (res) => {
+            let {result_header: {result_code}, result_body: {progress}} = res
+            if(result_code === "200"){
+                // 模拟
+                if(this.count >= 2){
+                    progress = 100
+                }
+                getProgress(index, progress)
+                if(progress !== 100) {
+                    setTimeout (() => {
+                        this.getProgress(serviceId)
+                    },5000)
+                }else {
+                    // 更新表格
+                    setTimeout(() => {
+                        if(!status){
+                            getTableData(orderId)
+                        }else {
+                            const pageNo = businesmgtTable.get('page_no')
+                            const pageSize = businesmgtTable.get('page_size')
+                            getTableData({status, pageNo, pageSize})
+                        }
+                    },2000)
+                }
+            }
         })
     }
 
@@ -39,19 +71,13 @@ class BusinessMGTTable extends Component {
     }
 
     handleServiceEnd = (serviceId) => {
-        const { businesmgtTable, getTableData, orderId, status, changeLoading } = this.props
-        // axiosdelete(APIS.terminate(serviceId))
-        changeLoading(true)
+        this.props.getStatusLoading(serviceId, true, 'terminate')
+        // axiosdelete(APIS.terminateApi(serviceId))
         axiosdelete(APIS.terminate).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
-                if(orderId){
-                    getTableData(orderId)
-                }else {
-                    const pageNo = businesmgtTable.get('page_no')
-                    const pageSize = businesmgtTable.get('page_size')
-                    getTableData({status, pageNo, pageSize})
-                }
+                this.count = 0
+                this.getProgress(serviceId)
             }    
         })
     }
@@ -107,8 +133,8 @@ class BusinessMGTTable extends Component {
             {
                 title: '激活',
                 dataIndex: 'activation',
+                align: 'center',
                 render: (isActivate,record) => {
-                    // let isActivate = record.service_status === 'activated' ? true : false
                     return (
                         <Popconfirm 
                           placement="top" 
@@ -121,6 +147,9 @@ class BusinessMGTTable extends Component {
                                 size='small' 
                                 loading={record.loading}
                             />
+                            {record.operation === 'activate' && record.progress !== 100 ? 
+                              <Progress size="small" percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false
+                            }
                         </Popconfirm>
                     )
                 }
@@ -128,6 +157,7 @@ class BusinessMGTTable extends Component {
             {
                 title: '终止',
                 dataIndex: 'end',
+                align: 'center',
                 render: (text,record) => {
                     let isDisable = record.activation
                     return (
@@ -137,13 +167,16 @@ class BusinessMGTTable extends Component {
                           onConfirm={() => this.handleServiceEnd(record.service_id)} 
                           okText="Yes" 
                           cancelText="No"
-                          disabled={isDisable}
+                          disabled={isDisable || record.loading}
                         >
                             <Button 
                                 icon='poweroff' 
                                 shape='circle' 
-                                disabled={isDisable} 
+                                disabled={isDisable || record.loading} 
                             />
+                            {record.operation === 'terminate' && record.progress !== 100 ?   
+                              <Progress size="small"  percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false
+                            }
                         </Popconfirm>
                     )
                 }

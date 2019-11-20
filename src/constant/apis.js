@@ -21,15 +21,21 @@ const APIS = {
     // bandwidth (queryTimestamp, queryNumber) {
     //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/bandwidth`)
     // },
-    getProvinceApi: resolvePath('/province'),
     getAddressApi: resolvePath('/address'),
-    getCityApi: resolvePath('/city'),
-    getCountyApi: resolvePath('/county'),
-    getStreetApi: resolvePath('/street'),
+    // getProvinceApi: resolvePath('/province'),
+    // getCityApi: resolvePath('/city'),
+    // getCountyApi: resolvePath('/county'),
+    // getStreetApi: resolvePath('/street'),
+    // 创建订单接口
     createOrderApi: resolvePath(`/api/usecaseui/csmf/5gSlicing`),
+    // 获取订单管理列表
+    getOrders: resolvePath('/orders'),
     getOrdersApi: ({status, pageNo, pageSize}) => {
         return resolvePath(`/api/usecaseui/csmf/5gSlicing/orders/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
     },
+    // 获取业务管理列表
+    getOrderDetail: resolvePath('/detail'),
+    getBusinessList: resolvePath('/business'),
     getOrderServiceApi: (params) => {
         if(typeof params === 'string') {
             return resolvePath(`/api/usecaseui/csmf/5gSlicing/orderId/${params}/services/status/pageNo/pageSize`)
@@ -38,21 +44,21 @@ const APIS = {
             return resolvePath(`/api/usecaseui/csmf/order/5gSlicing/services/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
         }
     },
-    enableApi(serviceId) {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/enable`)
-    },
-    disableApi(serviceId){
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/disable`)
-    },
-    terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
-    
-    // 模拟
-    getOrders: resolvePath('/orders'),
-    getOrderDetail: resolvePath('/detail'),
+    // 激活
     enable: resolvePath('/enable'),
+    activateApi(serviceId) {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/activate`)
+    },
+    // 去激活
     disable: resolvePath('/disable'),
+    terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
+    // 终止
     terminate: resolvePath('/terminate'),
-    getBusinessList: resolvePath('/business')
+    terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
+    // 获取进度值
+    getProgress: resolvePath('/progress'),
+    getProgressApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/service/${serviceId}/progress`),
+    
 }
 
 export default APIS

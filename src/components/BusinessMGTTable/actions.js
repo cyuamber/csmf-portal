@@ -6,6 +6,7 @@ const changeLoading = bool => ({type: 'CHANGE_LOADING', bool})
 export const actions = dispatch => {
     return {
         getTableData (params, cb) {
+            dispatch(changeLoading(true))
             const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
             // APIS.getOrderServiceApi(params)
             axiosget(url).then( res => {
@@ -17,7 +18,7 @@ export const actions = dispatch => {
                             const { pageNo, pageSize } = params
                             item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1
                         }
-                        item.activation = /* item.checked=  */item.service_status === 'activated'? true : false
+                        item.activation = item.service_status === 'activated'? true : false
                         return item
                     })
                     if (typeof params === 'object') {
@@ -33,9 +34,12 @@ export const actions = dispatch => {
         },
         changeLoading (bool) {
             dispatch(changeLoading(bool))
+        },
+        getStatusLoading (serviceId, bool, operation) {
+            dispatch({type: 'SET_STATUS_LOADING', serviceId, bool, operation})
+        },
+        getProgress (index, progress) {
+            dispatch({type: 'UPDATA_PROGRESS',index, progress})
         }
-        // getStatusLoading (serviceId, bool) {
-        //     dispatch({type: 'SET_STATUS_LOADING', serviceId, bool})
-        // }
     }
 }
