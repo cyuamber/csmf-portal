@@ -51,7 +51,7 @@ const APIS = {
     },
     // 去激活
     disable: resolvePath('/disable'),
-    terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
+    deactivateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/deactivate`),
     // 终止
     terminate: resolvePath('/terminate'),
     terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),

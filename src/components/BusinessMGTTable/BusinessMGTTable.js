@@ -83,20 +83,20 @@ class BusinessMGTTable extends Component {
     }
 
     componentDidMount(){
-        const { getTableData, status, orderId } = this.props
+        const { getTableData, status, orderId, getChartsData } = this.props
         if (orderId) {
             getTableData(orderId)
         }else {
             if ( status ){
                 getTableData({ status, pageNo: 1, pageSize: 10 }) 
             }else {
-                getTableData({ status: 'all', pageNo: 1, pageSize: 6 })
+                getTableData({ status: 'all', pageNo: 1, pageSize: 6 }, getChartsData)
             }
         }
     }
 
     shouldComponentUpdate(nextProps){
-        const { getTableData, status, businesmgtTable, orderId } = this.props
+        const { getTableData, status, orderId } = this.props
         if(orderId !== nextProps.orderId){
             getTableData(nextProps.orderId)
         }else if(status && status !== nextProps.status){

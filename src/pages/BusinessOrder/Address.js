@@ -73,7 +73,7 @@ class Address extends Component {
     render() {
         const { Item } = Form
         const { Option } = Select
-        const { formItemLayout, index, businessorder, data, data: { id }, form: { getFieldDecorator } } = this.props
+        const { formItemLayout, index, businessorder, data, form: { getFieldDecorator } } = this.props
         // const provinceList = businessorder.get('provinceList').toJS()
         const address = businessorder.get('address').toJS()
         const formItem = businessorder.get('formItem').toJS()

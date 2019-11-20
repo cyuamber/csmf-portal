@@ -169,7 +169,7 @@ class BusinessMonitor extends React.Component {
 
     render() {
         const { t } = this.props;
-        const { showLoading } = this.state;
+        // const { showLoading } = this.state;
         const pageSizeOptions = ['6', '8' ,'10']
 
         const trafficData = this.props.businessmonitor.get('traffic').toJS();

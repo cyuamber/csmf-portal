@@ -1,4 +1,4 @@
-import { axiosget, axiosdelete } from '../../utils/http'
+import { axiosget } from '../../utils/http'
 import APIS from '../../constant/apis'
 
 const changeLoading = bool => ({type: 'CHANGE_LOADING', bool})

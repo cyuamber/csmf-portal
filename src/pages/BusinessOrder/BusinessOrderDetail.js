@@ -6,7 +6,7 @@ import { actions } from './actions'
 import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover } from "antd";
 import { ORDER_CREATE_FORM } from '../../constant/constants'
 import Address from './Address'
-import { axiospost, axiosget } from '../../utils/http'
+import { axiospost } from '../../utils/http'
 import APIS from '../../constant/apis'
 
 import './BusinessOrderDetail.less';
