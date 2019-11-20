@@ -10,17 +10,17 @@ function resolvePath(url) {
 const APIS = {
     testapi: resolvePath('/home'),
     traffic: resolvePath('/traffic'),
-    // traffic(queryTimestamp){
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/trafficData`)
-    // },
+    trafficApi (queryTimestamp){
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/trafficData`)
+    },
     onlineUsers: resolvePath('/onlineUsers'),
-    // onlineUsers(queryTimestamp, queryNumber) {
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/onlineUsers`)
-    // },
+    onlineUsersApi(queryTimestamp) {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/onlineUsers`)
+    },
     bandwidth: resolvePath('/bandwidth'),
-    // bandwidth (queryTimestamp, queryNumber) {
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/bandwidth`)
-    // },
+    bandwidthApi (queryTimestamp) {
+        return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/bandwidth`)
+    },
     getAddressApi: resolvePath('/address'),
     // getProvinceApi: resolvePath('/province'),
     // getCityApi: resolvePath('/city'),

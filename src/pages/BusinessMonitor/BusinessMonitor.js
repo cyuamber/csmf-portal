@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withNamespaces } from 'react-i18next';
 import { actions } from './actions';
 import { Row, Col, DatePicker, message } from 'antd';
-import { axiosget } from 'utils/http';
+import { axiospost } from '../../utils/http';
 import APIS from 'constant/apis';
 import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
 
@@ -23,7 +23,7 @@ class BusinessMonitor extends React.Component {
         let serviceList = [];
         const tableList = this.props.businessmonitor.get('tableData').toJS().data
         tableList.forEach(item => {
-            serviceList.push(item.service_id)
+            serviceList.push({service_id: item.service_id})
         })
         this.fetchTrafficData(serviceList, time);
         this.fetchOnlineusersData(serviceList, time);
@@ -33,8 +33,8 @@ class BusinessMonitor extends React.Component {
     fetchTrafficData = (serviceList, time) => {
         const { setTrafficData } = this.props;
         // url中的参数
-        // APIS.traffic(time)
-        axiosget(APIS.traffic, { serviceList }).then(res => {
+        // APIS.trafficApi(time)
+        axiospost(APIS.traffic, { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setTrafficData(res.result_body);
             } else {
@@ -45,9 +45,8 @@ class BusinessMonitor extends React.Component {
     fetchOnlineusersData(serviceList, time) {
         const { setOnlineusersData } = this.props;
         // url中的参数
-        // const page_size = this.props.businessmonitor.get('page_size')
-        // APIS.onlineUsers(time, page_size)
-        axiosget(APIS.onlineUsers, { serviceList }).then(res => {
+        // APIS.onlineUsersApi(time)
+        axiospost(APIS.onlineUsers, { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setOnlineusersData(res.result_body);
             } else {
@@ -59,9 +58,8 @@ class BusinessMonitor extends React.Component {
     fetchBandwidthData(serviceList, time) {
         const { setBandwidthData } = this.props;
         // url中的参数
-        // const page_size = this.props.businessmonitor.get('page_size')
-        // APIS.bandwidth(time, page_size)
-        axiosget(APIS.bandwidth, { serviceList }).then(res => {
+        // APIS.bandwidthApi(time)
+        axiospost(APIS.bandwidth, { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setBandwidthData(res.result_body);
             } else {
@@ -94,14 +92,14 @@ class BusinessMonitor extends React.Component {
                 if (lineName === "onlineusers") {
                     LegendxAxis.push(item.online_user_list.forEach(_ => {
                         if (typeof (_.timestamp) === "string") {
-                            LegendxAxis.push(moment(_.timestamp).format('hh:mm'))
+                            LegendxAxis.push(moment(+_.timestamp).format('hh:mm'))
 
                         }
                     }));
                 } else if (lineName === "bandwidth") {
                     LegendxAxis.push(item.total_bandwidth_list.forEach(_ => {
                         if (typeof (_.timestamp) === "string") {
-                            LegendxAxis.push(moment(_.timestamp).format('hh:mm'))
+                            LegendxAxis.push(moment(+_.timestamp).format('hh:mm'))
 
                         }
                     }));

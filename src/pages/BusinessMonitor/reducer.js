@@ -33,7 +33,7 @@ export default function reducer(state = initialState, action) {
         case 'SET_TOTAL': 
             return state
                     .setIn(['page_size'], action.page_size)
-        case 'SET_TABLE_DATA':
+        case 'SET_TABLE_LIST':
             return state
                     .setIn(['tableData', 'data'], I.fromJS(action.data))
         default:
