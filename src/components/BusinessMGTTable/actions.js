@@ -7,13 +7,13 @@ export const actions = dispatch => {
     return {
         getTableData (params, cb) {
             dispatch(changeLoading(true))
-            const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
+            // const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
             // APIS.getOrderServiceApi(params)
-            axiosget(url).then( res => {
-                const {result_body: {record_number, slicing_service_list}, result_header: {result_code}} = res
+            axiosget(APIS.getOrderServiceApi(params)).then( res => {
+                const {result_body: {record_number, slicing_list}, result_header: {result_code}} = res
                 if(result_code === '200'){
                     let tableData = null
-                    tableData = slicing_service_list.map((item, index) => {
+                    tableData = slicing_list.map((item, index) => {
                         if (typeof params === 'object') {
                             const { pageNo, pageSize } = params
                             item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1

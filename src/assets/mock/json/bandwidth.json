@@ -3,62 +3,64 @@
         "result_code": "200",
         "result_message": "5G slicing service bandwidth query result."
     },
-    "result_body": [{
-        "service_id": "service1",
-        "total_bandwidth_list": [{
-                "timestamp": "1546275661000",
-                "total_bandwidth": "100"
-            },
-            {
-                "timestamp": "1546279261000",
-                "total_bandwidth": "200"
-            },
-            {
-                "timestamp": "1546282861000",
-                "total_bandwidth": "150"
-            },
-            {
-                "timestamp": "1546286461000",
-                "total_bandwidth": "200"
-            }
-        ]
-    }, {
-        "service_id": "service2",
-        "total_bandwidth_list": [{
-                "timestamp": "1546275661000",
-                "total_bandwidth": "200"
-            },
-            {
-                "timestamp": "1546279261000",
-                "total_bandwidth": "700"
-            },
-            {
-                "timestamp": "1546282861000",
-                "total_bandwidth": "10"
-            },
-            {
-                "timestamp": "1546286461000",
-                "total_bandwidth": "200"
-            }
-        ]
-    }, {
-        "service_id": "service3",
-        "total_bandwidth_list": [{
-                "timestamp": "1546275661000",
-                "total_bandwidth": "300"
-            },
-            {
-                "timestamp": "1546279261000",
-                "total_bandwidth": "400"
-            },
-            {
-                "timestamp": "1546282861000",
-                "total_bandwidth": "150"
-            },
-            {
-                "timestamp": "1546286461000",
-                "total_bandwidth": "40"
-            }
-        ]
-    }]
+    "result_body":{
+        "slicing_total_bandwidth_list":  [{
+            "service_id": "service1",
+            "total_bandwidth_list": [{
+                    "timestamp": "1546275661000",
+                    "total_bandwidth": "100"
+                },
+                {
+                    "timestamp": "1546279261000",
+                    "total_bandwidth": "200"
+                },
+                {
+                    "timestamp": "1546282861000",
+                    "total_bandwidth": "150"
+                },
+                {
+                    "timestamp": "1546286461000",
+                    "total_bandwidth": "200"
+                }
+            ]
+        }, {
+            "service_id": "service2",
+            "total_bandwidth_list": [{
+                    "timestamp": "1546275661000",
+                    "total_bandwidth": "200"
+                },
+                {
+                    "timestamp": "1546279261000",
+                    "total_bandwidth": "700"
+                },
+                {
+                    "timestamp": "1546282861000",
+                    "total_bandwidth": "10"
+                },
+                {
+                    "timestamp": "1546286461000",
+                    "total_bandwidth": "200"
+                }
+            ]
+        }, {
+            "service_id": "service3",
+            "total_bandwidth_list": [{
+                    "timestamp": "1546275661000",
+                    "total_bandwidth": "300"
+                },
+                {
+                    "timestamp": "1546279261000",
+                    "total_bandwidth": "400"
+                },
+                {
+                    "timestamp": "1546282861000",
+                    "total_bandwidth": "150"
+                },
+                {
+                    "timestamp": "1546286461000",
+                    "total_bandwidth": "40"
+                }
+            ]
+        }]
+    }
 }

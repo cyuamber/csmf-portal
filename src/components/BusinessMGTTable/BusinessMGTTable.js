@@ -10,10 +10,10 @@ import'./stype.less'
 class BusinessMGTTable extends Component {
     changeStatus = (serviceId, checked) => {
         this.props.getStatusLoading(serviceId, true, 'activate')
-        // const url = checked ? APIS.activateApi : APIS.deactivateApi 
-        const url = checked ? APIS.enable : APIS.disable 
-        // axiosput(url(serviceId))
-        axiosput(url).then(res => {
+        const url = checked ? APIS.activateApi : APIS.deactivateApi 
+        // const url = checked ? APIS.enable : APIS.disable 
+        // axiosput(url)
+        axiosput(url(serviceId)).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
                 this.count = 0
@@ -32,7 +32,8 @@ class BusinessMGTTable extends Component {
             }
         });
         // APIS.getProgressApi(serviceId)
-        axiosget (APIS.getProgress).then ( (res) => {
+        // APIS.getProgress
+        axiosget (APIS.getProgressApi(serviceId)).then ( (res) => {
             let {result_header: {result_code}, result_body: {progress}} = res
             if(result_code === "200"){
                 // 模拟
@@ -73,7 +74,8 @@ class BusinessMGTTable extends Component {
     handleServiceEnd = (serviceId) => {
         this.props.getStatusLoading(serviceId, true, 'terminate')
         // axiosdelete(APIS.terminateApi(serviceId))
-        axiosdelete(APIS.terminate).then(res => {
+        // APIS.terminate
+        axiosdelete(APIS.terminateApi(serviceId)).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
                 this.count = 0

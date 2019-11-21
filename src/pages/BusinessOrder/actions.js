@@ -1,5 +1,6 @@
 import { axiosget } from '../../utils/http';
 import APIS from '../../constant/apis'
+import { ADDRESS } from '../../constant/constants'
 
 const setProvinceList = provinceList => ({type: 'GET_PROVINCE', provinceList})
 const setCityList = (cityList, index) => ({type: 'GET_CITY', cityList, index})
@@ -30,12 +31,13 @@ export const actions = dispatch => {
         },
 
         getAddressApi: () => {
-            axiosget(APIS.getAddressApi).then( res => {
-                const {result_body, result_header: {result_code}} = res
-                if(result_code === 200){
-                    dispatch({type: 'GET_ADDRESS', address: result_body.province})
-                }
-            })
+            dispatch({type: 'GET_ADDRESS', address: ADDRESS.result_body.province})
+            // axiosget(APIS.getAddressApi).then( res => {
+            //     const {result_body, result_header: {result_code}} = res
+            //     if(result_code === 200){
+            //         dispatch({type: 'GET_ADDRESS', address: result_body.province})
+            //     }
+            // })
         },
        /*  getCityList: (province, index) => {
             axiosget(APIS.getCityApi,{province}).then(res => {

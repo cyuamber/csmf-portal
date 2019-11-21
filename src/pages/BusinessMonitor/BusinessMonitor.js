@@ -34,9 +34,10 @@ class BusinessMonitor extends React.Component {
         const { setTrafficData } = this.props;
         // url中的参数
         // APIS.trafficApi(time)
-        axiospost(APIS.traffic, { serviceList }).then(res => {
+        // APIS.traffic
+        axiospost(APIS.trafficApi(time), { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
-                setTrafficData(res.result_body);
+                setTrafficData(res.result_body.slicing_usage_traffic_list);
             } else {
                 message.error('get traffic data error');
             }
@@ -46,9 +47,10 @@ class BusinessMonitor extends React.Component {
         const { setOnlineusersData } = this.props;
         // url中的参数
         // APIS.onlineUsersApi(time)
-        axiospost(APIS.onlineUsers, { serviceList }).then(res => {
+        // APIS.onlineUsers
+        axiospost(APIS.onlineUsersApi(time), { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
-                setOnlineusersData(res.result_body);
+                setOnlineusersData(res.result_body.slicing_online_user_list);
             } else {
                 message.error('get online users data error');
             }
@@ -59,9 +61,10 @@ class BusinessMonitor extends React.Component {
         const { setBandwidthData } = this.props;
         // url中的参数
         // APIS.bandwidthApi(time)
-        axiospost(APIS.bandwidth, { serviceList }).then(res => {
+        // APIS.bandwidth
+        axiospost(APIS.bandwidthApi(time), { serviceList }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
-                setBandwidthData(res.result_body);
+                setBandwidthData(res.result_body.slicing_total_bandwidth_list);
             } else {
                 message.error('get bandwidth data error');
             }
@@ -85,7 +88,6 @@ class BusinessMonitor extends React.Component {
         let LegendArr = [];
         let LegendxAxis = [];
         let LegendData = [];
-
         lineData.data.forEach((item, index) => {
             LegendArr.push(item.service_id);
             if (index === 0) {

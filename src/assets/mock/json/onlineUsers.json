@@ -3,7 +3,8 @@
         "result_code": "200",
         "result_message": "5G slicing service online users query result."
     },
-    "result_body": [{
+    "result_body": {
+        "slicing_online_user_list":  [{
             "service_id": "service1",
             "online_user_list": [{
                     "timestamp": "1546275661000",
@@ -85,4 +86,6 @@
 
 
     ]
+    }
+   
 }

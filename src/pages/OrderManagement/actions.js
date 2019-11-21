@@ -12,7 +12,9 @@ export const actions = dispatch => {
             const reqBody = { status, pageNo, pageSize }
             
             // APIS.getOrdersApi(reqBody)
-            axiosget(APIS.getOrders).then(res => {
+            // APIS.getOrders
+            axiosget(APIS.getOrdersApi(reqBody)).then(res => {
+                
                 let { result_body: {record_number, slicing_order_list}, result_header: { result_code } } = res
                 if (result_code === '200') {
                     let tableData = slicing_order_list.map((item, index) => {
