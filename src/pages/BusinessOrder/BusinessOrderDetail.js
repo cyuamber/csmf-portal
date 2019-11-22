@@ -109,17 +109,21 @@ class BusinessOrderDetail extends Component {
         })
         this.props.form.validateFields((error, values) => {
             if (!error) {
-               
+                this.props.setBtnLoading(true)
                 let flag = this.areaList.includes(null)
                 if(!flag){
                     // 模拟请求
                     let slicing_order_info = {...values,coverageArea: JSON.stringify(this.areaList)}
                     axiospost(APIS.createOrderApi,{slicing_order_info}).then(res => {
                         if(res.result_header.result_code === '200'){
-                            console.log('创建成功')
+                            setTimeout(() => {
+                                console.log('创建成功')
+                                this.props.setBtnLoading(false)
+                                this.props.history.push('/ordermgt');
+                            },2000)
                         }
                     }) 
-                    // this.props.history.push('/ordermgt');
+                    
                 }
                 
             }
@@ -141,6 +145,7 @@ class BusinessOrderDetail extends Component {
         const { t } = this.props
         const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 }}
         const formItem = this.props.businessorder.get('formItem').toJS()
+        const loading = this.props.businessorder.get('btnLoading')
 
         return (
             <div className="orderdetail">
@@ -175,7 +180,7 @@ class BusinessOrderDetail extends Component {
                     )}
                     <div className="orderdetail_btns">
                         <Button onClick={this.handleOrderCancel}>取消</Button>
-                        <Button type='primary' onClick={this.handleSubmit}>确认</Button>
+                        <Button type='primary' onClick={this.handleSubmit} loading={loading}>确认</Button>
                     </div>
                 </Card>
             </div>

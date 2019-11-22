@@ -6,6 +6,7 @@ const setProvinceList = provinceList => ({type: 'GET_PROVINCE', provinceList})
 const setCityList = (cityList, index) => ({type: 'GET_CITY', cityList, index})
 const setCountyList = (countyList, index) => ({type: 'GET_COUNTY', countyList, index})
 const setStreetList = (streetList, index) => ({type: 'GET_STREET', streetList, index})
+const setBtnLoading = bool => ({type: 'SET_BTN_LOADING', bool})
 
 
 export const actions = dispatch => {
@@ -66,6 +67,9 @@ export const actions = dispatch => {
         // }
         getStreetList: (streetList, index) => {
             dispatch(setStreetList(streetList, index))
+        },
+        setBtnLoading: bool => {
+            dispatch(setBtnLoading(bool))
         }
     }
 }
