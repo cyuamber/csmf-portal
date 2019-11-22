@@ -149,9 +149,7 @@ class BusinessMonitor extends React.Component {
     selectedDate = status => {
         if (!status) {
             const { dateObj, getChartsData } = this
-            console.log(dateObj)
             if (dateObj) {
-                console.log(111)
                 getChartsData(dateObj.valueOf())
             }
         }
@@ -175,7 +173,7 @@ class BusinessMonitor extends React.Component {
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
         const bandwidthData = this.props.businessmonitor.get('bandwidth').toJS();
-
+        
         let trafficConfig = this.processPieData(trafficData, "traffic");
         let onlineusersConfig = this.processLineData(onlineusersData, "onlineusers");
         let bandwidthConfig = this.processLineData(bandwidthData, "bandwidth");
@@ -194,7 +192,6 @@ class BusinessMonitor extends React.Component {
                         <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} />
                     </Col>
                 </Row>
-
                 <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} pageSizeOptions={pageSizeOptions}/>
                 <Loading/>
             </div>

@@ -75,11 +75,11 @@ export const BUSINESS_SELECT_OPTIONS = [
     },
     {
         name: '未激活',
-        key: 'notActivated',
+        key: 'deactivated',
     },
     {
         name: '已激活',
-        key: 'normal'
+        key: 'activated'
     }
 ]
 
