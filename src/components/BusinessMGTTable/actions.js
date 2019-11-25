@@ -19,6 +19,9 @@ export const actions = dispatch => {
                             item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1
                         }
                         item.activation = item.service_status === 'activated'? true : false
+                        if(item.last_operation_progress !== 100) {
+                            item.loading = true
+                        }
                         return item
                     })
                     if (typeof params === 'object') {
