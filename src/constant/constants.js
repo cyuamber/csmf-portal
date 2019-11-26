@@ -10,7 +10,7 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '连接规模数',
-        key: 'connectCount',
+        key: 'maxNumberofUEs',
         content: '取值范围： 1-100000'
     },
     {
@@ -20,7 +20,7 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '时延',
-        key: 'delay',
+        key: 'latency',
         content: '取值范围： 10-200'
     },
     {
@@ -30,12 +30,29 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '共享等级',
-        key: 'shareLevel'
+        key: 'resourceSharingLevel'
     },
     {
         title: '游牧性',
-        key: 'nomadic',
-        options: ['不可游牧', '固定接入', '限定范围内可游牧', '自由游牧']
+        key: 'uEMobilityLevel',
+        options: [
+            {
+                value: '不可游牧',
+                key: 'stationary'
+            },
+            {
+                value: '固定接入',
+                key: 'nomadic'
+            },
+            {
+                value: '限定范围内可游牧',
+                key: 'spatially restricted mobility'
+            },
+            {
+                value: '自由游牧',
+                key: 'fully mobility'
+            }
+        ]
     },
     // {
     //     title: '激活因子（%）',
@@ -44,12 +61,12 @@ export const ORDER_CREATE_FORM = [{
     // },
     {
         title: '使用期限（月）',
-        key: 'timeLimit',
+        key: 'useInterval',
         content: '取值范围： ≥1'
     },
     {
         title: '区域',
-        key: 'area'
+        key: 'coverageArea'
     }
 ]
 
