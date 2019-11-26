@@ -64,14 +64,9 @@ class OrderManagement extends React.Component {
                 key: 'order_creation_time'
             },
             {
-                title: '服务到期时间',
+                title: '使用期限（月）',
                 dataIndex: 'service_expiration_time',
                 key: 'service_expiration_time'
-            },
-            {
-                title: '描述',
-                dataIndex: 'order_description',
-                key: 'order_description'
             },
             {
                 title: '状态',

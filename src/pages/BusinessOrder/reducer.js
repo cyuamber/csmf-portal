@@ -10,7 +10,8 @@ const initialState = I.fromJS({
             streetList: []
         }
     ],
-    address: []
+    address: [],
+    btnLoading: false
 });
 
 export default function reducer (state = initialState, action){
@@ -42,6 +43,8 @@ export default function reducer (state = initialState, action){
             }))
         case 'GET_ADDRESS': 
             return state.setIn(['address'], I.fromJS(action.address))
+        case 'SET_BTN_LOADING':
+            return state.setIn(['btnLoading'], action.bool)
         default:
             return state
     }

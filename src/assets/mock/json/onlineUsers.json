@@ -1,88 +1,91 @@
 {
     "result_header": {
-        "result_code": 200,
+        "result_code": "200",
         "result_message": "5G slicing service online users query result."
     },
-    "result_body": [{
+    "result_body": {
+        "slicing_online_user_list":  [{
             "service_id": "service1",
             "online_user_list": [{
-                    "timestamp": "2019-01-01 01:01:01",
-                    "online_users": 100
+                    "timestamp": "1546275661000",
+                    "online_users": "100"
                 },
                 {
-                    "timestamp": "2019-01-01 02:01:01",
-                    "online_users": 200
+                    "timestamp": "1546279261000",
+                    "online_users": "200"
                 },
                 {
-                    "timestamp": "2019-01-01 03:01:01",
-                    "online_users": 600
+                    "timestamp": "1546282861000",
+                    "online_users": "600"
                 },
                 {
-                    "timestamp": "2019-01-01 04:01:01",
-                    "online_users": 300
+                    "timestamp": "1554179445000",
+                    "online_users": "300"
                 }
             ]
         },
         {
             "service_id": "service2",
             "online_user_list": [{
-                    "timestamp": "2019-01-01 01:01:01",
-                    "online_users": 200
+                    "timestamp": "1546275661000",
+                    "online_users": "200"
                 },
                 {
-                    "timestamp": "2019-01-01 02:01:01",
-                    "online_users": 400
+                    "timestamp": "1546279261000",
+                    "online_users": "400"
                 },
                 {
-                    "timestamp": "2019-01-01 03:01:01",
-                    "online_users": 800
+                    "timestamp": "1546282861000",
+                    "online_users": "800"
                 },
                 {
-                    "timestamp": "2019-01-01 04:01:01",
-                    "online_users": 30
+                    "timestamp": "1546286461000",
+                    "online_users": "30"
                 }
             ]
         },
         {
             "service_id": "service3",
             "online_user_list": [{
-                    "timestamp": "2019-01-01 01:01:01",
-                    "online_users": 10
+                    "timestamp": "1546275661000",
+                    "online_users": "10"
                 },
                 {
-                    "timestamp": "2019-01-01 02:01:01",
-                    "online_users": 700
+                    "timestamp": "1546279261000",
+                    "online_users": "700"
                 },
                 {
-                    "timestamp": "2019-01-01 03:01:01",
-                    "online_users": 600
+                    "timestamp": "1546282861000",
+                    "online_users": "600"
                 },
                 {
-                    "timestamp": "2019-01-01 04:01:01",
-                    "online_users": 100
+                    "timestamp": "1546286461000",
+                    "online_users": "100"
                 }
             ]
         }, {
             "service_id": "service4",
             "online_user_list": [{
-                    "timestamp": "2019-01-01 01:01:01",
-                    "online_users": 300
+                    "timestamp": "1546275661000",
+                    "online_users": "300"
                 },
                 {
-                    "timestamp": "2019-01-01 02:01:01",
-                    "online_users": 500
+                    "timestamp": "1546279261000",
+                    "online_users": "500"
                 },
                 {
-                    "timestamp": "2019-01-01 03:01:01",
-                    "online_users": 100
+                    "timestamp": "1546282861000",
+                    "online_users": "100"
                 },
                 {
-                    "timestamp": "2019-01-01 04:01:01",
-                    "online_users": 180
+                    "timestamp": "1546286461000",
+                    "online_users": "180"
                 }
             ]
         }
 
 
     ]
+    }
+   
 }

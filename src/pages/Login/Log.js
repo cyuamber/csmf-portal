@@ -5,6 +5,8 @@ import { getCurrentUser } from 'utils/util';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 import './style.less';
+import { axiosget } from '../../utils/http';
+import APIS from '../../constant/apis'
 
 const history = createHashHistory();
 
@@ -13,8 +15,14 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                const {username, password} = values
                 window.localStorage.setItem("username", values.username);
+                axiosget(APIS.loginApi(username, password)).then( res => {
+                    const {result_header: {result_code}} = res
+                    if (result_code === '200') {
+                        console.log('登录成功')
+                    }
+                })
                 history.goBack();
             }
         });

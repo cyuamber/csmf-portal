@@ -9,48 +9,57 @@ function resolvePath(url) {
 }
 const APIS = {
     testapi: resolvePath('/home'),
-    traffic: resolvePath('/traffic'),
-    // traffic(queryTimestamp){
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/trafficData`)
-    // },
-    onlineUsers: resolvePath('/onlineUsers'),
-    // onlineUsers(queryTimestamp, queryNumber) {
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/onlineUsers`)
-    // },
-    bandwidth: resolvePath('/bandwidth'),
-    // bandwidth (queryTimestamp, queryNumber) {
-    //     return resolvePath(`/api/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/queryNumber/${queryNumber}/bandwidth`)
-    // },
-    getProvinceApi: resolvePath('/province'),
+    loginApi: (userId, password) => resolvePath(`/usecaseui/csmf/user/${userId}/password/${password} `),
     getAddressApi: resolvePath('/address'),
-    getCityApi: resolvePath('/city'),
-    getCountyApi: resolvePath('/county'),
-    getStreetApi: resolvePath('/street'),
-    createOrder: resolvePath(`/api/usecaseui/csmf/5gSlicing`),
-    getOrdersApi: ({status, pageNo, pageSize}) => {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/orders/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
-    },
-    getOrderDetailApi: (orderId) => {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/orderId/${orderId}/services`)
-    },
-    getBusinessListApi: ({status, pageNo, pageSize}) => {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
-    },
-    enableApi(serviceId) {
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/enable`)
-    },
-    disableApi(serviceId){
-        return resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}/disable`)
-    },
-    terminateApi: (serviceId) => resolvePath(`/api/usecaseui/csmf/5gSlicing/services/${serviceId}`),
-    
-    // 模拟
+    // getProvinceApi: resolvePath('/province'),
+    // getCityApi: resolvePath('/city'),
+    // getCountyApi: resolvePath('/county'),
+    // getStreetApi: resolvePath('/street'),
+    // 创建订单接口
+    createOrderApi: resolvePath(`/usecaseui/csmf/5gSlicing`),
+    // 获取订单管理列表
     getOrders: resolvePath('/orders'),
+    getOrdersApi: ({status, pageNo, pageSize}) => {
+        return resolvePath(`/usecaseui/csmf/5gSlicing/orders/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
+    },
+    // 获取业务管理列表
     getOrderDetail: resolvePath('/detail'),
+    getBusinessList: resolvePath('/business'),
+    getOrderServiceApi: (params) => {
+        if(typeof params === 'string') {
+            return resolvePath(`/usecaseui/csmf/5gSlicing/order/${params}/services`)
+        }else {
+            const { status, pageNo, pageSize} = params
+            return resolvePath(`/usecaseui/csmf/5gSlicing/services/status/${status}/pageNo/${pageNo}/pageSize/${pageSize}`)
+        }
+    },
+    // 激活
     enable: resolvePath('/enable'),
+    activateApi(serviceId) {
+        return resolvePath(`/usecaseui/csmf/5gSlicing/service/${serviceId}/activate`)
+    },
+    // 去激活
     disable: resolvePath('/disable'),
+    deactivateApi: (serviceId) => resolvePath(`/usecaseui/csmf/5gSlicing/service/${serviceId}/deactivate`),
+    // 终止
     terminate: resolvePath('/terminate'),
-    getBusinessList: resolvePath('/business')
+    terminateApi: (serviceId) => resolvePath(`/usecaseui/csmf/5gSlicing/service/${serviceId}`),
+    // 获取进度值
+    getProgress: resolvePath('/progress'),
+    getProgressApi: (serviceId) => resolvePath(`/usecaseui/csmf/5gSlicing/service/${serviceId}/progress`),
+    // 获取监控页面的图表数据
+    traffic: resolvePath('/traffic'),
+    trafficApi (queryTimestamp){
+        return resolvePath(`/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/trafficData`)
+    },
+    onlineUsers: resolvePath('/onlineUsers'),
+    onlineUsersApi(queryTimestamp) {
+        return resolvePath(`/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/onlineUsers`)
+    },
+    bandwidth: resolvePath('/bandwidth'),
+    bandwidthApi (queryTimestamp) {
+        return resolvePath(`/usecaseui/csmf/5gSlicing/queryTimestamp/${queryTimestamp}/bandwidth`)
+    },
 }
 
 export default APIS
