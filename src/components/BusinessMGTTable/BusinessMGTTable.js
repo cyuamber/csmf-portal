@@ -16,14 +16,12 @@ class BusinessMGTTable extends Component {
         axiosput(url(serviceId)).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
-                this.count = 0
                 this.getProgress(serviceId)
             }    
         })
     }
 
     getProgress = (serviceId) => { 
-        this.count ++
         const {getProgress, businesmgtTable, orderId, getTableData, status} = this.props
         let index = 0
         businesmgtTable.getIn(['tableData']).toJS().data.forEach((item, i) => {
@@ -34,14 +32,10 @@ class BusinessMGTTable extends Component {
         // APIS.getProgressApi(serviceId)
         // APIS.getProgress
         axiosget (APIS.getProgressApi(serviceId)).then ( (res) => {
-            let {result_header: {result_code}, result_body: {progress}} = res
+            let {result_header: {result_code}, result_body: {operation_progress}} = res
             if(result_code === "200"){
-                // 模拟
-                if(this.count >= 2){
-                    progress = 100
-                }
-                getProgress(index, progress)
-                if(progress !== 100) {
+                getProgress(index, operation_progress)
+                if(operation_progress !== 100) {
                     let timer = setTimeout (() => {
                         this.getProgress(serviceId)
                     },5000)
@@ -73,13 +67,12 @@ class BusinessMGTTable extends Component {
     }
 
     handleServiceEnd = (serviceId) => {
-        this.props.getStatusLoading(serviceId, true, 'terminate')
+        this.props.getStatusLoading(serviceId, true, 'delete')
         // axiosdelete(APIS.terminateApi(serviceId))
         // APIS.terminate
         axiosdelete(APIS.terminateApi(serviceId)).then(res => {
             let {result_header: {result_code}} = res
             if(result_code === '200'){
-                this.count = 0
                 this.getProgress(serviceId)
             }    
         })
@@ -88,10 +81,22 @@ class BusinessMGTTable extends Component {
     componentDidMount(){
         const { getTableData, status, orderId, getChartsData } = this.props
         if (orderId) {
-            getTableData(orderId)
+            getTableData(orderId).then( res => {
+                res.forEach (item => {
+                    if(item.progress !== 100){
+                        this.getProgress(item.service_id)
+                    }
+                })
+            })
         }else {
             if ( status ){
-                getTableData({ status, pageNo: 1, pageSize: 10 }) 
+                getTableData({ status, pageNo: 1, pageSize: 10 }).then( res => {
+                    res.forEach (item => {
+                        if(item.progress !== 100){
+                            this.getProgress(item.service_id)
+                        }
+                    })
+                })
             }else {
                 getTableData({ status: 'all', pageNo: 1, pageSize: 6 }, getChartsData)
             }
@@ -100,6 +105,7 @@ class BusinessMGTTable extends Component {
     }
     shouldComponentUpdate(nextProps){
         const { getTableData, status, orderId } = this.props
+
         if(orderId !== nextProps.orderId){
             getTableData(nextProps.orderId)
         }else if(status && status !== nextProps.status){
@@ -136,42 +142,30 @@ class BusinessMGTTable extends Component {
             {
                 title: '状态',
                 dataIndex: 'service_status',
-                render: (text, record) => {
-                    let status = text;
-                    if (record.last_operation_progress !== 100) {
-                        status = record.last_operation_type;
-                    }
-
-                    return status === 'activated' || 'activate' ? '已激活': '未激活'
-                }
-
+                render: text => text === 'activated' ? '已激活': '未激活'
             },
             {
                 title: '激活',
                 dataIndex: 'activation',
                 align: 'center',
                 render: (isActivate,record) => {
-                    let progress = 100;
-                    if (record.last_operation_progress !== 100 && record.last_operation_type !== 'terminante') {
-                        progress = record.last_operation_progress
-                        this.getProgress(record.service_id)
-                    }else if (record.progress && record.progress !== 100) {
-                        progress = record.progress
-                    }
                     return (
                         <Popconfirm 
                           placement="top" 
                           title={switchText} 
                           onConfirm={() => this.changeStatus(record.service_id, !isActivate)} 
-                          okText="Yes" cancelText="No">
+                          okText="Yes" cancelText="No"
+                          disabled={record.disabled}
+                        >
                             <Switch 
                                 defaultChecked={isActivate} 
                                 checked={isActivate}
                                 size='small' 
                                 loading={record.loading}
+                                disabled={record.disabled}
                             />
-                            {record.operation !== 'terminate' && progress !== 100 ? 
-                              <Progress size="small" percent={progress} status={progress === 100 ? 'success' : 'active'}/> : false
+                            {record.operation !== 'delete' && record.progress !== 100 ? 
+                              <Progress size="small" percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false
                             }
                         </Popconfirm>
                     )
@@ -183,13 +177,6 @@ class BusinessMGTTable extends Component {
                 align: 'center',
                 render: (text,record) => {
                     let isDisable = record.activation
-                    let progress = 100;
-                    if (record.last_operation_progress !== 100 && record.last_operation_type === 'terminante') {
-                        progress = record.last_operation_progress
-                        this.getProgress(record.service_id)
-                    }else if (record.progress && record.progress !== 100) {
-                        progress = record.progress
-                    }
                     return (
                         <Popconfirm 
                           placement="topLeft" 
@@ -204,8 +191,8 @@ class BusinessMGTTable extends Component {
                                 shape='circle' 
                                 disabled={isDisable || record.loading} 
                             />
-                            {record.operation === 'terminate' && progress !== 100 ?   
-                              <Progress size="small"  percent={progress} status={progress === 100 ? 'success' : 'active'}/> : false
+                            {record.operation === 'delete' && record.progress !== 100 ?   
+                              <Progress size="small"  percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false
                             }
                         </Popconfirm>
                     )

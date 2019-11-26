@@ -40,10 +40,13 @@ export default function reducer(state = initData, action){
                             .setIn(['operation'], action.operation)
             }))
         case 'UPDATA_PROGRESS':
+            console.log(action.index,state.setIn(['tableData', 'data']))
             return state.setIn(['tableData', 'data'], state.getIn(['tableData', 'data']).update(action.index, item => {
+                if(item){
                     return item
                             .setIn(['progress'], action.progress)
                             .setIn(['loading'], action.progress === 100 ? false : true)
+                }
             }))
         default: 
             return state

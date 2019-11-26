@@ -1,38 +1,52 @@
 import { axiosget } from '../../utils/http'
 import APIS from '../../constant/apis'
+import { reject, resolve } from 'any-promise'
 
 const changeLoading = bool => ({type: 'CHANGE_LOADING', bool})
 
 export const actions = dispatch => {
     return {
         getTableData (params, cb) {
-            dispatch(changeLoading(true))
-            // const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
-            // APIS.getOrderServiceApi(params)
-            axiosget(APIS.getOrderServiceApi(params)).then( res => {
-                const {result_body: {record_number, slicing_service_list}, result_header: {result_code}} = res
-                if(result_code === '200'){
-                    let tableData = null
-                    tableData = slicing_service_list.map((item, index) => {
+            return new Promise ((resolve, reject) => {
+                dispatch(changeLoading(true))
+                // const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
+                // APIS.getOrderServiceApi(params)
+                axiosget(APIS.getOrderServiceApi(params)).then( res => {
+                    const {result_body: {record_number, slicing_service_list}, result_header: {result_code}} = res
+                    if(result_code === '200'){
+                        let tableData = null
+                        tableData = slicing_service_list.map((item, index) => {
+                            if (typeof params === 'object') {
+                                const { pageNo, pageSize } = params
+                                item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1
+                            }
+                            item.activation = item.service_status === 'activated'? true : false
+                            // 判断是否成功创建，若未成功创建所有操作不可用
+                            if(item.last_operation_type === "create" && item.last_operation_progress !== 100) {
+                                item.disabled = true
+                            }
+                            // 判断是否有操作正在执行中
+                            else if (item.last_operation_progress !== 100) {
+                                item.loading = true
+                                item.progress = item.last_operation_progress
+                                item.operation = item.last_operation_type
+                            }
+                            // 若无操作执行中，不显示progress
+                            else {
+                                item.progress = 100
+                            }
+                            return item
+                        })
                         if (typeof params === 'object') {
                             const { pageNo, pageSize } = params
-                            item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1
+                            dispatch({type: 'SET_TABLE_LIST', total:record_number*1, pageNo, pageSize, data: tableData, bool: false})
+                            cb && typeof cb === 'function' && cb()
+                        } else {
+                            dispatch({type: 'SET_TABLE_DATA', data: tableData, bool: false})
                         }
-                        item.activation = item.service_status === 'activated'? true : false
-                        if(item.last_operation_progress !== 100) {
-                            item.loading = true
-                        }
-                        return item
-                    })
-                    if (typeof params === 'object') {
-                        const { pageNo, pageSize } = params
-                        dispatch({type: 'SET_TABLE_LIST', total:record_number*1, pageNo, pageSize, data: tableData, bool: false})
-                        cb && typeof cb === 'function' && cb()
-                    } else {
-                        dispatch({type: 'SET_TABLE_DATA', data: tableData, bool: false})
+                        resolve(tableData)
                     }
-
-                }
+                })
             })
         },
         changeLoading (bool) {

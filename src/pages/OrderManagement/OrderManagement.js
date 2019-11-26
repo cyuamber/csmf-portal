@@ -72,15 +72,16 @@ class OrderManagement extends React.Component {
                 title: '状态',
                 dataIndex: 'order_status',
                 key: 'order_status',
-                render: (text) => text === 'normal'? '进行中': '已终止'
+                render: (text) => text === 'terminated'? '订单完成': '订单受理中'
             },
             {
                 title: '详情',
                 dataIndex: 'detail',
                 key: 'detail',
-                render: (text, reacord) => (
-                    <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(reacord.order_id,e)}>查看详情</a>
-                    
+                render: (text, record) => (
+                    record.order_status === 'terminated' ? 
+                        <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(record.order_id,e)}>查看详情</a> : 
+                        <span className='ordermgt_detail_disabled'>查看详情</span>
                 )
             }
         ]
