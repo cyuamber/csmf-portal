@@ -242,3 +242,56 @@ export const ADDRESS = {
         ]
     }
 }
+
+export const ORDER_MGT_COLUMNS = [
+    {
+        title: '序号',
+        dataIndex: 'index',
+        key: 'index'
+    },
+    {
+        title: '订单编号',
+        dataIndex: 'order_id',
+        key: 'order_id'
+    },
+    {
+        title: '订单创建时间',
+        dataIndex: 'order_creation_time',
+        key: 'order_creation_time'
+    },
+    {
+        title: '使用期限（月）',
+        dataIndex: 'service_expiration_time',
+        key: 'service_expiration_time'
+    },
+    {
+        title: '状态',
+        dataIndex: 'order_status',
+        key: 'order_status',
+        render: (text) => text === 'terminated'? '订单完成': '订单受理中'
+    }
+]
+
+export const BUSINESS_MGT_COLUMNS = [
+    {
+        title: '切片业务ID',
+        dataIndex: 'service_id'
+    },
+    {
+        title: '切片业务名称',
+        dataIndex: 'service_name'
+    },
+    {
+        title: '切片类型',
+        dataIndex: 'service_type'
+    },
+    {
+        title: 'S-NSSAI',
+        dataIndex: 'service_snssai'
+    },
+    {
+        title: '状态',
+        dataIndex: 'service_status',
+        render: text => text === 'activated' ? '已激活': '未激活'
+    }
+]

@@ -1,23 +1,23 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next'
-import { Select } from 'antd'
-import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
-import { BUSINESS_SELECT_OPTIONS } from '../../constant/constants'
+import { withNamespaces } from 'react-i18next';
+import { Select } from 'antd';
+import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable';
+import { BUSINESS_SELECT_OPTIONS } from '../../constant/constants';
 
-import './BusinessManagement.less'
+import './BusinessManagement.less';
 
 class BusinessManagement extends React.Component {
 
     state = {
         status: 'all'
-    }
+    };
 
     selectStatus = (status) => {
-        this.setState({status})
+        this.setState({status});
     }
 
     render() {
-        const { t } = this.props
+        const { t } = this.props;
         
         return (
             <div className='businessmgt'>

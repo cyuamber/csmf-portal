@@ -48,14 +48,6 @@ class Homepage extends React.Component {
                     </div>
                 </div>
                 <div className="homepage_entry">
-                    {/* <Row type="flex" justify="space-around">
-                        {
-                            cardList.map((item, index) =>
-                                <Col key={index + 1} span={6}> <Qiuckcard key={index + 1} sourceData={item} /></Col>
-
-                            )
-                        }
-                    </Row> */}
                     {
                         cardList.map((item, index) =>
                             <Qiuckcard key={index + 1} sourceData={item} />
