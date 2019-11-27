@@ -29,7 +29,6 @@ class Appheader extends React.Component {
         this.props.history.go(0);
     }
     handleMenu(item) {
-        // console.log(item, "==>item")
         if (item.key === "detail") {
             this.props.history.push('/ordermonitor/detail');
         } else {
@@ -52,7 +51,7 @@ class Appheader extends React.Component {
             </Menu>
         return (
             <Header className="layout_header">
-                <div className="layout_header__logo" >{t('Project Title')}</div>
+                <div className="layout_header__logo">{t('Project Title')}</div>
                 <Menu
                     theme="dark"
                     mode="horizontal"
