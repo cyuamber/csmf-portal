@@ -1,7 +1,25 @@
-
 @media screen and (min-width: 1240px) {
     .homepage_card__top{
         height:372px;
+    }
+    .homepage_text {
+        left: 15%;
+        .homepage_text__main {
+            font-size: 34px;
+        }
+    }
+}
+@media screen and (max-width: 1240px) {
+    .homepage_text {
+        left: 9%;
+        .homepage_text__main {
+            font-size: 28px;
+        }
+    }
+}
+@media screen and (max-width: 1050px) {
+    .homepage_text {
+        left: 7%;
     }
 }
 @media screen and (max-width: 930px) {
@@ -19,12 +37,12 @@
     .homepage_text {
         position: absolute;
         top: 20%;
-        left: 15%;
         color: #ffffff;
+        transition: 1s;
 
         .homepage_text__main {
-            font-size: 34px;
             font-weight: bold;
+            transition: 1s;
         }
 
         .homepage_text__divid {
