@@ -13,18 +13,18 @@ import './BusinessOrderDetail.less';
 
 class BusinessOrderDetail extends Component {
 
-    getRules = title => ({required: true, message: `请输入${title}`})
+    getRules = title => ({ required: true, message: `请输入${title}` })
 
     getFormItem = () => {
         const { form: { getFieldDecorator } } = this.props;
         const { Item } = Form;
-        
-        return ORDER_CREATE_FORM.map( item => {
+
+        return ORDER_CREATE_FORM.map(item => {
             if (item.key === 'name') {
                 return (
                     <Col span={12} key={item.key}>
                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, { rules: [...item.rules, this.getRules(item.title)], validateFirst: true} )(<Input />)}
+                            {getFieldDecorator(item.key, { rules: [...item.rules, this.getRules(item.title)], validateFirst: true })(<Input />)}
                         </Item>
                     </Col>
                 )
@@ -34,8 +34,9 @@ class BusinessOrderDetail extends Component {
                         <Item label={item.title}>
                             <Popover placement="right" content={item.content} trigger="click">
                                 {getFieldDecorator(item.key, {
-                                    rules: [this.getRules(item.title), {validator: (rule, value, callback) => this.validator (item.content, rule, value, callback)}], 
-                                    validateFirst: true})(<Input />)}
+                                    rules: [this.getRules(item.title), { validator: (rule, value, callback) => this.validator(item.content, rule, value, callback) }],
+                                    validateFirst: true
+                                })(<Input />)}
                             </Popover>
                         </Item>
                     </Col>
@@ -43,12 +44,12 @@ class BusinessOrderDetail extends Component {
             } else if (item.options) {
                 return (
                     <Col span={12} key={item.key}>
-                            <Item label={item.title}>
-                                {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: item.options[0].value})(
-                                    <Select>
-                                        {item.options.map(ite => <Select.Option key={ite.value} >{ite.value}</Select.Option>)}
-                                    </Select>
-                                )}
+                        <Item label={item.title}>
+                            {getFieldDecorator(item.key, { rules: [{ required: true, message: `请选择${item.title}` }], initialValue: item.options[0].value })(
+                                <Select>
+                                    {item.options.map(ite => <Select.Option key={ite.value} >{ite.value}</Select.Option>)}
+                                </Select>
+                            )}
                         </Item>
                     </Col>
                 )
@@ -56,7 +57,7 @@ class BusinessOrderDetail extends Component {
                 return (
                     <Col key={item.key} span={12}>
                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: 'shared'})(
+                            {getFieldDecorator(item.key, { rules: [{ required: true, message: `请选择${item.title}` }], initialValue: 'shared' })(
                                 <Radio.Group>
                                     <Radio value="shared"> 共享 &nbsp;&nbsp; </Radio>
                                     <Radio value="non-shared"> 独占</Radio>
@@ -73,18 +74,18 @@ class BusinessOrderDetail extends Component {
         // 校验输入的必须为数字且不能以0开头
         if (!/^\d*$/.test(value)) {
             callback('只能输入数字');
-        } else if (!value.indexOf('0')){
+        } else if (!value.indexOf('0')) {
             callback(content);
         } else {
             // 限制取值范围
             let confine = content.slice(6);
             if (confine.indexOf('≥') === -1) {
                 confine = confine.split('-');
-                if ( value && (value*1 < confine[0] || value*1 > confine[1])) {
+                if (value && (value * 1 < confine[0] || value * 1 > confine[1])) {
                     callback(content);
                 }
             } else {
-                if (value && value*1 >= confine.slice(0)) {
+                if (value && value * 1 >= confine.slice(0)) {
                     callback(connect);
                 }
             }
@@ -104,7 +105,7 @@ class BusinessOrderDetail extends Component {
     }
 
     handleSubmit = () => {
-        this.areaSubmitList.forEach( item => {
+        this.areaSubmitList.forEach(item => {
             item();
         })
         this.props.form.validateFields((error, values) => {
@@ -114,9 +115,9 @@ class BusinessOrderDetail extends Component {
                 if (!flag) {
                     // 获取游牧性的key
                     let uEMobilityLevel = '';
-                    ORDER_CREATE_FORM.forEach( item => {
+                    ORDER_CREATE_FORM.forEach(item => {
                         if (item.key === 'uEMobilityLevel') {
-                            item.options.forEach( ite => {
+                            item.options.forEach(ite => {
                                 if (ite.value === values.uEMobilityLevel) {
                                     uEMobilityLevel = ite.key;
                                 }
@@ -124,15 +125,13 @@ class BusinessOrderDetail extends Component {
                         }
                     })
                     const slicing_order_info = { ...values, uEMobilityLevel: uEMobilityLevel, coverageArea: JSON.stringify(this.areaList) };
-                    axiospost(APIS.createOrderApi,{ slicing_order_info }).then(res => {
+                    axiospost(APIS.createOrderApi, { slicing_order_info }).then(res => {
                         if (res.result_header.result_code === '200') {
                             this.props.setBtnLoading(false);
                             this.props.history.push('/ordermgt');
                         }
-                    }) 
-                    
+                    })
                 }
-                
             }
             this.areaList = [];
         })
@@ -146,10 +145,10 @@ class BusinessOrderDetail extends Component {
         this.props.getAddressApi();
         this.areaList = [];
     }
-    
+
     render() {
         const { t } = this.props;
-        const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 }};
+        const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 } };
         const formItem = this.props.businessorder.get('formItem').toJS();
         const loading = this.props.businessorder.get('btnLoading');
 
@@ -166,23 +165,24 @@ class BusinessOrderDetail extends Component {
                             return (
                                 formItem.map((ite, index) => {
                                     let formItemLayout = null
-                                    if(ite === formItem[0]){
+                                    if (ite === formItem[0]) {
                                         formItemLayout = {
                                             label: item.title,
-                                            labelCol: {span: 10, offset: 0},
-                                            wrapperCol: {span: 11, offset: 2}
+                                            labelCol: { span: 10, offset: 0 },
+                                            wrapperCol: { span: 11, offset: 2 }
                                         }
-                                    }else{
+                                    } else {
                                         formItemLayout = {
-                                            wrapperCol: {span: 11, offset: 12}
+                                            wrapperCol: { span: 11, offset: 12 }
                                         }
                                     }
                                     return (
-                                        <Address formItemLayout={formItemLayout} key={ite.id} index={index} data={ite} getValues={this.getValues} addhandleSubmit={this.addhandleSubmit}/>
+                                        <Address formItemLayout={formItemLayout} key={ite.id} index={index} data={ite} getValues={this.getValues} addhandleSubmit={this.addhandleSubmit} />
                                     )
                                 })
                             )
-                        }}
+                        }
+                    }
                     )}
                     <div className="orderdetail_btns">
                         <Button onClick={this.handleOrderCancel}>取消</Button>

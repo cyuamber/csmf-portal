@@ -9,34 +9,34 @@ import { SELECT_OPTIONS, ORDER_MGT_COLUMNS } from '../../constant/constants';
 import './OrderManagement.less';
 
 class OrderManagement extends React.Component {
-    state = { 
+    state = {
         orderId: '',
         visible: false
     };
-    
+
     selectStatus = (status) => {
         this.props.changeTableLoading(true);
-        this.props.getTableData({status});
+        this.props.getTableData({ status });
     }
 
-    handleOpenDetail = (orderId,e) => {
+    handleOpenDetail = (orderId, e) => {
         this.setState({ visible: true, orderId });
         e.preventDefault();
     }
     pageChange = (pageNo, pageSize) => {
         this.props.changeTableLoading(true);
-        this.props.getTableData({pageNo, pageSize});
+        this.props.getTableData({ pageNo, pageSize });
     }
     pageSizeChange = (pageNo, pageSize) => {
         this.props.changeTableLoading(true);
-        this.props.getTableData({pageNo, pageSize});
+        this.props.getTableData({ pageNo, pageSize });
     }
 
     // modal
     handleCancel = () => {
-        this.setState({visible: false});
+        this.setState({ visible: false });
         // 清除定时器
-        this.timerList.forEach( item => {
+        this.timerList.forEach(item => {
             clearTimeout(item);
         })
     }
@@ -45,23 +45,22 @@ class OrderManagement extends React.Component {
         this.timerList = timerList;
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getTableData();
-      
-        this.timerList = []
+        this.timerList = [];
     }
     render() {
         const { t } = this.props;
         const tableData = this.props.ordermgt.get('tableData').toJS();
-        const {visible} = this.state;
+        const { visible } = this.state;
         const lastColumns = [{
             title: '详情',
             dataIndex: 'detail',
             key: 'detail',
             render: (text, record) => (
-                record.order_status === 'terminated' ? 
-                    <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(record.order_id,e)}>查看详情</a> : 
-                    <span className='ordermgt_detail_disabled'>查看详情</span>
+                record.order_status === 'terminated' ?
+                    <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(record.order_id, e)}>{t('View Detail')}</a> :
+                    <span className='ordermgt_detail_disabled'> {t('View Detail')}</span>
             )
         }]
         const columns = [...ORDER_MGT_COLUMNS, ...lastColumns]
@@ -69,11 +68,11 @@ class OrderManagement extends React.Component {
         const pageNo = this.props.ordermgt.get('pageNo');
         const pageSize = this.props.ordermgt.get('pageSize');
         const pagination = {
-            showSizeChanger: true, 
-            total: tableData.total, 
+            showSizeChanger: true,
+            total: tableData.total,
             current: pageNo,
             pageSize,
-            onChange: this.pageChange, 
+            onChange: this.pageChange,
             onShowSizeChange: this.pageSizeChange
         };
         return (
@@ -84,36 +83,36 @@ class OrderManagement extends React.Component {
                 <div className='ordermgt_content'>
                     <div className='ordermgt_query'>
                         <span className='orderStatus_select-label'>状态 ：</span>
-                        <Select 
-                          className='orderStatus_select' 
-                          defaultValue='all' 
-                          onChange={this.selectStatus}
+                        <Select
+                            className='orderStatus_select'
+                            defaultValue='all'
+                            onChange={this.selectStatus}
                         >
                             {SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
-                                            {item.name}
-                                        </Select.Option>
+                                    {item.name}
+                                </Select.Option>
                             })}
                         </Select>
                     </div>
-                    <Table 
-                      columns={columns} 
-                      dataSource={tableData.data}
-                      rowKey={(record, index) => index}
-                      loading={tableData.loading}
-                      pagination={pagination}
+                    <Table
+                        columns={columns}
+                        dataSource={tableData.data}
+                        rowKey={(record, index) => index}
+                        loading={tableData.loading}
+                        pagination={pagination}
                     />
                 </div>
                 <Modal
-                    title={t('Slicing Order Management')}
+                    title={t('Slicing Order Detail')}
                     visible={visible}
                     onCancel={this.handleCancel}
                     centered
                     width={1000}
-                    bodyStyle={{height: '400px'}}
+                    bodyStyle={{ height: '400px' }}
                     footer={null}
                 >
-                    <BusinessMGTTable orderId={orderId} getTimerList={this.getTimerList}/>
+                    <BusinessMGTTable orderId={orderId} getTimerList={this.getTimerList} />
                 </Modal>
             </div>
         );
@@ -121,6 +120,6 @@ class OrderManagement extends React.Component {
 }
 
 export default withNamespaces()(connect(
-    state => ({ordermgt: state.ordermgt}),
+    state => ({ ordermgt: state.ordermgt }),
     actions
 )(OrderManagement));

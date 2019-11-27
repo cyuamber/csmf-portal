@@ -1,84 +1,84 @@
 export const ORDER_CREATE_FORM = [{
-        title: '切片业务名称',
-        key: 'name',
-        rules: [
-            {
-                max: 50,
-                message: '切片业务名称不能超过50个字符'
-            }
-        ]
-    },
-    {
-        title: '连接规模数',
-        key: 'maxNumberofUEs',
-        content: '取值范围： 1-100000'
-    },
-    {
-        title: '用户下行带宽（Mbps）',
-        key: 'expDataRateDL',
-        content: '取值范围： 100-3000'
-    },
-    {
-        title: '时延',
-        key: 'latency',
-        content: '取值范围： 10-200'
-    },
-    {
-        title: '用户上行带宽（Mbps）',
-        key: 'expDataRateUL',
-        content: '取值范围： 100-3000'
-    },
-    {
-        title: '共享等级',
-        key: 'resourceSharingLevel'
-    },
-    {
-        title: '游牧性',
-        key: 'uEMobilityLevel',
-        options: [
-            {
-                value: '不可游牧',
-                key: 'stationary'
-            },
-            {
-                value: '固定接入',
-                key: 'nomadic'
-            },
-            {
-                value: '限定范围内可游牧',
-                key: 'spatially restricted mobility'
-            },
-            {
-                value: '自由游牧',
-                key: 'fully mobility'
-            }
-        ]
-    },
-    // {
-    //     title: '激活因子（%）',
-    //     key: 'factor',
-    //     content: '取值范围： 1-100'
-    // },
-    {
-        title: '使用期限（月）',
-        key: 'useInterval',
-        content: '取值范围： ≥1'
-    },
-    {
-        title: '区域',
-        key: 'coverageArea'
-    }
+    title: '切片业务名称',
+    key: 'name',
+    rules: [
+        {
+            max: 50,
+            message: '切片业务名称不能超过50个字符'
+        }
+    ]
+},
+{
+    title: '连接规模数',
+    key: 'maxNumberofUEs',
+    content: '取值范围： 1-100000'
+},
+{
+    title: '用户下行带宽（Mbps）',
+    key: 'expDataRateDL',
+    content: '取值范围： 100-3000'
+},
+{
+    title: '时延',
+    key: 'latency',
+    content: '取值范围： 10-200'
+},
+{
+    title: '用户上行带宽（Mbps）',
+    key: 'expDataRateUL',
+    content: '取值范围： 100-3000'
+},
+{
+    title: '共享等级',
+    key: 'resourceSharingLevel'
+},
+{
+    title: '游牧性',
+    key: 'uEMobilityLevel',
+    options: [
+        {
+            value: '不可游牧',
+            key: 'stationary'
+        },
+        {
+            value: '固定接入',
+            key: 'nomadic'
+        },
+        {
+            value: '限定范围内可游牧',
+            key: 'spatially restricted mobility'
+        },
+        {
+            value: '自由游牧',
+            key: 'fully mobility'
+        }
+    ]
+},
+// {
+//     title: '激活因子（%）',
+//     key: 'factor',
+//     content: '取值范围： 1-100'
+// },
+{
+    title: '使用期限（月）',
+    key: 'useInterval',
+    content: '取值范围： ≥1'
+},
+{
+    title: '区域',
+    key: 'coverageArea'
+}
 ]
 
 export const SELECT_OPTIONS = [
     {
         name: '全部',
         key: 'all'
-    }, 
+    },
     {
         name: '进行中',
         key: 'carryOut'
-    }, 
+    },
     {
         name: '已终止',
         key: 'Terminated'
@@ -105,7 +105,7 @@ export const ADDRESS = {
         "result_code": 200,
         "result_message": "Successfully"
     },
-    
+
     "result_body": {
         "province": [
             {
@@ -193,49 +193,49 @@ export const ADDRESS = {
                     "id": "201",
                     "name": "上海市",
                     "county": [{
-                            "id": "2001",
-                            "name": "浦东新区",
-                            "street": [
-                                {
-                                    "id": "200101",
-                                    "name": "陆家嘴街道"
-                                },
-                                {
-                                    "id": "200102",
-                                    "name": "周家渡街道"
-                                },
-                                {
-                                    "id": "200103",
-                                    "name": "塘桥街道"
-                                },
-                                {
-                                    "id": "200104",
-                                    "name": "南码头路街道"
-                                }
-                            ]
-                        },
-                        {
-                            "id": "2002",
-                            "name": "静安区",
-                            "street": [
-                                {
-                                    "id": "200201",
-                                    "name": "江宁路街道"
-                                },
-                                {
-                                    "id": "200202",
-                                    "name": "静安寺街道"
-                                },
-                                {
-                                    "id": "200203",
-                                    "name": "南京西路街道"
-                                },
-                                {
-                                    "id": "200204",
-                                    "name": "曹家渡街道"
-                                }
-                            ]
-                        }
+                        "id": "2001",
+                        "name": "浦东新区",
+                        "street": [
+                            {
+                                "id": "200101",
+                                "name": "陆家嘴街道"
+                            },
+                            {
+                                "id": "200102",
+                                "name": "周家渡街道"
+                            },
+                            {
+                                "id": "200103",
+                                "name": "塘桥街道"
+                            },
+                            {
+                                "id": "200104",
+                                "name": "南码头路街道"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "2002",
+                        "name": "静安区",
+                        "street": [
+                            {
+                                "id": "200201",
+                                "name": "江宁路街道"
+                            },
+                            {
+                                "id": "200202",
+                                "name": "静安寺街道"
+                            },
+                            {
+                                "id": "200203",
+                                "name": "南京西路街道"
+                            },
+                            {
+                                "id": "200204",
+                                "name": "曹家渡街道"
+                            }
+                        ]
+                    }
                     ]
                 }]
             }
@@ -268,7 +268,7 @@ export const ORDER_MGT_COLUMNS = [
         title: '状态',
         dataIndex: 'order_status',
         key: 'order_status',
-        render: (text) => text === 'terminated'? '订单完成': '订单受理中'
+        render: (text) => text === 'terminated' ? '订单完成' : '订单受理中'
     }
 ]
 
@@ -292,6 +292,6 @@ export const BUSINESS_MGT_COLUMNS = [
     {
         title: '状态',
         dataIndex: 'service_status',
-        render: text => text === 'activated' ? '已激活': '未激活'
+        render: text => text === 'activated' ? '已激活' : '未激活'
     }
 ]
