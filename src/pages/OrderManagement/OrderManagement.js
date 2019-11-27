@@ -1,92 +1,81 @@
 import React from 'react';
 import { withNamespaces } from 'react-i18next';
 import { Select, Table, Modal } from 'antd';
-import { connect } from 'react-redux'
-import { actions } from './actions'
-import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable'
-import { SELECT_OPTIONS } from '../../constant/constants'
+import { connect } from 'react-redux';
+import { actions } from './actions';
+import BusinessMGTTable from '../../components/BusinessMGTTable/BusinessMGTTable';
+import { SELECT_OPTIONS, ORDER_MGT_COLUMNS } from '../../constant/constants';
 
-import './OrderManagement.less'
+import './OrderManagement.less';
 
 class OrderManagement extends React.Component {
     state = { 
         orderId: '',
         visible: false
-    }
+    };
     
     selectStatus = (status) => {
-        this.props.changeTableLoading(true)
-        this.props.getTableData({status})
+        this.props.changeTableLoading(true);
+        this.props.getTableData({status});
     }
 
     handleOpenDetail = (orderId,e) => {
-        this.setState({visible: true})
-        // this.props.getOrderDetail(orderId)
-        this.setState ({orderId})
-        e.preventDefault()
+        this.setState({ visible: true, orderId });
+        e.preventDefault();
     }
     pageChange = (pageNo, pageSize) => {
-        this.props.changeTableLoading(true)
-        this.props.getTableData({pageNo, pageSize})
+        this.props.changeTableLoading(true);
+        this.props.getTableData({pageNo, pageSize});
     }
     pageSizeChange = (pageNo, pageSize) => {
-        this.props.changeTableLoading(true)
-        this.props.getTableData({pageNo, pageSize})
+        this.props.changeTableLoading(true);
+        this.props.getTableData({pageNo, pageSize});
     }
 
     // modal
     handleCancel = () => {
-        this.setState({visible: false})
+        this.setState({visible: false});
+        // 清除定时器
+        this.timerList.forEach( item => {
+            clearTimeout(item);
+        })
+    }
+
+    getTimerList = timerList => {
+        this.timerList = timerList;
     }
 
     componentDidMount(){
-        this.props.getTableData()
+        this.props.getTableData();
+      
+        this.timerList = []
     }
     render() {
         const { t } = this.props;
-        const tableData = this.props.ordermgt.get('tableData').toJS()
-        const {visible} = this.state
-
-        const columns = [
-            {
-                title: '序号',
-                dataIndex: 'index',
-                key: 'index'
-            },
-            {
-                title: '订单编号',
-                dataIndex: 'order_id',
-                key: 'order_id'
-            },
-            {
-                title: '订单创建时间',
-                dataIndex: 'order_creation_time',
-                key: 'order_creation_time'
-            },
-            {
-                title: '使用期限（月）',
-                dataIndex: 'service_expiration_time',
-                key: 'service_expiration_time'
-            },
-            {
-                title: '状态',
-                dataIndex: 'order_status',
-                key: 'order_status',
-                render: (text) => text === 'normal'? '进行中': '已终止'
-            },
-            {
-                title: '详情',
-                dataIndex: 'detail',
-                key: 'detail',
-                render: (text, reacord) => (
-                    <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(reacord.order_id,e)}>查看详情</a>
-                    
-                )
-            }
-        ]
-        const { orderId } = this.state
-        const pageNo = this.props.ordermgt.get('pageNo')
-        const pageSize = this.props.ordermgt.get('pageSize')
+        const tableData = this.props.ordermgt.get('tableData').toJS();
+        const {visible} = this.state;
+        const lastColumns = [{
+            title: '详情',
+            dataIndex: 'detail',
+            key: 'detail',
+            render: (text, record) => (
+                record.order_status === 'terminated' ? 
+                    <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(record.order_id,e)}>查看详情</a> : 
+                    <span className='ordermgt_detail_disabled'>查看详情</span>
+            )
+        }]
+        const columns = [...ORDER_MGT_COLUMNS, ...lastColumns]
+        const { orderId } = this.state;
+        const pageNo = this.props.ordermgt.get('pageNo');
+        const pageSize = this.props.ordermgt.get('pageSize');
+        const pagination = {
+            showSizeChanger: true, 
+            total: tableData.total, 
+            current: pageNo,
+            pageSize,
+            onChange: this.pageChange, 
+            onShowSizeChange: this.pageSizeChange
+        };
         return (
             <div className='ordermgt'>
                 <h2 className='ordermgt_title'>
@@ -112,14 +101,7 @@ class OrderManagement extends React.Component {
                       dataSource={tableData.data}
                       rowKey={(record, index) => index}
                       loading={tableData.loading}
-                      pagination={{
-                        showSizeChanger: true, 
-                        total: tableData.total, 
-                        current: pageNo,
-                        pageSize: pageSize,
-                        onChange: this.pageChange, 
-                        onShowSizeChange: this.pageSizeChange
-                      }}
+                      pagination={pagination}
                     />
                 </div>
                 <Modal
@@ -131,7 +113,7 @@ class OrderManagement extends React.Component {
                     bodyStyle={{height: '400px'}}
                     footer={null}
                 >
-                    <BusinessMGTTable orderId={orderId} />
+                    <BusinessMGTTable orderId={orderId} getTimerList={this.getTimerList}/>
                 </Modal>
             </div>
         );
@@ -141,4 +123,4 @@ class OrderManagement extends React.Component {
 export default withNamespaces()(connect(
     state => ({ordermgt: state.ordermgt}),
     actions
-)(OrderManagement))
+)(OrderManagement));

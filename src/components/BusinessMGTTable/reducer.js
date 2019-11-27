@@ -1,4 +1,4 @@
-import I from 'immutable'
+import I from 'immutable';
 
 const initData = I.fromJS({
     tableData: {
@@ -8,44 +8,46 @@ const initData = I.fromJS({
     },
     page_no: 1,
     page_size: 10
-})
+});
 
 export default function reducer(state = initData, action){
     switch (action.type) {
         case 'CHANGE_LOADING':
             return state
                     .setIn(['tableData', 'loading'], action.bool)
-                    .setIn(['tableData', 'data'], I.fromJS([]))
+                    .setIn(['tableData', 'data'], I.fromJS([]));
         case 'SET_TABLE_LIST': 
             return state
                     .setIn(['tableData', 'total'], action.total)
                     .setIn(['page_no'], action.pageNo)
                     .setIn(['page_size'], action.pageSize)
                     .setIn(['tableData', 'data'], I.fromJS(action.data))
-                    .setIn(['tableData', 'loading'], action.bool)
+                    .setIn(['tableData', 'loading'], action.bool);
         case 'SET_TABLE_DATA':
             return state
                     .setIn(['tableData', 'data'], I.fromJS(action.data))
-                    .setIn(['tableData', 'loading'], action.bool)
+                    .setIn(['tableData', 'loading'], action.bool);
         case 'SET_STATUS_LOADING':
-            let index = 0
+            let index = 0;
             state.getIn(['tableData']).toJS().data.forEach((item, i) => {
                 if(item.service_id === action.serviceId){
-                    index = i
+                    index = i;
                 }
             });
             return state.setIn(['tableData', 'data'], state.getIn(['tableData', 'data']).update(index, item => {
                     return item
                             .setIn(['loading'], action.bool)
-                            .setIn(['operation'], action.operation)
+                            .setIn(['operation'], action.operation);
             }))
         case 'UPDATA_PROGRESS':
             return state.setIn(['tableData', 'data'], state.getIn(['tableData', 'data']).update(action.index, item => {
+                if(item){
                     return item
                             .setIn(['progress'], action.progress)
-                            .setIn(['loading'], action.progress === 100 ? false : true)
+                            .setIn(['loading'], action.progress === 100 ? false : true);
+                }
             }))
         default: 
-            return state
+            return state;
     }
 }

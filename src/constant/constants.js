@@ -10,7 +10,7 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '连接规模数',
-        key: 'connectCount',
+        key: 'maxNumberofUEs',
         content: '取值范围： 1-100000'
     },
     {
@@ -20,7 +20,7 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '时延',
-        key: 'delay',
+        key: 'latency',
         content: '取值范围： 10-200'
     },
     {
@@ -30,12 +30,29 @@ export const ORDER_CREATE_FORM = [{
     },
     {
         title: '共享等级',
-        key: 'shareLevel'
+        key: 'resourceSharingLevel'
     },
     {
         title: '游牧性',
-        key: 'nomadic',
-        options: ['不可游牧', '固定接入', '限定范围内可游牧', '自由游牧']
+        key: 'uEMobilityLevel',
+        options: [
+            {
+                value: '不可游牧',
+                key: 'stationary'
+            },
+            {
+                value: '固定接入',
+                key: 'nomadic'
+            },
+            {
+                value: '限定范围内可游牧',
+                key: 'spatially restricted mobility'
+            },
+            {
+                value: '自由游牧',
+                key: 'fully mobility'
+            }
+        ]
     },
     // {
     //     title: '激活因子（%）',
@@ -44,12 +61,12 @@ export const ORDER_CREATE_FORM = [{
     // },
     {
         title: '使用期限（月）',
-        key: 'timeLimit',
+        key: 'useInterval',
         content: '取值范围： ≥1'
     },
     {
         title: '区域',
-        key: 'area'
+        key: 'coverageArea'
     }
 ]
 
@@ -225,3 +242,56 @@ export const ADDRESS = {
         ]
     }
 }
+
+export const ORDER_MGT_COLUMNS = [
+    {
+        title: '序号',
+        dataIndex: 'index',
+        key: 'index'
+    },
+    {
+        title: '订单编号',
+        dataIndex: 'order_id',
+        key: 'order_id'
+    },
+    {
+        title: '订单创建时间',
+        dataIndex: 'order_creation_time',
+        key: 'order_creation_time'
+    },
+    {
+        title: '使用期限（月）',
+        dataIndex: 'service_expiration_time',
+        key: 'service_expiration_time'
+    },
+    {
+        title: '状态',
+        dataIndex: 'order_status',
+        key: 'order_status',
+        render: (text) => text === 'terminated'? '订单完成': '订单受理中'
+    }
+]
+
+export const BUSINESS_MGT_COLUMNS = [
+    {
+        title: '切片业务ID',
+        dataIndex: 'service_id'
+    },
+    {
+        title: '切片业务名称',
+        dataIndex: 'service_name'
+    },
+    {
+        title: '切片类型',
+        dataIndex: 'service_type'
+    },
+    {
+        title: 'S-NSSAI',
+        dataIndex: 'service_snssai'
+    },
+    {
+        title: '状态',
+        dataIndex: 'service_status',
+        render: text => text === 'activated' ? '已激活': '未激活'
+    }
+]

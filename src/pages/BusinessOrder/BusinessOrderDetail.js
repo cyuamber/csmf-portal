@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { actions } from './actions'
+import { withNamespaces } from 'react-i18next';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { actions } from './actions';
 import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover } from "antd";
-import { ORDER_CREATE_FORM } from '../../constant/constants'
-import Address from './Address'
-import { axiospost } from '../../utils/http'
-import APIS from '../../constant/apis'
+import { ORDER_CREATE_FORM } from '../../constant/constants';
+import Address from './Address';
+import { axiospost } from '../../utils/http';
+import APIS from '../../constant/apis';
 
 import './BusinessOrderDetail.less';
 
@@ -17,7 +17,7 @@ class BusinessOrderDetail extends Component {
 
     getFormItem = () => {
         const { form: { getFieldDecorator } } = this.props;
-        const { Item } = Form
+        const { Item } = Form;
         
         return ORDER_CREATE_FORM.map( item => {
             if (item.key === 'name') {
@@ -44,22 +44,22 @@ class BusinessOrderDetail extends Component {
                 return (
                     <Col span={12} key={item.key}>
                             <Item label={item.title}>
-                                {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: item.options[0]})(
+                                {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: item.options[0].value})(
                                     <Select>
-                                        {item.options.map(item => <Select.Option key={item}>{item}</Select.Option>)}
+                                        {item.options.map(ite => <Select.Option key={ite.value} >{ite.value}</Select.Option>)}
                                     </Select>
                                 )}
                         </Item>
                     </Col>
                 )
-            } else if (item.key === 'shareLevel') {
+            } else if (item.key === 'resourceSharingLevel') {
                 return (
                     <Col key={item.key} span={12}>
                         <Item label={item.title}>
-                            {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: 'share'})(
+                            {getFieldDecorator(item.key, {rules: [{required: true, message: `请选择${item.title}`}], initialValue: 'shared'})(
                                 <Radio.Group>
-                                    <Radio value="share"> 共享 &nbsp;&nbsp; </Radio>
-                                    <Radio value="self"> 独占</Radio>
+                                    <Radio value="shared"> 共享 &nbsp;&nbsp; </Radio>
+                                    <Radio value="non-shared"> 独占</Radio>
                                 </Radio.Group>
                             )}
                         </Item>
@@ -72,62 +72,69 @@ class BusinessOrderDetail extends Component {
     validator = (content, rule, value, callback) => {
         // 校验输入的必须为数字且不能以0开头
         if (!/^\d*$/.test(value)) {
-            callback('只能输入数字')
+            callback('只能输入数字');
         } else if (!value.indexOf('0')){
-            callback(content)
+            callback(content);
         } else {
             // 限制取值范围
-            let confine = content.slice(6)
+            let confine = content.slice(6);
             if (confine.indexOf('≥') === -1) {
-                confine = confine.split('-')
+                confine = confine.split('-');
                 if ( value && (value*1 < confine[0] || value*1 > confine[1])) {
-                    callback(content)
+                    callback(content);
                 }
             } else {
-                if ( value && value*1 >= confine.slice(0)) {
-                    callback(connect)
+                if (value && value*1 >= confine.slice(0)) {
+                    callback(connect);
                 }
             }
         }
-        callback()
+        callback();
     }
 
     getValues = areaObj => {
-        this.areaList.push(areaObj)
+        this.areaList.push(areaObj);
     }
 
     addhandleSubmit = event => {
-        if(!this.areaSubmitList) {
-            this.areaSubmitList = []
+        if (!this.areaSubmitList) {
+            this.areaSubmitList = [];
         }
-        this.areaSubmitList.push(event)
+        this.areaSubmitList.push(event);
     }
 
     handleSubmit = () => {
         this.areaSubmitList.forEach( item => {
-            item()
+            item();
         })
         this.props.form.validateFields((error, values) => {
             if (!error) {
-                this.props.setBtnLoading(true)
-                let flag = this.areaList.includes(null)
-                if(!flag){
-                    // 模拟请求
-                    let slicing_order_info = {...values,coverageArea: JSON.stringify(this.areaList)}
-                    axiospost(APIS.createOrderApi,{slicing_order_info}).then(res => {
-                        if(res.result_header.result_code === '200'){
-                            setTimeout(() => {
-                                console.log('创建成功')
-                                this.props.setBtnLoading(false)
-                                this.props.history.push('/ordermgt');
-                            },2000)
+                this.props.setBtnLoading(true);
+                const flag = this.areaList.includes(null);
+                if (!flag) {
+                    // 获取游牧性的key
+                    let uEMobilityLevel = '';
+                    ORDER_CREATE_FORM.forEach( item => {
+                        if (item.key === 'uEMobilityLevel') {
+                            item.options.forEach( ite => {
+                                if (ite.value === values.uEMobilityLevel) {
+                                    uEMobilityLevel = ite.key;
+                                }
+                            })
+                        }
+                    })
+                    const slicing_order_info = { ...values, uEMobilityLevel: uEMobilityLevel, coverageArea: JSON.stringify(this.areaList) };
+                    axiospost(APIS.createOrderApi,{ slicing_order_info }).then(res => {
+                        if (res.result_header.result_code === '200') {
+                            this.props.setBtnLoading(false);
+                            this.props.history.push('/ordermgt');
                         }
                     }) 
                     
                 }
                 
             }
-            this.areaList = []
+            this.areaList = [];
         })
     }
 
@@ -136,16 +143,15 @@ class BusinessOrderDetail extends Component {
     }
 
     componentDidMount() {
-        // this.props.getProvinceList()
-        this.props.getAddressApi()
-        this.areaList = []
+        this.props.getAddressApi();
+        this.areaList = [];
     }
     
     render() {
-        const { t } = this.props
-        const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 }}
-        const formItem = this.props.businessorder.get('formItem').toJS()
-        const loading = this.props.businessorder.get('btnLoading')
+        const { t } = this.props;
+        const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 }};
+        const formItem = this.props.businessorder.get('formItem').toJS();
+        const loading = this.props.businessorder.get('btnLoading');
 
         return (
             <div className="orderdetail">
@@ -156,7 +162,7 @@ class BusinessOrderDetail extends Component {
                         </Row>
                     </Form>
                     {ORDER_CREATE_FORM.map(item => {
-                        if (item.key === 'area') {
+                        if (item.key === 'coverageArea') {
                             return (
                                 formItem.map((ite, index) => {
                                     let formItemLayout = null

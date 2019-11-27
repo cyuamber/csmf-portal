@@ -1,177 +1,150 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { actions } from './actions'
-import { Button, Table, Switch, Popconfirm, Progress } from 'antd'
-import { axiosput, axiosdelete, axiosget } from '../../utils/http'
-import APIS from '../../constant/apis'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { actions } from './actions';
+import { Button, Table, Switch, Popconfirm, Progress } from 'antd';
+import { axiosput, axiosdelete, axiosget } from '../../utils/http';
+import APIS from '../../constant/apis';
+import { BUSINESS_MGT_COLUMNS } from '../../constant/constants';
 
-import'./stype.less'
+import'./stype.less';
 
 class BusinessMGTTable extends Component {
     changeStatus = (serviceId, checked) => {
-        this.props.getStatusLoading(serviceId, true, 'activate')
-        const url = checked ? APIS.activateApi : APIS.deactivateApi 
+        this.props.getStatusLoading(serviceId, true, 'activate');
+        const url = checked ? APIS.activateApi : APIS.deactivateApi; 
         // const url = checked ? APIS.enable : APIS.disable 
         // axiosput(url)
         axiosput(url(serviceId)).then(res => {
-            let {result_header: {result_code}} = res
+            const {result_header: {result_code}} = res;
             if(result_code === '200'){
-                this.count = 0
-                this.getProgress(serviceId)
+                this.getProgress(serviceId);
             }    
         })
     }
 
     getProgress = (serviceId) => { 
-        this.count ++
-        const {getProgress, businesmgtTable, orderId, getTableData, status} = this.props
-        let index = 0
+        const { getProgress, businesmgtTable, orderId, getTableData, status, getTimerList } = this.props;
+        let index = 0;
         businesmgtTable.getIn(['tableData']).toJS().data.forEach((item, i) => {
             if(item.service_id === serviceId){
-                index = i
+                index = i;;
             }
         });
         // APIS.getProgressApi(serviceId)
         // APIS.getProgress
         axiosget (APIS.getProgressApi(serviceId)).then ( (res) => {
-            let {result_header: {result_code}, result_body: {progress}} = res
+            const {result_header: {result_code}, result_body: {operation_progress}} = res;
             if(result_code === "200"){
-                // 模拟
-                if(this.count >= 2){
-                    progress = 100
-                }
-                getProgress(index, progress)
-                if(progress !== 100) {
-                    let timer = setTimeout (() => {
-                        this.getProgress(serviceId)
+                getProgress(index, operation_progress);
+                if(operation_progress !== 100) {
+                    const timer = setTimeout (() => {
+                        this.getProgress(serviceId);
                     },5000)
-                    this.timerList.push(timer)
+                    this.timerList.push(timer);
+                    getTimerList && getTimerList(this.timerList);
                 }else {
                     // 更新表格
-                    setTimeout(() => {
-                        if(!status){
-                            getTableData(orderId)
-                        }else {
-                            const pageNo = businesmgtTable.get('page_no')
-                            const pageSize = businesmgtTable.get('page_size')
-                            getTableData({status, pageNo, pageSize})
-                        }
-                    },2000)
+                    if(!status){
+                        getTableData(orderId);
+                    }else {
+                        const pageNo = businesmgtTable.get('page_no');
+                        const pageSize = businesmgtTable.get('page_size');
+                        getTableData({status, pageNo, pageSize});
+                    }
                 }
-            }
+            };
         })
     }
 
     pageChange = (pageNo, pageSize) => {
-        let { status = 'all', getTableData, getChartsData } = this.props
-        getTableData({status, pageNo, pageSize}, getChartsData)
+        const { status = 'all', getTableData, getChartsData } = this.props;
+        getTableData({status, pageNo, pageSize}, getChartsData);
     }
 
     pageSizeChange = (pageNo, pageSize) => {
-        let { status = 'all', getTableData, getChartsData } = this.props
-        getTableData({status, pageNo, pageSize}, getChartsData)
+        const { status = 'all', getTableData, getChartsData } = this.props;
+        getTableData({status, pageNo, pageSize}, getChartsData);
     }
 
     handleServiceEnd = (serviceId) => {
-        this.props.getStatusLoading(serviceId, true, 'terminate')
+        this.props.getStatusLoading(serviceId, true, 'delete');
         // axiosdelete(APIS.terminateApi(serviceId))
         // APIS.terminate
         axiosdelete(APIS.terminateApi(serviceId)).then(res => {
-            let {result_header: {result_code}} = res
+            const {result_header: {result_code}} = res;
             if(result_code === '200'){
-                this.count = 0
-                this.getProgress(serviceId)
+                this.getProgress(serviceId);
             }    
         })
     }
 
-    componentDidMount(){
-        const { getTableData, status, orderId, getChartsData } = this.props
+    componentDidMount(){;
+        const { getTableData, status, orderId, getChartsData } = this.props;
         if (orderId) {
-            getTableData(orderId)
+            getTableData(orderId).then( res => {
+                res.forEach (item => {
+                    if(item.progress !== 100){
+                        this.getProgress(item.service_id);
+                    }
+                })
+            })
         }else {
             if ( status ){
-                getTableData({ status, pageNo: 1, pageSize: 10 }) 
+                getTableData({ status, pageNo: 1, pageSize: 10 }).then( res => {
+                    res.forEach (item => {
+                        if(item.progress !== 100){
+                            this.getProgress(item.service_id);
+                        }
+                    })
+                })
             }else {
-                getTableData({ status: 'all', pageNo: 1, pageSize: 6 }, getChartsData)
+                getTableData({ status: 'all', pageNo: 1, pageSize: 6 }, getChartsData);
             }
         }
-        this.timerList = []
+        this.timerList = [];
     }
     shouldComponentUpdate(nextProps){
-        const { getTableData, status, orderId } = this.props
+        const { getTableData, status, orderId } = this.props;
+
         if(orderId !== nextProps.orderId){
-            getTableData(nextProps.orderId)
+            getTableData(nextProps.orderId);
         }else if(status && status !== nextProps.status){
-            getTableData({status: nextProps.status, pageNo: 1, pageSize: 10})
+            getTableData({status: nextProps.status, pageNo: 1, pageSize: 10});
         }
-        return true
+        return true;
     }
     componentWillUnmount () {
         this.timerList.forEach( item => {
-            clearTimeout(item)
+            clearTimeout(item);
         })
     }
-
+;
     render() {
-        const btnText = 'Are you sure you want to terminate this task?'
-        const switchText = 'Are you sure you want to perform this task?'
-        const columns = [
-            {
-                title: '切片业务ID',
-                dataIndex: 'service_id'
-            },
-            {
-                title: '切片业务名称',
-                dataIndex: 'service_name'
-            },
-            {
-                title: '切片类型',
-                dataIndex: 'service_type'
-            },
-            {
-                title: 'S-NSSAI',
-                dataIndex: 'service_snssai'
-            },
-            {
-                title: '状态',
-                dataIndex: 'service_status',
-                render: (text, record) => {
-                    let status = text;
-                    if (record.last_operation_progress !== 100) {
-                        status = record.last_operation_type;
-                    }
-
-                    return status === 'activated' || 'activate' ? '已激活': '未激活'
-                }
-
-            },
+        const btnText = 'Are you sure you want to terminate this task?';
+        const switchText = 'Are you sure you want to perform this task?';
+        const lastColumns = [
             {
                 title: '激活',
                 dataIndex: 'activation',
                 align: 'center',
                 render: (isActivate,record) => {
-                    let progress = 100;
-                    if (record.last_operation_progress !== 100 && record.last_operation_type !== 'terminante') {
-                        progress = record.last_operation_progress
-                        this.getProgress(record.service_id)
-                    }else if (record.progress && record.progress !== 100) {
-                        progress = record.progress
-                    }
                     return (
                         <Popconfirm 
                           placement="top" 
                           title={switchText} 
                           onConfirm={() => this.changeStatus(record.service_id, !isActivate)} 
-                          okText="Yes" cancelText="No">
+                          okText="Yes" cancelText="No"
+                          disabled={record.disabled}
+                        >
                             <Switch 
                                 defaultChecked={isActivate} 
                                 checked={isActivate}
                                 size='small' 
                                 loading={record.loading}
+                                disabled={record.disabled}
                             />
-                            {record.operation !== 'terminate' && progress !== 100 ? 
-                              <Progress size="small" percent={progress} status={progress === 100 ? 'success' : 'active'}/> : false
+                            {record.operation !== 'delete' && record.progress !== 100 ? 
+                              <Progress size="small" percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false
                             }
                         </Popconfirm>
                     )
@@ -182,14 +155,7 @@ class BusinessMGTTable extends Component {
                 dataIndex: 'end',
                 align: 'center',
                 render: (text,record) => {
-                    let isDisable = record.activation
-                    let progress = 100;
-                    if (record.last_operation_progress !== 100 && record.last_operation_type === 'terminante') {
-                        progress = record.last_operation_progress
-                        this.getProgress(record.service_id)
-                    }else if (record.progress && record.progress !== 100) {
-                        progress = record.progress
-                    }
+                    const isDisable = record.activation
                     return (
                         <Popconfirm 
                           placement="topLeft" 
@@ -204,26 +170,27 @@ class BusinessMGTTable extends Component {
                                 shape='circle' 
                                 disabled={isDisable || record.loading} 
                             />
-                            {record.operation === 'terminate' && progress !== 100 ?   
-                              <Progress size="small"  percent={progress} status={progress === 100 ? 'success' : 'active'}/> : false
+                            {record.operation === 'delete' && record.progress !== 100 ?   
+                              <Progress size="small"  percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false
                             }
                         </Popconfirm>
                     )
                 }
             }
-        ]
-        const { orderId, businesmgtTable, getChartsData } = this.props
+        ];
+        const firstColumns = [{ title: '序号', dataIndex: 'index' }]
+        let columns = BUSINESS_MGT_COLUMNS;
+        const { orderId, businesmgtTable, getChartsData } = this.props;
         if(!orderId){
-            columns.unshift({title: '序号', dataIndex: 'index'})
+            columns = [...firstColumns,...BUSINESS_MGT_COLUMNS];
         }
-        if(getChartsData){
-            columns.pop()
-            columns.pop()
+        if(!getChartsData){
+            columns = [...columns, ...lastColumns];
         }
-        const tableData = businesmgtTable.get('tableData').toJS()
-        const pageNo = businesmgtTable.get('page_no')
-        const pageSize = businesmgtTable.get('page_size')
-        const { pageSizeOptions } = this.props
+        const tableData = businesmgtTable.get('tableData').toJS();
+        const pageNo = businesmgtTable.get('page_no');
+        const pageSize = businesmgtTable.get('page_size');
+        const { pageSizeOptions } = this.props;
         const pagination = orderId ? false : {
             showSizeChanger: true, 
             total: tableData.total, 
@@ -232,7 +199,7 @@ class BusinessMGTTable extends Component {
             pageSizeOptions: pageSizeOptions || ['10', '20', '30', '40'],
             current: pageNo,
             pageSize: pageSize
-        } 
+        };
         return (
             <Table 
                 loading={tableData.loading}
@@ -247,4 +214,4 @@ class BusinessMGTTable extends Component {
 export default connect(
     state => ({businesmgtTable: state.businesmgtTable}),
     actions
-)(BusinessMGTTable)
+)(BusinessMGTTable);

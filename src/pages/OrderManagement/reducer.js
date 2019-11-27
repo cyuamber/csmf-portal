@@ -18,11 +18,11 @@ export default function reducer(state = initData, action){
                     .setIn(['tableData','loading'], action.bool)
                     .setIn(['tableData', 'total'], action.total)
                     .setIn(['pageNo'], action.pageNo)
-                    .setIn(['pageSize'], action.pageSize)
+                    .setIn(['pageSize'], action.pageSize);
 
         case 'CHANGE_TABLE_LOADING': 
-            return state.setIn(['tableData','loading'], action.bool)
+            return state.setIn(['tableData','loading'], action.bool);
         default:
-            return state
+            return state;
     }
 }

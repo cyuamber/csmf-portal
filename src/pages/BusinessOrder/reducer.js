@@ -1,4 +1,4 @@
-import I from 'immutable'
+import I from 'immutable';
 
 const initialState = I.fromJS({
     provinceList: [],
@@ -17,9 +17,9 @@ const initialState = I.fromJS({
 export default function reducer (state = initialState, action){
     switch(action.type){
         case 'ADD_FORM_ITEM': 
-            return state.setIn(['formItem'], state.getIn(['formItem']).push(I.fromJS(action.item)))
+            return state.setIn(['formItem'], state.getIn(['formItem']).push(I.fromJS(action.item)));
         case 'DELETE_FORM_ITEM':
-            return state.setIn(['formItem'], state.get('formItem').splice(action.index, 1))
+            return state.setIn(['formItem'], state.get('formItem').splice(action.index, 1));
         case 'GET_PROVINCE':
             return state.setIn(['provinceList'], I.fromJS(action.provinceList));
         case 'GET_CITY':
@@ -28,25 +28,25 @@ export default function reducer (state = initialState, action){
                         return item
                                 .setIn(['cityList'],action.cityList)
                                 .setIn(['countyList'], I.fromJS([]))
-                                .setIn(['streetList'], I.fromJS([]))
+                                .setIn(['streetList'], I.fromJS([]));
                     }))
         case 'GET_COUNTY':
             return state
                     .setIn(['formItem'],state.get('formItem').update( action.index, item => {
                         return item
                                 .setIn(['countyList'],action.countyList)
-                                .setIn(['streetList'], I.fromJS([]))
+                                .setIn(['streetList'], I.fromJS([]));
                     }))
         case 'GET_STREET':
             return state.setIn(['formItem'],state.get('formItem').update( action.index, item => {
-                return item.setIn(['streetList'],action.streetList)
+                return item.setIn(['streetList'],action.streetList);
             }))
         case 'GET_ADDRESS': 
-            return state.setIn(['address'], I.fromJS(action.address))
+            return state.setIn(['address'], I.fromJS(action.address));
         case 'SET_BTN_LOADING':
-            return state.setIn(['btnLoading'], action.bool)
+            return state.setIn(['btnLoading'], action.bool);
         default:
-            return state
+            return state;
     }
     
 }
