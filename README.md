@@ -28,6 +28,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Start the mock server and get mock data for development.
 
+### [Change log](./CHANGELOG.md)
+
 ## Learn More
 
 @ 2019 CMCC 
