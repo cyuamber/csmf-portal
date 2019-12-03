@@ -22,9 +22,10 @@ export const actions = dispatch => {
                             // 判断是否成功创建，若未成功创建所有操作不可用
                             if(item.last_operation_type === "create" && item.last_operation_progress !== 100) {
                                 item.disabled = true;
+                                item.progress = 100;
                             }
                             // 判断是否有操作正在执行中
-                            else if (item.last_operation_progress !== 100) {
+                            else if (item.last_operation_type && item.last_operation_progress !== 100) {
                                 item.loading = true;
                                 item.progress = item.last_operation_progress;
                                 item.operation = item.last_operation_type;;

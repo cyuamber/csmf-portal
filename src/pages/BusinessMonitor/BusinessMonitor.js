@@ -16,26 +16,31 @@ import "./style.less";
 
 class BusinessMonitor extends React.Component {
     state = {
-        showLoading: false
+        showLoading: false,
+        loading: true,
     };
 
     getChartsData = (time = new Date().getTime()) => {
-        const serviceList = [];
+        const service_list = [];
         const tableList = this.props.businessmonitor.get('tableData').toJS().data;
         tableList.forEach(item => {
-            serviceList.push({service_id: item.service_id});
+            service_list.push({service_id: item.service_id});
         })
-        this.fetchTrafficData(serviceList, time);
-        this.fetchOnlineusersData(serviceList, time);
-        this.fetchBandwidthData(serviceList, time);
+        if (!service_list.length) {
+            this.setState({loading: false})
+            return 
+        }
+        this.fetchTrafficData(service_list, time);
+        this.fetchOnlineusersData(service_list, time);
+        this.fetchBandwidthData(service_list, time);
     }
 
-    fetchTrafficData = (serviceList, time) => {
+    fetchTrafficData = (service_list, time) => {
         const { setTrafficData } = this.props;
         // url中的参数
         // APIS.trafficApi(time)
         // APIS.traffic
-        axiospost(APIS.trafficApi(time), { serviceList }).then(res => {
+        axiospost(APIS.trafficApi(time), { service_list }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setTrafficData(res.result_body.slicing_usage_traffic_list);
             } else {
@@ -43,12 +48,12 @@ class BusinessMonitor extends React.Component {
             }
         })
     }
-    fetchOnlineusersData(serviceList, time) {
+    fetchOnlineusersData(service_list, time) {
         const { setOnlineusersData } = this.props;
         // url中的参数
         // APIS.onlineUsersApi(time)
         // APIS.onlineUsers
-        axiospost(APIS.onlineUsersApi(time), { serviceList }).then(res => {
+        axiospost(APIS.onlineUsersApi(time), { service_list }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setOnlineusersData(res.result_body.slicing_online_user_list);
             } else {
@@ -57,12 +62,12 @@ class BusinessMonitor extends React.Component {
         })
     }
 
-    fetchBandwidthData(serviceList, time) {
+    fetchBandwidthData(service_list, time) {
         const { setBandwidthData } = this.props;
         // url中的参数
         // APIS.bandwidthApi(time)
         // APIS.bandwidth
-        axiospost(APIS.bandwidthApi(time), { serviceList }).then(res => {
+        axiospost(APIS.bandwidthApi(time), { service_list }).then(res => {
             if (res.result_header && +res.result_header.result_code === 200) {
                 setBandwidthData(res.result_body.slicing_total_bandwidth_list);
             } else {
@@ -168,6 +173,7 @@ class BusinessMonitor extends React.Component {
     render() {
         const { t } = this.props;
         // const { showLoading } = this.state;
+        const { loading } = this.state;
         const pageSizeOptions = ['6', '8' ,'10'];
 
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
@@ -183,13 +189,13 @@ class BusinessMonitor extends React.Component {
                 <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate} />
                 <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={6}>
-                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} />
+                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} loading={loading}/>
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} />
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} loading={loading}/>
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} />
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} loading={loading}/>
                     </Col>
                 </Row>
                 <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} pageSizeOptions={pageSizeOptions}/>

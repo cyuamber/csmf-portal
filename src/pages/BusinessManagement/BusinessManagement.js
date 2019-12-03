@@ -9,7 +9,7 @@ import './BusinessManagement.less';
 class BusinessManagement extends React.Component {
 
     state = {
-        status: 'all'
+        status: 'created'
     };
 
     selectStatus = (status) => {
@@ -29,7 +29,7 @@ class BusinessManagement extends React.Component {
                         <span className='businessStatus_select-label'>状态 ：</span>
                         <Select 
                           className='businessStatus_select' 
-                          defaultValue='all' 
+                          defaultValue='created' 
                           onChange={this.selectStatus}
                         >
                             {BUSINESS_SELECT_OPTIONS.map(item => {

@@ -57,12 +57,12 @@ class BusinessMGTTable extends Component {
     }
 
     pageChange = (pageNo, pageSize) => {
-        const { status = 'all', getTableData, getChartsData } = this.props;
+        const { status = 'created', getTableData, getChartsData } = this.props;
         getTableData({status, pageNo, pageSize}, getChartsData);
     }
 
     pageSizeChange = (pageNo, pageSize) => {
-        const { status = 'all', getTableData, getChartsData } = this.props;
+        const { status = 'created', getTableData, getChartsData } = this.props;
         getTableData({status, pageNo, pageSize}, getChartsData);
     }
 
@@ -98,7 +98,7 @@ class BusinessMGTTable extends Component {
                     })
                 })
             }else {
-                getTableData({ status: 'all', pageNo: 1, pageSize: 6 }, getChartsData);
+                getTableData({ status: 'created', pageNo: 1, pageSize: 6 }, getChartsData);
             }
         }
         this.timerList = [];
@@ -155,7 +155,8 @@ class BusinessMGTTable extends Component {
                 dataIndex: 'end',
                 align: 'center',
                 render: (text,record) => {
-                    const isDisable = record.activation
+                    // 当非actavtion且disable为false且loading为false     显示                  
+                    const isDisable = !record.activation && !record.disabled && !record.loading;
                     return (
                         <Popconfirm 
                           placement="topLeft" 
@@ -163,12 +164,12 @@ class BusinessMGTTable extends Component {
                           onConfirm={() => this.handleServiceEnd(record.service_id)} 
                           okText="Yes" 
                           cancelText="No"
-                          disabled={isDisable || record.loading}
+                          disabled={!isDisable}
                         >
                             <Button 
                                 icon='poweroff' 
                                 shape='circle' 
-                                disabled={isDisable || record.loading} 
+                                disabled={!isDisable} 
                             />
                             {record.operation === 'delete' && record.progress !== 100 ?   
                               <Progress size="small"  percent={record.progress} status={record.progress === 100 ? 'success' : 'active'}/> : false

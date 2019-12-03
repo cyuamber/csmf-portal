@@ -18,7 +18,7 @@ class Chartbox extends Component {
         this.initEchart(this.state.lineId);
     }
     initEchart(id) {
-        const { chartConfig, pieExtraConfig,lineExtraConfig,chartName } = this.props;
+        const { chartConfig, pieExtraConfig,lineExtraConfig,chartName, loading } = this.props;
         let myChart = echarts.getInstanceByDom(document.getElementById(id));
         if (myChart === undefined) {
             myChart = echarts.init(document.getElementById(id));
@@ -27,9 +27,9 @@ class Chartbox extends Component {
             text: 'loading...',
             x: 'center'
         })
-        if(pieExtraConfig && pieExtraConfig.value.length){
+        if((pieExtraConfig && pieExtraConfig.value.length) || !loading ){
             myChart.hideLoading()
-        }else if(lineExtraConfig && lineExtraConfig.legend.length) {
+        }else if((lineExtraConfig && lineExtraConfig.legend.length) || !loading) {
             if(chartName === '在线用户数量' || chartName === 'Onlines Users'){
                 myChart.hideLoading()
             }else {

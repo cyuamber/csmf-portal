@@ -44,7 +44,8 @@ export default function reducer(state = initData, action){
                 if(item){
                     return item
                             .setIn(['progress'], action.progress)
-                            .setIn(['loading'], action.progress === 100 ? false : true);
+                            .setIn(['disabled'], action.progress === 100 ? false : true);
+                            // .setIn(['loading'], action.progress === 100 ? false : true);
                 }
             }))
         default: 

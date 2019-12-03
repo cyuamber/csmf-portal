@@ -73,8 +73,8 @@ export const ORDER_CREATE_FORM = [{
 export const SELECT_OPTIONS = [
     {
         name: '全部',
-        key: 'all'
-    },
+        key: 'created'
+    }, 
     {
         name: '进行中',
         key: 'carryOut'
@@ -88,7 +88,7 @@ export const SELECT_OPTIONS = [
 export const BUSINESS_SELECT_OPTIONS = [
     {
         name: '全部',
-        key: 'all'
+        key: 'created'
     },
     {
         name: '未激活',

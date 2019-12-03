@@ -85,7 +85,7 @@ class OrderManagement extends React.Component {
                         <span className='orderStatus_select-label'>状态 ：</span>
                         <Select
                             className='orderStatus_select'
-                            defaultValue='all'
+                            defaultValue='created' 
                             onChange={this.selectStatus}
                         >
                             {SELECT_OPTIONS.map(item => {
