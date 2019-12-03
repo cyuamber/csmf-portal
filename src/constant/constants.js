@@ -74,7 +74,7 @@ export const SELECT_OPTIONS = [
     {
         name: '全部',
         key: 'all'
-    }, 
+    },
     {
         name: '进行中',
         key: 'created'

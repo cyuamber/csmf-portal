@@ -197,8 +197,8 @@ class BusinessOrderDetail extends Component {
                     }
                     )}
                     <div className="orderdetail_btns">
-                        <Button onClick={this.handleOrderCancel}>取消</Button>
-                        <Button type='primary' onClick={this.handleSubmit} loading={loading}>确认</Button>
+                        <Button onClick={this.handleOrderCancel}>{t('Cancel')}</Button>
+                        <Button type='primary' onClick={this.handleSubmit} loading={loading}>{t('Submit')}</Button>
                     </div>
                 </Card>
             </div>

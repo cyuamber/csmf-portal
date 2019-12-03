@@ -82,10 +82,10 @@ class OrderManagement extends React.Component {
                 </h2>
                 <div className='ordermgt_content'>
                     <div className='ordermgt_query'>
-                        <span className='orderStatus_select-label'>状态 ：</span>
+                        <span className='orderStatus_select-label'>{t('Status')}：</span>
                         <Select
                             className='orderStatus_select'
-                            defaultValue='all' 
+                            defaultValue='all'
                             onChange={this.selectStatus}
                         >
                             {SELECT_OPTIONS.map(item => {

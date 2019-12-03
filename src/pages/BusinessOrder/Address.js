@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
 import { Form, Row, Col, Select, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { actions } from './actions';
@@ -6,21 +7,21 @@ import { actions } from './actions';
 class Address extends Component {
 
     handleAddArea = () => {
-        this.id ++;
+        this.id++;
         this.props.addFormItem(this.id);
     }
     handleReduceArea = () => {
         const { deleteFormItem, index } = this.props;
         deleteFormItem(index);
     }
-    
-    getRules = message => ({ rules: [{ required: true, message }]})
+
+    getRules = message => ({ rules: [{ required: true, message }] })
 
     changeProvince = value => {
         const { index, businessorder, getCityList, form } = this.props;
         const address = businessorder.get('address').toJS();
         let cityList = [];
-        address.forEach( item => {
+        address.forEach(item => {
             if (value === item.name) {
                 cityList = item.city;
             }
@@ -33,7 +34,7 @@ class Address extends Component {
         const { index, businessorder, getCountyList, form } = this.props;
         const cityList = businessorder.get('formItem').toJS()[index].cityList;
         let countyList = [];
-        cityList.forEach( item => {
+        cityList.forEach(item => {
             if (value === item.name) {
                 countyList = item.county;
             }
@@ -46,7 +47,7 @@ class Address extends Component {
         const { index, businessorder, getStreetList, form } = this.props;
         const countyList = businessorder.get('formItem').toJS()[index].countyList;
         let streetList = [];
-        countyList.forEach( item => {
+        countyList.forEach(item => {
             if (value === item.name) {
                 streetList = item.street;
             }
@@ -57,20 +58,21 @@ class Address extends Component {
 
     handleSubmit = () => {
         this.props.form.validateFields((error, values) => {
-            if(!error){
+            if (!error) {
                 this.props.getValues(values);
-            }else {
+            } else {
                 this.props.getValues(null);
             }
         })
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.props.addhandleSubmit(this.handleSubmit);
         this.id = 1;
     }
 
     render() {
+        const { t } = this.props;
         const { Item } = Form;
         const { Option } = Select;
         const { formItemLayout, index, businessorder, data, form: { getFieldDecorator } } = this.props;
@@ -80,59 +82,59 @@ class Address extends Component {
         return (
             <Form onSubmit={this.handleSubmit} labelAlign='left'>
                 <Row>
-                <Col span={8}>
-                    <Item {...formItemLayout}>
-                        {getFieldDecorator('province', this.getRules('Please select a region'))(
-                            <Select placeholder="省" onChange={this.changeProvince}>
-                                { address.map ( item => <Option key={item.id} value={item.name}>{item.name}</Option>) }
-                            </Select>
-                        )}
-                    </Item>
-                </Col>
-                <Col span={4}>
-                    <Item wrapperCol={{ span: 22, offset: 0 }}>
-                        {getFieldDecorator('city', this.getRules('Please select a region'))(
-                            <Select placeholder="市" onChange={this.changeCity}>
-                                {data.cityList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
-                            </Select>
-                        )}
-                    </Item>
-                </Col> 
-                <Col span={4}>
-                    <Item wrapperCol={{ span: 22, offset: 0 }}>
-                        {getFieldDecorator('county', this.getRules('Please select a region'))(
-                            <Select placeholder="区" onChange={this.changeCounty}>
-                                {data.countyList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
-                            </Select>
-                        )}
-                    </Item>
-                </Col>
-                <Col span={4}>
-                    <Item wrapperCol={{ span: 22, offset: 0 }}>
-                        {getFieldDecorator('street', this.getRules('Please select a region' ))(
-                            <Select placeholder="街道" >
-                                {data.streetList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
-                            </Select>
-                        )}
-                    </Item>
-                </Col>
-                {index ? (<Icon
-                            type="minus-square" 
-                            theme="filled"
-                            className="orderdetail_icon" 
-                            onClick={this.handleReduceArea}
-                        />): ( <Icon 
-                            type="plus-square" 
-                            theme="filled" 
-                            className={formItem.length === 10 ? 'orderdetail_icon_disabled':"orderdetail_icon"}
-                            onClick={this.handleAddArea}
-                        />) }
+                    <Col span={8}>
+                        <Item {...formItemLayout}>
+                            {getFieldDecorator('province', this.getRules('Please select a region'))(
+                                <Select placeholder={t('Province')} onChange={this.changeProvince}>
+                                    {address.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
+                                </Select>
+                            )}
+                        </Item>
+                    </Col>
+                    <Col span={4}>
+                        <Item wrapperCol={{ span: 22, offset: 0 }}>
+                            {getFieldDecorator('city', this.getRules('Please select a region'))(
+                                <Select placeholder={t('City')} onChange={this.changeCity}>
+                                    {data.cityList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
+                                </Select>
+                            )}
+                        </Item>
+                    </Col>
+                    <Col span={4}>
+                        <Item wrapperCol={{ span: 22, offset: 0 }}>
+                            {getFieldDecorator('county', this.getRules('Please select a region'))(
+                                <Select placeholder={t('District')} onChange={this.changeCounty}>
+                                    {data.countyList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
+                                </Select>
+                            )}
+                        </Item>
+                    </Col>
+                    <Col span={4}>
+                        <Item wrapperCol={{ span: 22, offset: 0 }}>
+                            {getFieldDecorator('street', this.getRules('Please select a region'))(
+                                <Select placeholder={t('Street')} >
+                                    {data.streetList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
+                                </Select>
+                            )}
+                        </Item>
+                    </Col>
+                    {index ? (<Icon
+                        type="minus-square"
+                        theme="filled"
+                        className="orderdetail_icon"
+                        onClick={this.handleReduceArea}
+                    />) : (<Icon
+                        type="plus-square"
+                        theme="filled"
+                        className={formItem.length === 10 ? 'orderdetail_icon_disabled' : "orderdetail_icon"}
+                        onClick={this.handleAddArea}
+                    />)}
                 </Row>
             </Form>
         )
     }
 }
-export default connect(
+export default withNamespaces()(connect(
     state => ({ businessorder: state.businessorder }),
     actions
-)(Form.create({})(Address));
+)(Form.create({})(Address)));

@@ -13,12 +13,12 @@ class BusinessManagement extends React.Component {
     };
 
     selectStatus = (status) => {
-        this.setState({status});
+        this.setState({ status });
     }
 
     render() {
         const { t } = this.props;
-        
+
         return (
             <div className='businessmgt'>
                 <h2 className='businessmgt_title'>
@@ -26,20 +26,20 @@ class BusinessManagement extends React.Component {
                 </h2>
                 <div className='businessmgt_content'>
                     <div className='businessmgt_query'>
-                        <span className='businessStatus_select-label'>状态 ：</span>
-                        <Select 
-                          className='businessStatus_select' 
-                          defaultValue='all' 
-                          onChange={this.selectStatus}
+                        <span className='businessStatus_select-label'>{t('Status')}：</span>
+                        <Select
+                            className='businessStatus_select'
+                            defaultValue='all'
+                            onChange={this.selectStatus}
                         >
                             {BUSINESS_SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
-                                            {item.name}
-                                        </Select.Option>
+                                    {item.name}
+                                </Select.Option>
                             })}
                         </Select>
                     </div>
-                    <BusinessMGTTable status={this.state.status}/>
+                    <BusinessMGTTable status={this.state.status} />
                 </div>
             </div>
         );
