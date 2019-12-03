@@ -36,7 +36,7 @@ class Chartbox extends Component {
                 myChart.hideLoading()
             }
         }
-        myChart.setOption(chartConfig);
+        myChart.setOption(chartConfig, true);
         if (pieExtraConfig) {
             myChart.setOption({
                 legend: {
