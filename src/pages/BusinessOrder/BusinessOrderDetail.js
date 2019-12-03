@@ -3,7 +3,7 @@ import { withNamespaces } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { actions } from './actions';
-import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover } from "antd";
+import { Card, Form, Col, Input, Select, Radio, Button, Row, Popover, message } from "antd";
 import { ORDER_CREATE_FORM } from '../../constant/constants';
 import Address from './Address';
 import { axiospost } from '../../utils/http';
@@ -105,6 +105,7 @@ class BusinessOrderDetail extends Component {
     }
 
     handleSubmit = () => {
+        const { t } = this.props;
         this.areaSubmitList.forEach(item => {
             item();
         })
@@ -124,19 +125,22 @@ class BusinessOrderDetail extends Component {
                             })
                         }
                     })
-                    this.areaList = this.areaList.map( item => {
+                    this.areaList = this.areaList.map(item => {
                         item = Object.values(item).join(';');
                         return item
                     }).join('|')
                     console.log(this.areaList)
-                    
+
                     const slicing_order_info = { ...values, uEMobilityLevel: uEMobilityLevel, coverageArea: this.areaList };
                     console.log(slicing_order_info)
 
                     axiospost(APIS.createOrderApi, { slicing_order_info }).then(res => {
-                        if (res.result_header.result_code === '200') {
+                        if (+res.result_header.result_code === 200) {
                             this.props.setBtnLoading(false);
                             this.props.history.push('/ordermgt');
+                        } else {
+                            this.props.setBtnLoading(false);
+                            message.error(res.result_header.result_message || t('Create Failed'));
                         }
                     })
                 }
