@@ -124,7 +124,15 @@ class BusinessOrderDetail extends Component {
                             })
                         }
                     })
-                    const slicing_order_info = { ...values, uEMobilityLevel: uEMobilityLevel, coverageArea: JSON.stringify(this.areaList) };
+                    this.areaList = this.areaList.map( item => {
+                        item = Object.values(item).join(';');
+                        return item
+                    }).join('|')
+                    console.log(this.areaList)
+                    
+                    const slicing_order_info = { ...values, uEMobilityLevel: uEMobilityLevel, coverageArea: this.areaList };
+                    console.log(slicing_order_info)
+
                     axiospost(APIS.createOrderApi, { slicing_order_info }).then(res => {
                         if (res.result_header.result_code === '200') {
                             this.props.setBtnLoading(false);

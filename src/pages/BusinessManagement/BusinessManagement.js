@@ -29,7 +29,7 @@ class BusinessManagement extends React.Component {
                         <span className='businessStatus_select-label'>状态 ：</span>
                         <Select 
                           className='businessStatus_select' 
-                          defaultValue='created' 
+                          defaultValue='all' 
                           onChange={this.selectStatus}
                         >
                             {BUSINESS_SELECT_OPTIONS.map(item => {

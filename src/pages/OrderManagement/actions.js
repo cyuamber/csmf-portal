@@ -7,7 +7,7 @@ export const actions = dispatch => {
         changeTableLoading(bool = false) {
             dispatch({ type: 'CHANGE_TABLE_LOADING', bool });
         },
-        getTableData({ status = 'created', pageNo = 1, pageSize = 10 } = {}) {
+        getTableData({ status = 'all', pageNo = 1, pageSize = 10 } = {}) {
             dispatch({ type: 'CHANGE_TABLE_LOADING', bool: true });
             const reqBody = { status, pageNo, pageSize };
             // APIS.getOrdersApi(reqBody)

@@ -73,22 +73,22 @@ export const ORDER_CREATE_FORM = [{
 export const SELECT_OPTIONS = [
     {
         name: '全部',
-        key: 'created'
+        key: 'all'
     }, 
     {
         name: '进行中',
-        key: 'carryOut'
+        key: 'created'
     },
     {
         name: '已终止',
-        key: 'Terminated'
+        key: 'deleted'
     }
 ]
 
 export const BUSINESS_SELECT_OPTIONS = [
     {
         name: '全部',
-        key: 'created'
+        key: 'all'
     },
     {
         name: '未激活',
@@ -268,7 +268,7 @@ export const ORDER_MGT_COLUMNS = [
         title: '状态',
         dataIndex: 'order_status',
         key: 'order_status',
-        render: (text) => text === 'terminated' ? '订单完成' : '订单受理中'
+        render: (text) => text === 'created' ? '订单完成' : '订单受理中'
     }
 ]
 

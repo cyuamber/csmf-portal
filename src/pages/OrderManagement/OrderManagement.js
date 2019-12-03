@@ -58,7 +58,7 @@ class OrderManagement extends React.Component {
             dataIndex: 'detail',
             key: 'detail',
             render: (text, record) => (
-                record.order_status === 'terminated' ?
+                record.order_status === 'created' ?
                     <a href='##' className='ordermgt_detail' onClick={(e) => this.handleOpenDetail(record.order_id, e)}>{t('View Detail')}</a> :
                     <span className='ordermgt_detail_disabled'> {t('View Detail')}</span>
             )
@@ -85,7 +85,7 @@ class OrderManagement extends React.Component {
                         <span className='orderStatus_select-label'>状态 ：</span>
                         <Select
                             className='orderStatus_select'
-                            defaultValue='created' 
+                            defaultValue='all' 
                             onChange={this.selectStatus}
                         >
                             {SELECT_OPTIONS.map(item => {
