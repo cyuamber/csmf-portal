@@ -57,12 +57,12 @@ class BusinessMGTTable extends Component {
     }
 
     pageChange = (pageNo, pageSize) => {
-        const { status = 'created', getTableData, getChartsData } = this.props;
+        const { status = 'all', getTableData, getChartsData } = this.props;
         getTableData({status, pageNo, pageSize}, getChartsData);
     }
 
     pageSizeChange = (pageNo, pageSize) => {
-        const { status = 'created', getTableData, getChartsData } = this.props;
+        const { status = 'all', getTableData, getChartsData } = this.props;
         getTableData({status, pageNo, pageSize}, getChartsData);
     }
 
@@ -98,7 +98,7 @@ class BusinessMGTTable extends Component {
                     })
                 })
             }else {
-                getTableData({ status: 'created', pageNo: 1, pageSize: 6 }, getChartsData);
+                getTableData({ status: 'all', pageNo: 1, pageSize: 6 }, getChartsData);
             }
         }
         this.timerList = [];
