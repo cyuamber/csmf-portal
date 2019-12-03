@@ -76,12 +76,12 @@ export const SELECT_OPTIONS = [
         key: 'all'
     },
     {
-        name: '进行中',
-        key: 'created'
+        name: '订单受理中',
+        key: 'processing'
     },
     {
-        name: '已终止',
-        key: 'deleted'
+        name: '订单完成',
+        key: 'created'
     }
 ]
 
