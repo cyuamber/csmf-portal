@@ -15,7 +15,7 @@ class BusinessOrderDetail extends Component {
 
     getRules = title => {
         const { t } = this.props;
-        return {required: true, message: t('Please enter') + ' ' + t(title) }
+        return { required: true, message: t('Please enter') + ' ' + t(title) }
     }
 
     getFormItem = () => {
@@ -26,7 +26,7 @@ class BusinessOrderDetail extends Component {
             if (item.key === 'name') {
                 return (
                     <Col span={12} key={item.key}>
-                        <Item label={ t(item.title) }>
+                        <Item label={t(item.title)}>
                             {getFieldDecorator(item.key, { rules: [{ max: 50, message: t('Slicing business name cannot exceed 50 characters') }, this.getRules(item.title)], validateFirst: true })(<Input />)}
                         </Item>
                     </Col>
@@ -34,8 +34,8 @@ class BusinessOrderDetail extends Component {
             } else if (item.content) {
                 return (
                     <Col span={12} key={item.key}>
-                        <Item label={ t(item.title) }>
-                            <Popover placement="right" content={ t(item.content)+item.scope} trigger="click">
+                        <Item label={t(item.title)}>
+                            <Popover placement="right" content={t(item.content) + item.scope} trigger="click">
                                 {getFieldDecorator(item.key, {
                                     rules: [this.getRules(item.title), { validator: (rule, value, callback) => this.validator(item.content, item.scope, rule, value, callback) }],
                                     validateFirst: true
@@ -47,7 +47,7 @@ class BusinessOrderDetail extends Component {
             } else if (item.options) {
                 return (
                     <Col span={12} key={item.key}>
-                        <Item label={ t(item.title) }>
+                        <Item label={t(item.title)}>
                             {getFieldDecorator(item.key, { rules: [{ required: true, message: t('Please choose') + ' ' + t(item.title) }], initialValue: item.options[0].value })(
                                 <Select>
                                     {item.options.map(ite => <Select.Option key={ite.value} >{t(ite.value)}</Select.Option>)}
@@ -59,11 +59,11 @@ class BusinessOrderDetail extends Component {
             } else if (item.key === 'resourceSharingLevel') {
                 return (
                     <Col key={item.key} span={12}>
-                        <Item label={ t(item.title) }>
+                        <Item label={t(item.title)}>
                             {getFieldDecorator(item.key, { rules: [{ required: true, message: t('Please choose') + ' ' + t(item.title) }], initialValue: 'shared' })(
                                 <Radio.Group>
-                                    <Radio value="shared">{ t('Shared') }&nbsp;&nbsp; </Radio>
-                                    <Radio value="non-shared">{ t('Non-shared') }</Radio>
+                                    <Radio value="shared">{t('Shared')}&nbsp;&nbsp; </Radio>
+                                    <Radio value="non-shared">{t('Non-shared')}</Radio>
                                 </Radio.Group>
                             )}
                         </Item>
@@ -73,8 +73,8 @@ class BusinessOrderDetail extends Component {
         })
     }
 
-    validator = (content, scope,  rule, value, callback) => {
-        const { t } = this.props; 
+    validator = (content, scope, rule, value, callback) => {
+        const { t } = this.props;
         // 校验输入的必须为数字且不能以0开头
         if (!/^\d*$/.test(value)) {
             callback(t('Only numbers can be entered'));
@@ -156,7 +156,7 @@ class BusinessOrderDetail extends Component {
 
     render() {
         const { t } = this.props;
-        const formItemLayout = { labelCol: { span: 8, offset: 0 }, wrapperCol: { span: 8, offset: 0 } };
+        const formItemLayout = { labelCol: { span: 9, offset: 0 }, wrapperCol: { span: 9, offset: 0 } };
         const formItem = this.props.businessorder.get('formItem').toJS();
         const loading = this.props.businessorder.get('btnLoading');
 
@@ -176,8 +176,8 @@ class BusinessOrderDetail extends Component {
                                     if (ite === formItem[0]) {
                                         formItemLayout = {
                                             label: t(item.title),
-                                            labelCol: { span: 10, offset: 0 },
-                                            wrapperCol: { span: 11, offset: 2 }
+                                            labelCol: { span: 9, offset: 0 },
+                                            wrapperCol: { span: 11, offset: 3 }
                                         }
                                     } else {
                                         formItemLayout = {

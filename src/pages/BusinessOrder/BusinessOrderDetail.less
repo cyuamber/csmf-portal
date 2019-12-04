@@ -1,48 +1,60 @@
 .orderdetail {
-    width: 85%;
+    width: 95%;
     height: calc(100% - 140px);
     margin: 0 auto;
     padding: 20px;
+
     .ant-card-head-title {
         font-family: '微软雅黑 Bold', '微软雅黑';
         font-size: 20px;
         font-weight: 700;
         color: #3D508D;
     }
-    .ant-card-body{
+
+    .ant-card-body {
         padding: 24px 40px;
     }
-    .orderdetail_icon,.orderdetail_icon_disabled{
+
+    .orderdetail_icon,
+    .orderdetail_icon_disabled {
         font-size: 24px;
         margin-top: 8px;
     }
-    .orderdetail_icon{
+
+    .orderdetail_icon {
         cursor: pointer;
-        &:hover{
+
+        &:hover {
             color: #424e70;
         }
     }
-    .orderdetail_icon_disabled{
+
+    .orderdetail_icon_disabled {
         color: #424e70;
         opacity: .7;
         pointer-events: none;
     }
-    .orderdetail_btns{
+
+    .orderdetail_btns {
         display: flex;
         justify-content: center;
         margin-top: 10px;
-        Button{
+
+        Button {
             padding: 2px 20px;
-            &:first-child{
+
+            &:first-child {
                 margin-left: -30px;
                 margin-right: 20px;
             }
         }
     }
 }
-.ant-popover-inner-content{
-    padding: 6px 16px !important; 
+
+.ant-popover-inner-content {
+    padding: 6px 16px !important;
 }
-.ant-form-explain{
+
+.ant-form-explain {
     white-space: nowrap;
 }
