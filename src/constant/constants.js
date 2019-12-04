@@ -72,15 +72,15 @@ export const ORDER_CREATE_FORM = [{
 
 export const SELECT_OPTIONS = [
     {
-        name: '全部',
+        name: 'All',
         key: 'all'
     },
     {
-        name: '订单受理中',
+        name: 'Processing',
         key: 'processing'
     },
     {
-        name: '订单完成',
+        name: 'Created',
         key: 'created'
     }
 ]
@@ -245,31 +245,25 @@ export const ADDRESS = {
 
 export const ORDER_MGT_COLUMNS = [
     {
-        title: '序号',
+        title: 'No',
         dataIndex: 'index',
         key: 'index'
     },
     {
-        title: '订单编号',
+        title: 'Order Number',
         dataIndex: 'order_id',
         key: 'order_id'
     },
     {
-        title: '订单创建时间',
+        title: 'Created Time',
         dataIndex: 'order_creation_time',
         key: 'order_creation_time'
     },
     {
-        title: '使用期限（月）',
+        title: 'Use Interval',
         dataIndex: 'service_expiration_time',
         key: 'service_expiration_time'
     },
-    {
-        title: '状态',
-        dataIndex: 'order_status',
-        key: 'order_status',
-        render: (text) => text === 'created' ? '订单完成' : '订单受理中'
-    }
 ]
 
 export const BUSINESS_MGT_COLUMNS = [

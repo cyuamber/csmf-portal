@@ -53,8 +53,17 @@ class OrderManagement extends React.Component {
         const { t } = this.props;
         const tableData = this.props.ordermgt.get('tableData').toJS();
         const { visible } = this.state;
+        ORDER_MGT_COLUMNS.map ( item => {
+            item.title = t(item.title)
+        })
+        const statusColumn = [ {
+            title: 'Status',
+            dataIndex: 'order_status',
+            key: 'order_status',
+            render: (text) => text === 'created' ? t('Order completed') : t('Order processing')
+        }];
         const lastColumns = [{
-            title: '详情',
+            title: t('Detail'),
             dataIndex: 'detail',
             key: 'detail',
             render: (text, record) => (
@@ -63,7 +72,7 @@ class OrderManagement extends React.Component {
                     <span className='ordermgt_detail_disabled'> {t('View Detail')}</span>
             )
         }]
-        const columns = [...ORDER_MGT_COLUMNS, ...lastColumns]
+        const columns = [...ORDER_MGT_COLUMNS, ...statusColumn, ...lastColumns]
         const { orderId } = this.state;
         const pageNo = this.props.ordermgt.get('pageNo');
         const pageSize = this.props.ordermgt.get('pageSize');
@@ -90,7 +99,7 @@ class OrderManagement extends React.Component {
                         >
                             {SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
-                                    {item.name}
+                                    { t(item.name) }
                                 </Select.Option>
                             })}
                         </Select>
