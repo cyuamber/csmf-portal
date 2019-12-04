@@ -87,15 +87,15 @@ export const SELECT_OPTIONS = [
 
 export const BUSINESS_SELECT_OPTIONS = [
     {
-        name: '全部',
+        name: 'All',
         key: 'all'
     },
     {
-        name: '未激活',
+        name: 'Deactivated',
         key: 'deactivated',
     },
     {
-        name: '已激活',
+        name: 'Activated',
         key: 'activated'
     }
 ]
@@ -268,24 +268,19 @@ export const ORDER_MGT_COLUMNS = [
 
 export const BUSINESS_MGT_COLUMNS = [
     {
-        title: '切片业务ID',
+        title: 'Slicing Business Id',
         dataIndex: 'service_id'
     },
     {
-        title: '切片业务名称',
+        title: 'Slicing Business Name',
         dataIndex: 'service_name'
     },
     {
-        title: '切片类型',
+        title: 'Slicing Type',
         dataIndex: 'service_type'
     },
     {
         title: 'S-NSSAI',
         dataIndex: 'service_snssai'
-    },
-    {
-        title: '状态',
-        dataIndex: 'service_status',
-        render: text => text === 'activated' ? '已激活' : '未激活'
     }
 ]

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions } from './actions';
 import { Button, Table, Switch, Popconfirm, Progress } from 'antd';
@@ -120,11 +121,22 @@ class BusinessMGTTable extends Component {
     }
 ;
     render() {
+        const { pageSizeOptions, t } = this.props;
         const btnText = 'Are you sure you want to terminate this task?';
         const switchText = 'Are you sure you want to perform this task?';
+        BUSINESS_MGT_COLUMNS.map( item => {
+            if (item.title !== 'S-NSSAI') {
+                item.title = t(item.title)
+            }
+        })
+        const statusColumn = [{
+            title: t('Status'),
+            dataIndex: 'service_status',
+            render: text => text === 'activated' ? t('Activated') : t('Deactivated')
+        }];
         const lastColumns = [
             {
-                title: '激活',
+                title: t('Activate'),
                 dataIndex: 'activation',
                 align: 'center',
                 render: (isActivate,record) => {
@@ -151,7 +163,7 @@ class BusinessMGTTable extends Component {
                 }
             },
             {
-                title: '终止',
+                title: t('Terminate'),
                 dataIndex: 'end',
                 align: 'center',
                 render: (text,record) => {
@@ -179,11 +191,12 @@ class BusinessMGTTable extends Component {
                 }
             }
         ];
-        const firstColumns = [{ title: '序号', dataIndex: 'index' }]
-        let columns = BUSINESS_MGT_COLUMNS;
+        const firstColumns = [{ title: t('No'), dataIndex: 'index' }]
+        let columns = [...BUSINESS_MGT_COLUMNS, ...statusColumn];
         const { orderId, businesmgtTable, getChartsData } = this.props;
         if(!orderId){
-            columns = [...firstColumns,...BUSINESS_MGT_COLUMNS];
+            columns = [...firstColumns, ...columns];
+
         }
         if(!getChartsData){
             columns = [...columns, ...lastColumns];
@@ -191,7 +204,7 @@ class BusinessMGTTable extends Component {
         const tableData = businesmgtTable.get('tableData').toJS();
         const pageNo = businesmgtTable.get('page_no');
         const pageSize = businesmgtTable.get('page_size');
-        const { pageSizeOptions } = this.props;
+        
         const pagination = orderId ? false : {
             showSizeChanger: true, 
             total: tableData.total, 
@@ -212,7 +225,7 @@ class BusinessMGTTable extends Component {
         )
     }
 }
-export default connect(
+export default withNamespaces()(connect(
     state => ({businesmgtTable: state.businesmgtTable}),
     actions
-)(BusinessMGTTable);
+)(BusinessMGTTable));
