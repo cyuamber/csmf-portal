@@ -53,11 +53,11 @@ class OrderManagement extends React.Component {
         const { t } = this.props;
         const tableData = this.props.ordermgt.get('tableData').toJS();
         const { visible } = this.state;
-        ORDER_MGT_COLUMNS.map ( item => {
+        ORDER_MGT_COLUMNS.map(item => {
             item.title = t(item.title)
         })
-        const statusColumn = [ {
-            title: 'Status',
+        const statusColumn = [{
+            title: t('Status'),
             dataIndex: 'order_status',
             key: 'order_status',
             render: (text) => text === 'created' ? t('Order completed') : t('Order processing')
@@ -99,7 +99,7 @@ class OrderManagement extends React.Component {
                         >
                             {SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
-                                    { t(item.name) }
+                                    {t(item.name)}
                                 </Select.Option>
                             })}
                         </Select>

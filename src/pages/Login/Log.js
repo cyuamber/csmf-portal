@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createHashHistory } from 'history';
 
 import { getCurrentUser } from 'utils/util';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 
 import './style.less';
 import { axiosget } from '../../utils/http';
@@ -15,12 +15,15 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const {username, password} = values
+                const { username, password } = values
                 window.localStorage.setItem("username", values.username);
-                axiosget(APIS.loginApi(username, password)).then( res => {
-                    const {result_header: {result_code}} = res
-                    if (result_code === '200') {
-                        console.log('登录成功')
+                axiosget(APIS.loginApi(username, password)).then(res => {
+                    const { result_header: { result_code, result_message } } = res
+                    if (+result_code === 200) {
+                        message.success('Successfully login', 3000);
+                        console.log('登录成功');
+                    } else {
+                        message.error(result_message || 'Error occured when login', 3000);
                     }
                 })
                 history.goBack();
@@ -32,7 +35,7 @@ class Login extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login">
-                <h2>Welcome to CSMF Portal</h2>
+                <h2>Welcome to 5G Slicing Market</h2>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <Form.Item>
                         {getFieldDecorator('username', {

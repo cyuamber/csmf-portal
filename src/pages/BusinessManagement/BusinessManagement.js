@@ -34,8 +34,8 @@ class BusinessManagement extends React.Component {
                         >
                             {BUSINESS_SELECT_OPTIONS.map(item => {
                                 return <Select.Option key={item.key}>
-                                            { t(item.name) }
-                                        </Select.Option>
+                                    {t(item.name)}
+                                </Select.Option>
                             })}
                         </Select>
                     </div>

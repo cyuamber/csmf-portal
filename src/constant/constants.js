@@ -25,7 +25,7 @@ export const ORDER_CREATE_FORM = [{
     key: 'expDataRateUL',
     content: 'Scope',
     scope: '： 100-3000'
-    
+
 },
 {
     title: 'Resource Sharing Level',
@@ -269,7 +269,8 @@ export const ORDER_MGT_COLUMNS = [
 export const BUSINESS_MGT_COLUMNS = [
     {
         title: 'Slicing Business Id',
-        dataIndex: 'service_id'
+        dataIndex: 'service_id',
+        width: 200
     },
     {
         title: 'Slicing Business Name',
