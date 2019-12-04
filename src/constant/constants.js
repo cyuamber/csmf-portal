@@ -1,55 +1,54 @@
 export const ORDER_CREATE_FORM = [{
-    title: '切片业务名称',
-    key: 'name',
-    rules: [
-        {
-            max: 50,
-            message: '切片业务名称不能超过50个字符'
-        }
-    ]
+    title: 'Slicing Business Name',
+    key: 'name'
 },
 {
-    title: '连接规模数',
+    title: 'Max Number of UEs',
     key: 'maxNumberofUEs',
-    content: '取值范围： 1-100000'
+    content: 'Scope',
+    scope: ": 1-100000"
 },
 {
-    title: '用户下行带宽（Mbps）',
+    title: 'Data Rate Downlink',
     key: 'expDataRateDL',
-    content: '取值范围： 100-3000'
+    content: 'Scope',
+    scope: ": 100-3000"
 },
 {
-    title: '时延',
+    title: 'Latency',
     key: 'latency',
-    content: '取值范围： 10-200'
+    content: 'Scope',
+    scope: '： 10-200',
 },
 {
-    title: '用户上行带宽（Mbps）',
+    title: 'Data Rate Uplink',
     key: 'expDataRateUL',
-    content: '取值范围： 100-3000'
+    content: 'Scope',
+    scope: '： 100-3000'
+    
 },
 {
-    title: '共享等级',
+    title: 'Resource Sharing Level',
     key: 'resourceSharingLevel'
 },
 {
-    title: '游牧性',
+    title: 'Mobility',
     key: 'uEMobilityLevel',
     options: [
         {
-            value: '不可游牧',
+            value: 'Stationary',
             key: 'stationary'
         },
         {
-            value: '固定接入',
+            value: 'Nomadic',
             key: 'nomadic'
         },
         {
-            value: '限定范围内可游牧',
+            value: 'Spatially Restricted Mobility',
             key: 'spatially restricted mobility'
         },
         {
-            value: '自由游牧',
+            value: 'Fully Mobility',
             key: 'fully mobility'
         }
     ]
@@ -60,12 +59,13 @@ export const ORDER_CREATE_FORM = [{
 //     content: '取值范围： 1-100'
 // },
 {
-    title: '使用期限（月）',
+    title: 'Use Interval',
     key: 'useInterval',
-    content: '取值范围： ≥1'
+    content: 'Scope',
+    scope: '： ≥1',
 },
 {
-    title: '区域',
+    title: 'Area',
     key: 'coverageArea'
 }
 ]

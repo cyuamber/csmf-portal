@@ -13,28 +13,31 @@ import './BusinessOrderDetail.less';
 
 class BusinessOrderDetail extends Component {
 
-    getRules = title => ({ required: true, message: `请输入${title}` })
+    getRules = title => {
+        const { t } = this.props;
+        return {required: true, message: t('Please enter') + ' ' + t(title) }
+    }
 
     getFormItem = () => {
-        const { form: { getFieldDecorator } } = this.props;
+        const { t, form: { getFieldDecorator } } = this.props;
         const { Item } = Form;
 
         return ORDER_CREATE_FORM.map(item => {
             if (item.key === 'name') {
                 return (
                     <Col span={12} key={item.key}>
-                        <Item label={item.title}>
-                            {getFieldDecorator(item.key, { rules: [...item.rules, this.getRules(item.title)], validateFirst: true })(<Input />)}
+                        <Item label={ t(item.title) }>
+                            {getFieldDecorator(item.key, { rules: [{ max: 50, message: t('Slicing business name cannot exceed 50 characters') }, this.getRules(item.title)], validateFirst: true })(<Input />)}
                         </Item>
                     </Col>
                 )
             } else if (item.content) {
                 return (
                     <Col span={12} key={item.key}>
-                        <Item label={item.title}>
-                            <Popover placement="right" content={item.content} trigger="click">
+                        <Item label={ t(item.title) }>
+                            <Popover placement="right" content={ t(item.content)+item.scope} trigger="click">
                                 {getFieldDecorator(item.key, {
-                                    rules: [this.getRules(item.title), { validator: (rule, value, callback) => this.validator(item.content, rule, value, callback) }],
+                                    rules: [this.getRules(item.title), { validator: (rule, value, callback) => this.validator(item.content, item.scope, rule, value, callback) }],
                                     validateFirst: true
                                 })(<Input />)}
                             </Popover>
@@ -44,10 +47,10 @@ class BusinessOrderDetail extends Component {
             } else if (item.options) {
                 return (
                     <Col span={12} key={item.key}>
-                        <Item label={item.title}>
-                            {getFieldDecorator(item.key, { rules: [{ required: true, message: `请选择${item.title}` }], initialValue: item.options[0].value })(
+                        <Item label={ t(item.title) }>
+                            {getFieldDecorator(item.key, { rules: [{ required: true, message: t('Please choose') + ' ' + t(item.title) }], initialValue: item.options[0].value })(
                                 <Select>
-                                    {item.options.map(ite => <Select.Option key={ite.value} >{ite.value}</Select.Option>)}
+                                    {item.options.map(ite => <Select.Option key={ite.value} >{t(ite.value)}</Select.Option>)}
                                 </Select>
                             )}
                         </Item>
@@ -56,11 +59,11 @@ class BusinessOrderDetail extends Component {
             } else if (item.key === 'resourceSharingLevel') {
                 return (
                     <Col key={item.key} span={12}>
-                        <Item label={item.title}>
-                            {getFieldDecorator(item.key, { rules: [{ required: true, message: `请选择${item.title}` }], initialValue: 'shared' })(
+                        <Item label={ t(item.title) }>
+                            {getFieldDecorator(item.key, { rules: [{ required: true, message: t('Please choose') + ' ' + t(item.title) }], initialValue: 'shared' })(
                                 <Radio.Group>
-                                    <Radio value="shared"> 共享 &nbsp;&nbsp; </Radio>
-                                    <Radio value="non-shared"> 独占</Radio>
+                                    <Radio value="shared">{ t('Shared') }&nbsp;&nbsp; </Radio>
+                                    <Radio value="non-shared">{ t('Non-shared') }</Radio>
                                 </Radio.Group>
                             )}
                         </Item>
@@ -70,23 +73,24 @@ class BusinessOrderDetail extends Component {
         })
     }
 
-    validator = (content, rule, value, callback) => {
+    validator = (content, scope,  rule, value, callback) => {
+        const { t } = this.props; 
         // 校验输入的必须为数字且不能以0开头
         if (!/^\d*$/.test(value)) {
-            callback('只能输入数字');
+            callback(t('Only numbers can be entered'));
         } else if (!value.indexOf('0')) {
-            callback(content);
+            callback(t(content) + scope);
         } else {
             // 限制取值范围
-            let confine = content.slice(6);
+            let confine = scope.slice(2);
             if (confine.indexOf('≥') === -1) {
                 confine = confine.split('-');
                 if (value && (value * 1 < confine[0] || value * 1 > confine[1])) {
-                    callback(content);
+                    callback(t(content) + scope);
                 }
             } else {
                 if (value && value * 1 >= confine.slice(0)) {
-                    callback(connect);
+                    callback(t(content) + scope);
                 }
             }
         }
@@ -171,7 +175,7 @@ class BusinessOrderDetail extends Component {
                                     let formItemLayout = null
                                     if (ite === formItem[0]) {
                                         formItemLayout = {
-                                            label: item.title,
+                                            label: t(item.title),
                                             labelCol: { span: 10, offset: 0 },
                                             wrapperCol: { span: 11, offset: 2 }
                                         }

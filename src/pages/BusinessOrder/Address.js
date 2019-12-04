@@ -72,10 +72,9 @@ class Address extends Component {
     }
 
     render() {
-        const { t } = this.props;
         const { Item } = Form;
         const { Option } = Select;
-        const { formItemLayout, index, businessorder, data, form: { getFieldDecorator } } = this.props;
+        const { formItemLayout, index, businessorder, data, t, form: { getFieldDecorator } } = this.props;
         const address = businessorder.get('address').toJS();
         const formItem = businessorder.get('formItem').toJS();
 
@@ -84,7 +83,7 @@ class Address extends Component {
                 <Row>
                     <Col span={8}>
                         <Item {...formItemLayout}>
-                            {getFieldDecorator('province', this.getRules('Please select a region'))(
+                            {getFieldDecorator('province', this.getRules(t('Please select a') + t('Province')))(
                                 <Select placeholder={t('Province')} onChange={this.changeProvince}>
                                     {address.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                                 </Select>
@@ -93,7 +92,7 @@ class Address extends Component {
                     </Col>
                     <Col span={4}>
                         <Item wrapperCol={{ span: 22, offset: 0 }}>
-                            {getFieldDecorator('city', this.getRules('Please select a region'))(
+                            {getFieldDecorator('city', this.getRules(t('Please select a') + t('City')))(
                                 <Select placeholder={t('City')} onChange={this.changeCity}>
                                     {data.cityList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                                 </Select>
@@ -102,7 +101,7 @@ class Address extends Component {
                     </Col>
                     <Col span={4}>
                         <Item wrapperCol={{ span: 22, offset: 0 }}>
-                            {getFieldDecorator('county', this.getRules('Please select a region'))(
+                        {getFieldDecorator('county', this.getRules(t('Please select a') + t('District')))(
                                 <Select placeholder={t('District')} onChange={this.changeCounty}>
                                     {data.countyList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                                 </Select>
@@ -111,7 +110,7 @@ class Address extends Component {
                     </Col>
                     <Col span={4}>
                         <Item wrapperCol={{ span: 22, offset: 0 }}>
-                            {getFieldDecorator('street', this.getRules('Please select a region'))(
+                        {getFieldDecorator('street', this.getRules(t('Please select a') + t('Street')))(
                                 <Select placeholder={t('Street')} >
                                     {data.streetList.map(item => <Option key={item.id} value={item.name}>{item.name}</Option>)}
                                 </Select>
