@@ -44,7 +44,6 @@ class Appheader extends React.Component {
     render() {
         const { t } = this.props;
         const login = window.localStorage.getItem("username");
-        console.log(login, "----login")
         const { currentMenu, currentLanguage } = this.state;
         const menu =
             <Menu>

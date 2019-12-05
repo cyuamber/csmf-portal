@@ -9,7 +9,7 @@ class Bread extends React.Component {
         showBread: false
     }
     handelBreaditem() {
-        console.log(this.props.location, "=====>handelBreaditem")
+        // console.log(this.props.location, "=====>handelBreaditem")
     }
     render() {
         const { location, t } = this.props;
