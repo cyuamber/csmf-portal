@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import Axios from 'axios';
 import enUS from 'antd/es/locale/en_US';
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd';
@@ -35,7 +36,9 @@ const storeFactory = (initialState) => {
 const store = storeFactory()(rootReducer);
 let storageLng = getCurrentLng();
 const locale = storageLng === 'en' ? enUS : zhCN;
-
+if (process.env.NODE_ENV === "production") {
+    Axios.defaults.baseURL = 'http://192.168.235.66:8083/';
+}
 ReactDOM.render(
     <Provider store={store}>
         <ConfigProvider locale={locale}>

@@ -38,15 +38,24 @@ class Appheader extends React.Component {
         this.setState({ currentMenu: item.key })
     }
     handleLogout() {
+        window.localStorage.removeItem("username");
         this.props.history.push('/login');
     }
     render() {
         const { t } = this.props;
+        const login = window.localStorage.getItem("username");
+        console.log(login, "----login")
         const { currentMenu, currentLanguage } = this.state;
         const menu =
             <Menu>
                 <Menu.Item>
-                    <span onClick={() => this.handleLogout()}><Icon type="logout" />{t('Log out')}</span>
+                    <span onClick={() => this.handleLogout()}>
+                        {
+                            !login ?
+                                <span><Icon type="login" style={{ marginRight: 5 }} />{t('Log in')}</span> :
+                                <span><Icon type="logout" style={{ marginRight: 5 }} />{t('Log out')}</span>
+                        }
+                    </span>
                 </Menu.Item>
             </Menu>
         return (
@@ -68,7 +77,14 @@ class Appheader extends React.Component {
                 <div className="layout_header__operation" >
                     <Dropdown overlay={menu} placement="bottomCenter">
                         <span style={{ cursor: 'pointer' }}>
-                            <Icon type="user" style={{ marginRight: 5 }} /><span>{getCurrentUser()}</span>
+                            {!login ?
+                                <span>{t('Not Login')}</span> :
+                                <span>
+                                    <Icon type="user" style={{ marginRight: 5 }} />
+                                    <span>{getCurrentUser()}</span>
+                                </span>
+                            }
+
                         </span>
                     </Dropdown>
                     <Button size="small" ghost style={{ marginLeft: 25 }} onClick={() => this.handleLanguage()}>{currentLanguage === 'ch' ? "中文" : "English"}</Button>

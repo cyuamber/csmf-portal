@@ -2,6 +2,7 @@
   "name": "csmf-portal",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "scripts": {
     "start": "cross-env PORT=9000 node scripts/start.js",
     "build": "node scripts/build.js",

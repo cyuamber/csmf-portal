@@ -12,6 +12,7 @@ export const testHeadmenu = (currentUrl, seperator = "/") => {
 
 export const getCurrentUser = () => {
     let user = window.localStorage.getItem("username");
+    console.log(user, "===>user")
     return user
 }
 

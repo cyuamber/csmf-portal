@@ -23,7 +23,8 @@ class Login extends Component {
                         message.success('Successfully login', 3000);
                         console.log('登录成功');
                     } else {
-                        message.error(result_message || 'Error occured when login', 3000);
+                        console.log(result_message, "===>log in error")
+                        // message.error(result_message || 'Error occured when login', 3000);
                     }
                 })
                 history.goBack();
