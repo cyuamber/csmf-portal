@@ -53,11 +53,6 @@ export const ORDER_CREATE_FORM = [{
         }
     ]
 },
-// {
-//     title: '激活因子（%）',
-//     key: 'factor',
-//     content: '取值范围： 1-100'
-// },
 {
     title: 'Use Interval',
     key: 'useInterval',
@@ -270,7 +265,7 @@ export const BUSINESS_MGT_COLUMNS = [
     {
         title: 'Slicing Business Id',
         dataIndex: 'service_id',
-        width: 200
+        width: 280
     },
     {
         title: 'Slicing Business Name',

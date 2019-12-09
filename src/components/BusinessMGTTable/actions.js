@@ -1,26 +1,26 @@
 import { axiosget } from '../../utils/http';
 import APIS from '../../constant/apis';
 
-const changeLoading = bool => ({type: 'CHANGE_LOADING', bool});
+const changeLoading = bool => ({ type: 'CHANGE_LOADING', bool });
 
 export const actions = dispatch => {
     return {
-        getTableData (params, cb) {
-            return new Promise ((resolve) => {
+        getTableData(params, cb) {
+            return new Promise((resolve) => {
                 dispatch(changeLoading(true));
                 // const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
                 // APIS.getOrderServiceApi(params)
-                axiosget(APIS.getOrderServiceApi(params)).then( res => {
-                    const {result_body: {record_number, slicing_service_list}, result_header: {result_code}} = res;
-                    if(result_code === '200'){
+                axiosget(APIS.getOrderServiceApi(params)).then(res => {
+                    const { result_body: { record_number, slicing_service_list }, result_header: { result_code } } = res;
+                    if (result_code === '200') {
                         const tableData = slicing_service_list.map((item, index) => {
                             if (typeof params === 'object') {
                                 const { pageNo, pageSize } = params;
-                                item.index = pageNo ? (pageNo-1)*pageSize + index+1 : index+1;
+                                item.index = pageNo ? (pageNo - 1) * pageSize + index + 1 : index + 1;
                             }
-                            item.activation = item.service_status === 'activated'? true : false;
+                            item.activation = item.service_status === 'activated' ? true : false;
                             // 判断是否成功创建，若未成功创建所有操作不可用
-                            if(item.last_operation_type === "create" && item.last_operation_progress !== 100) {
+                            if (item.last_operation_type === "create" && item.last_operation_progress !== 100) {
                                 item.disabled = true;
                                 item.progress = 100;
                             }
@@ -38,24 +38,24 @@ export const actions = dispatch => {
                         })
                         if (typeof params === 'object') {
                             const { pageNo, pageSize } = params;
-                            dispatch({type: 'SET_TABLE_LIST', total:record_number*1, pageNo, pageSize, data: tableData, bool: false});
+                            dispatch({ type: 'SET_TABLE_LIST', total: record_number * 1, pageNo, pageSize, data: tableData, bool: false });
                             cb && typeof cb === 'function' && cb();
                         } else {
-                            dispatch({type: 'SET_TABLE_DATA', data: tableData, bool: false});
+                            dispatch({ type: 'SET_TABLE_DATA', data: tableData, bool: false });
                         }
                         resolve(tableData);
                     }
                 })
             })
         },
-        changeLoading (bool) {
+        changeLoading(bool) {
             dispatch(changeLoading(bool));
         },
-        getStatusLoading (serviceId, bool, operation) {
-            dispatch({type: 'SET_STATUS_LOADING', serviceId, bool, operation});
+        getStatusLoading(serviceId, bool, operation) {
+            dispatch({ type: 'SET_STATUS_LOADING', serviceId, bool, operation });
         },
-        getProgress (index, progress) {
-            dispatch({type: 'UPDATA_PROGRESS',index, progress});
+        getProgress(index, progress) {
+            dispatch({ type: 'UPDATA_PROGRESS', index, progress });
         }
     }
 }

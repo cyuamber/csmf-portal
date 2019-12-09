@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withNamespaces } from 'react-i18next';
-import { Row, Col, DatePicker, message } from 'antd'; 
+import { Row, Col, DatePicker, message } from 'antd';
 import moment from 'moment';
 import { actions } from './actions';
 import { axiospost } from '../../utils/http';
@@ -24,11 +24,12 @@ class BusinessMonitor extends React.Component {
         const service_list = [];
         const tableList = this.props.businessmonitor.get('tableData').toJS().data;
         tableList.forEach(item => {
-            service_list.push({service_id: item.service_id});
+            //KPI端接受snssai的值
+            service_list.push({ service_id: item.service_snssai });
         })
         if (!service_list.length) {
-            this.setState({loading: false})
-            return 
+            this.setState({ loading: false })
+            return
         }
         this.fetchTrafficData(service_list, time);
         this.fetchOnlineusersData(service_list, time);
@@ -174,32 +175,32 @@ class BusinessMonitor extends React.Component {
         const { t } = this.props;
         // const { showLoading } = this.state;
         const { loading } = this.state;
-        const pageSizeOptions = ['6', '8' ,'10'];
+        const pageSizeOptions = ['6', '8', '10'];
 
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
         const bandwidthData = this.props.businessmonitor.get('bandwidth').toJS();
-        
+
         const trafficConfig = this.processPieData(trafficData, "traffic");
         const onlineusersConfig = this.processLineData(onlineusersData, "onlineusers");
         const bandwidthConfig = this.processLineData(bandwidthData, "bandwidth");
-        
+
         return (
             <div className="businessmonitor">
                 <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate} />
                 <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={6}>
-                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} loading={loading}/>
+                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} loading={loading} />
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} loading={loading}/>
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} loading={loading} />
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} loading={loading}/>
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} loading={loading} />
                     </Col>
                 </Row>
-                <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} pageSizeOptions={pageSizeOptions}/>
-                <Loading/>
+                <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} pageSizeOptions={pageSizeOptions} />
+                <Loading />
             </div>
         );
     }

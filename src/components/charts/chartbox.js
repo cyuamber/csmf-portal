@@ -8,7 +8,7 @@ class Chartbox extends Component {
         let id = ('_' + Math.random()).replace('.', '_');
         this.state = {
             lineId: 'line' + id
-        }   
+        }
     }
 
     componentDidMount() {
@@ -18,7 +18,7 @@ class Chartbox extends Component {
         this.initEchart(this.state.lineId);
     }
     initEchart(id) {
-        const { chartConfig, pieExtraConfig,lineExtraConfig,chartName, loading } = this.props;
+        const { chartConfig, pieExtraConfig, lineExtraConfig, chartName, loading } = this.props;
         let myChart = echarts.getInstanceByDom(document.getElementById(id));
         if (myChart === undefined) {
             myChart = echarts.init(document.getElementById(id));
@@ -27,12 +27,12 @@ class Chartbox extends Component {
             text: 'loading...',
             x: 'center'
         })
-        if((pieExtraConfig && pieExtraConfig.value.length) || !loading ){
+        if ((pieExtraConfig && pieExtraConfig.value.length) || !loading) {
             myChart.hideLoading()
-        }else if((lineExtraConfig && lineExtraConfig.legend.length) || !loading) {
-            if(chartName === '在线用户数量' || chartName === 'Onlines Users'){
+        } else if ((lineExtraConfig && lineExtraConfig.legend.length) || !loading) {
+            if (chartName === '在线用户数量' || chartName === 'Onlines Users') {
                 myChart.hideLoading()
-            }else {
+            } else {
                 myChart.hideLoading()
             }
         }
@@ -45,27 +45,27 @@ class Chartbox extends Component {
                 },
                 series: [
                     {
-                        name:pieExtraConfig.legendName,
+                        name: pieExtraConfig.legendName,
                         data: pieExtraConfig.value
                     }
                 ]
             });
         }
-        if(lineExtraConfig){
+        if (lineExtraConfig) {
             myChart.setOption({
                 legend: {
                     data: lineExtraConfig.legend,
                     type: 'scroll'
                 },
-                xAxis:{
-                    data:lineExtraConfig.xAxis
+                xAxis: {
+                    data: lineExtraConfig.xAxis
                 },
                 series: lineExtraConfig.value
             });
         }
-        window.addEventListener('resize', () =>{
+        window.addEventListener('resize', () => {
             myChart.resize()
-        }) 
+        })
     }
     render() {
         const { chartStyle, chartName } = this.props;
@@ -73,7 +73,7 @@ class Chartbox extends Component {
         return (
             <div className="chartArea">
                 <p className="chartArea_title">{chartName}</p>
-                <div className="chartArea_chart" id={this.state.lineId} style={chartStyle}></div>
+                <div id={this.state.lineId} style={chartStyle}></div>
             </div>
         )
     }
