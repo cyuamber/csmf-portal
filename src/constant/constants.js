@@ -25,7 +25,7 @@ export const ORDER_CREATE_FORM = [{
     key: 'expDataRateUL',
     content: 'Scope',
     scope: '： 100-3000'
-
+    
 },
 {
     title: 'Resource Sharing Level',
@@ -33,7 +33,7 @@ export const ORDER_CREATE_FORM = [{
 },
 {
     title: 'Mobility',
-    key: 'uEMobilityLevel',
+    key: 'mobilityLevel',
     options: [
         {
             value: 'Stationary',

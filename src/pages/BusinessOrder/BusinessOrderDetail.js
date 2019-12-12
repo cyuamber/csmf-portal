@@ -74,7 +74,7 @@ class BusinessOrderDetail extends Component {
     }
 
     validator = (content, scope, rule, value, callback) => {
-        const { t } = this.props;
+        const { t } = this.props; 
         // 校验输入的必须为数字且不能以0开头
         if (!/^\d*$/.test(value)) {
             callback(t('Only numbers can be entered'));
@@ -119,17 +119,17 @@ class BusinessOrderDetail extends Component {
                 const flag = this.areaList.includes(null);
                 if (!flag) {
                     // 获取游牧性的key
-                    let uEMobilityLevel = '';
+                    let mobilityLevel = '';
                     ORDER_CREATE_FORM.forEach(item => {
-                        if (item.key === 'uEMobilityLevel') {
+                        if (item.key === 'mobilityLevel') {
                             item.options.forEach(ite => {
-                                if (ite.value === values.uEMobilityLevel) {
-                                    uEMobilityLevel = ite.key;
+                                if (ite.value === values.mobilityLevel) {
+                                    mobilityLevel = ite.key;
                                 }
                             })
                         }
                     })
-                    const slicing_order_info = { ...values, uEMobilityLevel: uEMobilityLevel, coverageArea: JSON.stringify(this.areaList) };
+                    const slicing_order_info = { ...values, mobilityLevel, coverageArea: JSON.stringify(this.areaList) };
                     axiospost(APIS.createOrderApi, { slicing_order_info }).then(res => {
                         if (+res.result_header.result_code === 200) {
                             this.props.setBtnLoading(false);
