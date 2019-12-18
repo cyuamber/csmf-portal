@@ -1,5 +1,6 @@
 import { axiosget } from '../../utils/http';
 import APIS from '../../constant/apis';
+import { message } from 'antd';
 
 const changeLoading = bool => ({ type: 'CHANGE_LOADING', bool });
 
@@ -8,11 +9,12 @@ export const actions = dispatch => {
         getTableData(params, cb) {
             return new Promise((resolve) => {
                 dispatch(changeLoading(true));
-                // const url = typeof params === 'string' ? APIS.getOrderDetail : APIS.getBusinessList
-                // APIS.getOrderServiceApi(params)
                 axiosget(APIS.getOrderServiceApi(params)).then(res => {
-                    const { result_body: { record_number, slicing_service_list }, result_header: { result_code } } = res;
-                    if (result_code === '200') {
+                    const { result_body: { record_number, slicing_service_list }, result_header: { result_code, result_message } } = res;
+                    if (+result_code !== 200 && slicing_service_list.length === 0) {
+                        message.error(result_message || 'System error');
+                        dispatch(changeLoading(false));
+                    } else {
                         const tableData = slicing_service_list.map((item, index) => {
                             if (typeof params === 'object') {
                                 const { pageNo, pageSize } = params;
