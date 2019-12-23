@@ -34,10 +34,10 @@ class BusinessMGTTable extends Component {
         // APIS.getProgressApi(serviceId)
         // APIS.getProgress
         axiosget(APIS.getProgressApi(serviceId)).then((res) => {
-            const { result_header: { result_code }, result_body: { operation_progress } } = res;
+            const { result_header: { result_code }, result_body: { operation_process } } = res;
             if (result_code === "200") {
-                getProgress(index, operation_progress);
-                if (operation_progress !== 100) {
+                getProgress(index, operation_process);
+                if (operation_process !== 100) {
                     const timer = setTimeout(() => {
                         this.getProgress(serviceId);
                     }, 5000)

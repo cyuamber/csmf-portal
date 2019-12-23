@@ -22,14 +22,14 @@ export const actions = dispatch => {
                             }
                             item.activation = item.service_status === 'activated' ? true : false;
                             // 判断是否成功创建，若未成功创建所有操作不可用
-                            if (item.last_operation_type === "create" && item.last_operation_progress !== 100) {
+                            if (item.last_operation_type === "create" && item.last_operation_process !== 100) {
                                 item.disabled = true;
                                 item.progress = 100;
                             }
                             // 判断是否有操作正在执行中
-                            else if (item.last_operation_type && item.last_operation_progress !== 100) {
+                            else if (item.last_operation_type && item.last_operation_process !== 100) {
                                 item.loading = true;
-                                item.progress = item.last_operation_progress;
+                                item.progress = item.last_operation_process;
                                 item.operation = item.last_operation_type;;
                             }
                             // 若无操作执行中，不显示progress
