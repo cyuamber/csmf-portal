@@ -13,8 +13,6 @@ class BusinessMGTTable extends Component {
     changeStatus = (serviceId, checked) => {
         this.props.getStatusLoading(serviceId, true, 'activate');
         const url = checked ? APIS.activateApi : APIS.deactivateApi;
-        // const url = checked ? APIS.enable : APIS.disable 
-        // axiosput(url)
         axiosput(url(serviceId)).then(res => {
             const { result_header: { result_code } } = res;
             if (result_code === '200') {
@@ -28,16 +26,14 @@ class BusinessMGTTable extends Component {
         let index = 0;
         businesmgtTable.getIn(['tableData']).toJS().data.forEach((item, i) => {
             if (item.service_id === serviceId) {
-                index = i;;
+                index = i;
             }
         });
-        // APIS.getProgressApi(serviceId)
-        // APIS.getProgress
         axiosget(APIS.getProgressApi(serviceId)).then((res) => {
-            const { result_header: { result_code }, result_body: { operation_process } } = res;
+            const { result_header: { result_code }, result_body: { operation_progress } } = res;
             if (result_code === "200") {
-                getProgress(index, operation_process);
-                if (operation_process !== 100) {
+                getProgress(index, operation_progress);
+                if (operation_progress !== 100) {
                     const timer = setTimeout(() => {
                         this.getProgress(serviceId);
                     }, 5000)
@@ -53,7 +49,7 @@ class BusinessMGTTable extends Component {
                         getTableData({ status, pageNo, pageSize });
                     }
                 }
-            };
+            }
         })
     }
 
@@ -73,14 +69,14 @@ class BusinessMGTTable extends Component {
         // APIS.terminate
         axiosdelete(APIS.terminateApi(serviceId)).then(res => {
             const { result_header: { result_code } } = res;
-            if (result_code === '200') {
+            if (+result_code === 200) {
+                console.log(serviceId, "===>serviceId")
                 this.getProgress(serviceId);
             }
         })
     }
 
     componentDidMount() {
-        ;
         const { getTableData, status, orderId, getChartsData } = this.props;
         if (orderId) {
             getTableData(orderId).then(res => {
