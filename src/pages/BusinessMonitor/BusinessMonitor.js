@@ -42,11 +42,14 @@ class BusinessMonitor extends React.Component {
         // APIS.trafficApi(time)
         // APIS.traffic
         axiospost(APIS.trafficApi(time), { service_list }).then(res => {
-            if (res.result_header && +res.result_header.result_code === 200) {
+            const { result_header, result_header: { result_code, result_message }} = res;
+            if (result_header && +result_code === 200) {
                 setTrafficData(res.result_body.slicing_usage_traffic_list);
             } else {
-                message.error('get traffic data error');
+                message.error(result_message || 'get traffic data error');
             }
+        }, ({message: error}) => {
+            message.error(error)
         })
     }
     fetchOnlineusersData(service_list, time) {
@@ -55,11 +58,14 @@ class BusinessMonitor extends React.Component {
         // APIS.onlineUsersApi(time)
         // APIS.onlineUsers
         axiospost(APIS.onlineUsersApi(time), { service_list }).then(res => {
-            if (res.result_header && +res.result_header.result_code === 200) {
+            const { result_header, result_header: { result_code, result_message }} = res;
+            if (result_header && +result_code === 200) {
                 setOnlineusersData(res.result_body.slicing_online_user_list);
             } else {
-                message.error('get online users data error');
+                message.error(result_message || 'get online users data error');
             }
+        }, ({message: error}) => {
+            message.error(error);
         })
     }
 
@@ -69,11 +75,14 @@ class BusinessMonitor extends React.Component {
         // APIS.bandwidthApi(time)
         // APIS.bandwidth
         axiospost(APIS.bandwidthApi(time), { service_list }).then(res => {
-            if (res.result_header && +res.result_header.result_code === 200) {
+            const { result_header, result_header: { result_code, result_message }} = res;
+            if (result_header && +result_code === 200) {
                 setBandwidthData(res.result_body.slicing_total_bandwidth_list);
             } else {
-                message.error('get bandwidth data error');
+                message.error(result_message || 'get bandwidth data error');
             }
+        }, ({message: error}) => {
+            message.error(error);
         })
     }
     processPieData = (chartData, chartName = "traffic") => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions } from './actions';
-import { Button, Table, Switch, Popconfirm, Progress } from 'antd';
+import { Button, Table, Switch, Popconfirm, Progress, message } from 'antd';
 import { axiosput, axiosdelete, axiosget } from '../../utils/http';
 import APIS from '../../constant/apis';
 import { BUSINESS_MGT_COLUMNS } from '../../constant/constants';
@@ -14,14 +14,20 @@ class BusinessMGTTable extends Component {
         this.props.getStatusLoading(serviceId, true, 'activate');
         const url = checked ? APIS.activateApi : APIS.deactivateApi;
         axiosput(url(serviceId)).then(res => {
-            const { result_header: { result_code } } = res;
-            if (result_code === '200') {
-                this.getProgress(serviceId);
-            }
+            const { result_header: { result_code, result_message } } = res;
+            if (+result_code === 200) {
+                this.getProgress(serviceId, 'activate');
+            } else {
+                message.error(result_message);
+                this.props.getStatusLoading(serviceId, false, 'activate');
+            } 
+        }, ({message: error}) => {
+            message.error(error);
+            this.props.getStatusLoading(serviceId, false, 'activate');
         })
     }
 
-    getProgress = (serviceId) => {
+    getProgress = (serviceId, operation) => {
         const { getProgress, businesmgtTable, orderId, getTableData, status, getTimerList } = this.props;
         let index = 0;
         businesmgtTable.getIn(['tableData']).toJS().data.forEach((item, i) => {
@@ -30,9 +36,15 @@ class BusinessMGTTable extends Component {
             }
         });
         axiosget(APIS.getProgressApi(serviceId)).then((res) => {
-            const { result_header: { result_code }, result_body: { operation_progress } } = res;
-            if (result_code === "200") {
+            const { result_header: { result_code, result_message}, result_body: { operation_progress } } = res;
+            if (+result_code === 200) {
                 getProgress(index, operation_progress);
+                // 判断当请求成功响应，但progress值出现错误
+                if (!operation_progress) {
+                    if (operation_progress !== 0) {
+                        return this.props.getStatusLoading(serviceId, false, operation);
+                    }
+                }
                 if (operation_progress !== 100) {
                     const timer = setTimeout(() => {
                         this.getProgress(serviceId);
@@ -49,7 +61,13 @@ class BusinessMGTTable extends Component {
                         getTableData({ status, pageNo, pageSize });
                     }
                 }
+            } else {
+                this.props.getStatusLoading(serviceId, false, operation);
+                message.error(result_message);
             }
+        }, ({message: error}) => {
+            message.error(error);
+            this.props.getStatusLoading(serviceId, false, operation);
         })
     }
 
@@ -68,11 +86,17 @@ class BusinessMGTTable extends Component {
         // axiosdelete(APIS.terminateApi(serviceId))
         // APIS.terminate
         axiosdelete(APIS.terminateApi(serviceId)).then(res => {
-            const { result_header: { result_code } } = res;
+            const { result_header: { result_code, result_message } } = res;
             if (+result_code === 200) {
                 console.log(serviceId, "===>serviceId")
-                this.getProgress(serviceId);
+                this.getProgress(serviceId, 'delete');
+            }else {
+                this.props.getStatusLoading(serviceId, false, 'delete');
+                message.error(result_message);
             }
+        }, ({message: error}) => {
+            this.props.getStatusLoading(serviceId, false, 'delete');
+            message.error(error);
         })
     }
 
@@ -81,8 +105,10 @@ class BusinessMGTTable extends Component {
         if (orderId) {
             getTableData(orderId).then(res => {
                 res.forEach(item => {
-                    if (item.progress !== 100) {
-                        this.getProgress(item.service_id);
+                    if (item.progress !== 100 && item.progress) {
+                        this.getProgress(item.service_id, item.operation);
+                    } else if (item.progress === 0){
+                        this.getProgress(item.service_id, item.operation);
                     }
                 })
             })
@@ -90,8 +116,10 @@ class BusinessMGTTable extends Component {
             if (status) {
                 getTableData({ status, pageNo: 1, pageSize: 10 }).then(res => {
                     res.forEach(item => {
-                        if (item.progress !== 100) {
-                            this.getProgress(item.service_id);
+                        if (item.progress !== 100 && item.progress) {
+                            this.getProgress(item.service_id, item.operation);
+                        } else if (item.progress === 0){
+                            this.getProgress(item.service_id, item.operation);
                         }
                     })
                 })

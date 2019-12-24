@@ -47,6 +47,9 @@ export const actions = dispatch => {
                         }
                         resolve(tableData);
                     }
+                }, error => {
+                    message.error(error.message)
+                    dispatch(changeLoading(false));
                 })
             })
         },

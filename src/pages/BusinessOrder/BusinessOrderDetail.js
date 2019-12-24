@@ -138,6 +138,9 @@ class BusinessOrderDetail extends Component {
                             this.props.setBtnLoading(false);
                             message.error(res.result_header.result_message || t('Create Failed'));
                         }
+                    }, ({message: error}) => {
+                        this.props.setBtnLoading(false);
+                        message.error(error);
                     })
                 }
             }
