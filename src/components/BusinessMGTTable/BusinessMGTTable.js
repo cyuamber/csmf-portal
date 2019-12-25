@@ -177,10 +177,10 @@ class BusinessMGTTable extends Component {
                                 defaultChecked={isActivate}
                                 checked={isActivate}
                                 size='small'
-                                loading={record.loading}
+                                loading={record.loading && (record.operation && record.operation.toLowerCase() !== 'delete')}
                                 disabled={record.disabled}
                             />
-                            {record.operation !== 'delete' && record.progress !== 100 ?
+                            {record.operation && record.operation.toLowerCase() !== 'delete' && record.progress !== 100 ?
                                 <Progress size="small" percent={record.progress} status={record.progress === 100 ? 'success' : 'active'} /> : false
                             }
                         </Popconfirm>
@@ -192,7 +192,7 @@ class BusinessMGTTable extends Component {
                 dataIndex: 'end',
                 align: 'center',
                 render: (text, record) => {
-                    // 当非actavtion且disable为false且loading为false     显示                  
+                    // 当非actavtion且disable为false且loading为false  显示                  
                     const isDisable = !record.activation && !record.disabled && !record.loading;
                     return (
                         <Popconfirm
@@ -208,7 +208,7 @@ class BusinessMGTTable extends Component {
                                 shape='circle'
                                 disabled={!isDisable}
                             />
-                            {record.operation === 'delete' && record.progress !== 100 ?
+                            {record.operation && record.operation.toLowerCase() === 'delete' && record.progress !== 100 ?
                                 <Progress size="small" percent={record.progress} status={record.progress === 100 ? 'success' : 'active'} /> : false
                             }
                         </Popconfirm>

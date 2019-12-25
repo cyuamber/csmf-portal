@@ -37,7 +37,8 @@ export default function reducer(state = initData, action){
             return state.setIn(['tableData', 'data'], state.getIn(['tableData', 'data']).update(index, item => {
                     return item
                             .setIn(['loading'], action.bool)
-                            .setIn(['operation'], action.operation);
+                            .setIn(['operation'], action.operation)
+                            .setIn(['disabled'], action.bool ? true: false);
             }))
         case 'UPDATA_PROGRESS':
             return state.setIn(['tableData', 'data'], state.getIn(['tableData', 'data']).update(action.index, item => {

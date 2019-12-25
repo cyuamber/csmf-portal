@@ -103,48 +103,29 @@ class BusinessMonitor extends React.Component {
         const LegendArr = [];
         const LegendxAxis = [];
         const LegendData = [];
-        lineData.data.forEach((item, index) => {
+        const listKey = lineName === "onlineusers" ? 'online_user_list' : 'total_bandwidth_list';
+        const key = lineName === "onlineusers" ? 'online_users' : 'total_bandwidth';
+        const data = lineData.data.filter(item => item[listKey] && item[listKey].length);
+        data.forEach((item, index) => {
             LegendArr.push(item.service_id);
             if (index === 0) {
-                if (lineName === "onlineusers") {
-                    LegendxAxis.push(item.online_user_list.forEach(_ => {
-                        if (typeof (_.timestamp) === "string") {
-                            LegendxAxis.push(moment(+_.timestamp).format('hh:mm'));
-
-                        }
-                    }));
-                } else if (lineName === "bandwidth") {
-                    LegendxAxis.push(item.total_bandwidth_list.forEach(_ => {
-                        if (typeof (_.timestamp) === "string") {
-                            LegendxAxis.push(moment(+_.timestamp).format('hh:mm'));
-
-                        }
-                    }));
-                }
+                LegendxAxis.push(item[listKey].forEach (_ => {
+                    if (typeof (_.timestamp) === "string") {
+                        LegendxAxis.push(moment(+_.timestamp).format('hh:mm'));
+                    }
+                }))
                 LegendxAxis.pop();
             }
             const LegendDataNumber = [];
-            if (lineName === "onlineusers") {
-                item.online_user_list.forEach(t => {
-                    LegendDataNumber.push(t.online_users);
-                })
-                LegendData.push({
-                    name: item.service_id,
-                    type: 'line',
-                    data: LegendDataNumber
-                })
-            } else if (lineName === "bandwidth") {
-                item.total_bandwidth_list.forEach(t => {
-                    LegendDataNumber.push(t.total_bandwidth);
-                })
-                LegendData.push({
-                    name: item.service_id,
-                    type: 'line',
-                    data: LegendDataNumber
-                })
-            }
+            item[listKey].forEach (t => {
+                LegendDataNumber.push(t[key]);
+            })
+            LegendData.push({
+                name: item.service_id,
+                type: 'line',
+                data: LegendDataNumber
+            })
         })
-
         return { legend: LegendArr, xAxis: LegendxAxis, value: LegendData };
     }
     setDisabledDate = (current) => {
