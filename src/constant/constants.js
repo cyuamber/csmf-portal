@@ -25,7 +25,7 @@ export const ORDER_CREATE_FORM = [{
     key: 'expDataRateUL',
     content: 'Scope',
     scope: '： 100-3000'
-    
+
 },
 {
     title: 'Resource Sharing Level',
@@ -242,17 +242,24 @@ export const ORDER_MGT_COLUMNS = [
     {
         title: 'No',
         dataIndex: 'index',
-        key: 'index'
+        key: 'index',
+        width: 100
     },
     {
         title: 'Order Number',
         dataIndex: 'order_id',
-        key: 'order_id'
+        key: 'order_id',
+        width: 380
     },
     {
         title: 'Created Time',
         dataIndex: 'order_creation_time',
         key: 'order_creation_time'
+    },
+    {
+        title: 'S-NSSAI',
+        dataIndex: 'service_snssai',
+        key: 'service_snssai'
     },
     {
         title: 'Use Interval',
@@ -265,11 +272,12 @@ export const BUSINESS_MGT_COLUMNS = [
     {
         title: 'Slicing Business Id',
         dataIndex: 'service_id',
-        width: 280
+        width: 300
     },
     {
         title: 'Slicing Business Name',
-        dataIndex: 'service_name'
+        dataIndex: 'service_name',
+        width: 200
     },
     {
         title: 'Slicing Type',
