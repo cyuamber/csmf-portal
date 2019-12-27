@@ -19,6 +19,7 @@ class Chartbox extends Component {
     }
     initEchart(id) {
         const { chartConfig, pieExtraConfig, lineExtraConfig, chartName, loading } = this.props;
+        if(!loading) return 
         let myChart = echarts.getInstanceByDom(document.getElementById(id));
         if (myChart === undefined) {
             myChart = echarts.init(document.getElementById(id));
@@ -68,12 +69,14 @@ class Chartbox extends Component {
         })
     }
     render() {
-        const { chartStyle, chartName } = this.props;
+        const { chartStyle, chartName, loading } = this.props;
 
         return (
             <div className="chartArea">
                 <p className="chartArea_title">{chartName}</p>
-                <div id={this.state.lineId} style={chartStyle}></div>
+                {
+                    loading ? <div id={this.state.lineId} style={chartStyle}></div> : <p className="noData">NO DATA</p>
+                }
             </div>
         )
     }

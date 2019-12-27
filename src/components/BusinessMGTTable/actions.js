@@ -14,6 +14,7 @@ export const actions = dispatch => {
                     if (+result_code !== 200 && slicing_service_list.length === 0) {
                         message.error(result_message || 'System error', 1);
                         dispatch(changeLoading(false));
+                        cb && typeof cb === 'function' && cb();
                     } else if (+result_code === 404) {
                         dispatch(changeLoading(false));
                     } else {
@@ -52,6 +53,7 @@ export const actions = dispatch => {
                 }, error => {
                     message.error(error.message, 1)
                     dispatch(changeLoading(false));
+                    cb && typeof cb === 'function' && cb();
                 })
             })
         },
