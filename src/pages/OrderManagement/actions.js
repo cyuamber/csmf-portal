@@ -24,11 +24,11 @@ export const actions = dispatch => {
                     })
                     dispatch({ type: 'GET_TABLE_DATA', tableData, bool: false, total: record_number * 1, pageSize, pageNo });
                 } else {
-                    message.error(result_message);
+                    message.error(result_message, 1);
                     dispatch({ type: 'CHANGE_TABLE_LOADING' });
                 }
             }, ({ message: error }) => {
-                message.error(error);
+                message.error(error, 1);
                 dispatch({ type: 'CHANGE_TABLE_LOADING' });
             })
         }

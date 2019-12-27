@@ -74,7 +74,7 @@ class BusinessOrderDetail extends Component {
     }
 
     validator = (content, scope, rule, value, callback) => {
-        const { t } = this.props; 
+        const { t } = this.props;
         // 校验输入的必须为数字且不能以0开头
         if (!/^\d*$/.test(value)) {
             callback(t('Only numbers can be entered'));
@@ -136,11 +136,11 @@ class BusinessOrderDetail extends Component {
                             this.props.history.push('/ordermgt');
                         } else {
                             this.props.setBtnLoading(false);
-                            message.error(res.result_header.result_message || t('Create Failed'));
+                            message.error(res.result_header.result_message || t('Create Failed'), 1);
                         }
-                    }, ({message: error}) => {
+                    }, ({ message: error }) => {
                         this.props.setBtnLoading(false);
-                        message.error(error);
+                        message.error(error, 1);
                     })
                 }
             }

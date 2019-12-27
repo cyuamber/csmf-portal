@@ -18,11 +18,11 @@ class BusinessMGTTable extends Component {
             if (+result_code === 200) {
                 this.getProgress(serviceId, 'activate');
             } else {
-                message.error(result_message);
+                message.error(result_message, 1);
                 this.props.getStatusLoading(serviceId, false, 'activate');
             }
         }, ({ message: error }) => {
-            message.error(error);
+            message.error(error, 1);
             this.props.getStatusLoading(serviceId, false, 'activate');
         })
     }
@@ -63,10 +63,10 @@ class BusinessMGTTable extends Component {
                 }
             } else {
                 this.props.getStatusLoading(serviceId, false, operation);
-                message.error(result_message);
+                message.error(result_message, 1);
             }
         }, ({ message: error }) => {
-            message.error(error);
+            message.error(error, 1);
             this.props.getStatusLoading(serviceId, false, operation);
         })
     }
@@ -92,11 +92,11 @@ class BusinessMGTTable extends Component {
                 this.getProgress(serviceId, 'delete');
             } else {
                 this.props.getStatusLoading(serviceId, false, 'delete');
-                message.error(result_message);
+                message.error(result_message, 1);
             }
         }, ({ message: error }) => {
             this.props.getStatusLoading(serviceId, false, 'delete');
-            message.error(error);
+            message.error(error, 1);
         })
     }
 
