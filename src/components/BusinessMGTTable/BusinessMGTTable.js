@@ -18,7 +18,7 @@ class BusinessMGTTable extends Component {
             if (+result_code === 200) {
                 this.getProgress(serviceId, 'activate');
             } else {
-                // message.error(result_message, 1);
+                message.error(result_message, 1);
                 this.props.getStatusLoading(serviceId, false, 'activate');
             }
         }, ({ message: error }) => {

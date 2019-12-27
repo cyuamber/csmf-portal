@@ -12,7 +12,9 @@ export const actions = dispatch => {
                 axiosget(APIS.getOrderServiceApi(params)).then(res => {
                     const { result_body: { record_number, slicing_service_list }, result_header: { result_code, result_message } } = res;
                     if (+result_code !== 200 && slicing_service_list.length === 0) {
-                        // message.error(result_message || 'System error', 1);
+                        message.error(result_message || 'System error', 1);
+                        dispatch(changeLoading(false));
+                    } else if (+result_code === 404) {
                         dispatch(changeLoading(false));
                     } else {
                         const tableData = slicing_service_list.map((item, index) => {

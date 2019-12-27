@@ -251,7 +251,7 @@ export const ORDER_MGT_COLUMNS = [
         title: 'Order Number',
         dataIndex: 'order_id',
         key: 'order_id',
-        width: 380
+        width: 300
     },
     {
         title: 'Business Name',
