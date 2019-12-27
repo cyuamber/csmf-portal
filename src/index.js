@@ -43,7 +43,11 @@ ReactDOM.render(
     <Provider store={store}>
         <ConfigProvider locale={locale}>
             <Router>
-                <Route path="/login" exact component={Login} />
+                <Route path="/login" exact >
+                    <Layout>
+                        <Login />
+                    </Layout>
+                </Route>
                 <Route path="/" exact >
                     <Layout>
                         <Homepage />

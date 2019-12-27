@@ -1,3 +1,5 @@
+import react from 'react';
+
 export const ORDER_CREATE_FORM = [{
     title: 'Slicing Business Name',
     key: 'name'
@@ -250,6 +252,13 @@ export const ORDER_MGT_COLUMNS = [
         dataIndex: 'order_id',
         key: 'order_id',
         width: 380
+    },
+    {
+        title: 'Business Name',
+        dataIndex: 'service_name',
+        key: 'service_name',
+        width: 200,
+        render: (row) => { return row ? row : "--" }
     },
     {
         title: 'Created Time',

@@ -60,6 +60,7 @@
     "Slicing business name cannot exceed 50 characters": "切片业务名称不能超过50个字符",
     "No": "序号",
     "Order Number": "订单编号",
+    "Business Name": "业务名称",
     "Created Time": "订单创建时间",
     "Status": "状态",
     "Detail": "详情",

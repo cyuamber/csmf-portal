@@ -60,6 +60,7 @@
     "Slicing business name cannot exceed 50 characters": "Slicing business name cannot exceed 50 characters",
     "No": "No",
     "Order Number": "Order Number",
+    "Business Name": "Business Name",
     "Created Time": "Created Time",
     "Status": "Status",
     "Detail": "Detail",

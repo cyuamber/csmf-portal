@@ -11,13 +11,17 @@ const { Content } = Layout;
 
 class Layoutframe extends React.Component {
     render() {
+        const isBread = window.location.href.indexOf('login') === -1 ? true : false;
+        console.log(window.location.href, window.location.href.indexOf('login'))
         return (
             <Layout className="layout" style={{ background: "#fff" }}>
                 <Appheader />
                 <Content className="layout_content">
-                    <div className="layout_content__bread">
-                        <Bread />
-                    </div>
+                    {
+                        isBread ? <div className="layout_content__bread">
+                            <Bread />
+                        </div> : null
+                    }
                     <div className="layout_content__body">{this.props.children}</div>
                 </Content>
                 {/* <Appfooter /> */}
