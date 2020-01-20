@@ -18,3 +18,8 @@ export const getCurrentUser = () => {
 export const getCurrentLng = () => {
     return window.localStorage.getItem("currentLng");
 }
+
+export const isEmptyArr = (arr = []) => {
+    let isEmpty = arr.length === 0 ? true : false;
+    return isEmpty
+}

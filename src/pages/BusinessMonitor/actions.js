@@ -1,13 +1,13 @@
 export const actions = dispatch => {
     return {
-        setTrafficData: (data = {}) => {
-            dispatch({ type: 'SET_TRAFFIC_DATA', data });
+        setTrafficData: (data = {}, loading = true) => {
+            dispatch({ type: 'SET_TRAFFIC_DATA', data, loading });
         },
-        setOnlineusersData: (data = {}) => {
-            dispatch({ type: 'SET_ONLINEUSERS_DATA', data });
+        setOnlineusersData: (data = {}, loading = false) => {
+            dispatch({ type: 'SET_ONLINEUSERS_DATA', data, loading });
         },
-        setBandwidthData: (data = {}) => {
-            dispatch({ type: 'SET_BANDWIDTH_DATA', data });
+        setBandwidthData: (data = {}, loading = false) => {
+            dispatch({ type: 'SET_BANDWIDTH_DATA', data, loading });
         }
     }
 }

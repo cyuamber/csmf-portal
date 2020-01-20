@@ -5,6 +5,7 @@ import { Row, Col, DatePicker, message } from 'antd';
 import moment from 'moment';
 import { actions } from './actions';
 import { axiospost } from '../../utils/http';
+import { isEmptyArr } from '../../utils/util';
 import APIS from 'constant/apis';
 import { chartConfig, chartStyle, pieChartconfig } from './constants';
 
@@ -16,7 +17,6 @@ import "./style.less";
 
 class BusinessMonitor extends React.Component {
     state = {
-        showLoading: false,
         loading: true,
     };
 
@@ -38,13 +38,11 @@ class BusinessMonitor extends React.Component {
 
     fetchTrafficData = (service_list, time) => {
         const { setTrafficData } = this.props;
-        // url中的参数
-        // APIS.trafficApi(time)
-        // APIS.traffic
         axiospost(APIS.trafficApi(time), { service_list }).then(res => {
             const { result_header, result_header: { result_code, result_message } } = res;
             if (result_header && +result_code === 200) {
-                setTrafficData(res.result_body.slicing_usage_traffic_list);
+                let isLoading = res.result_body.slicing_usage_traffic_list && res.result_body.slicing_usage_traffic_list.length !== 0 ? true : false;
+                setTrafficData(res.result_body.slicing_usage_traffic_list, isLoading);
             } else {
                 message.error(result_message || 'get traffic data error', 1);
             }
@@ -54,13 +52,13 @@ class BusinessMonitor extends React.Component {
     }
     fetchOnlineusersData(service_list, time) {
         const { setOnlineusersData } = this.props;
-        // url中的参数
-        // APIS.onlineUsersApi(time)
-        // APIS.onlineUsers
         axiospost(APIS.onlineUsersApi(time), { service_list }).then(res => {
             const { result_header, result_header: { result_code, result_message } } = res;
             if (result_header && +result_code === 200) {
-                setOnlineusersData(res.result_body.slicing_online_user_list);
+                let isLoading = res.result_body.slicing_online_user_list.every(item =>
+                    isEmptyArr(item.online_user_list)
+                )
+                setOnlineusersData(res.result_body.slicing_online_user_list, !isLoading);
             } else {
                 message.error(result_message || 'get online users data error', 1);
             }
@@ -71,13 +69,13 @@ class BusinessMonitor extends React.Component {
 
     fetchBandwidthData(service_list, time) {
         const { setBandwidthData } = this.props;
-        // url中的参数
-        // APIS.bandwidthApi(time)
-        // APIS.bandwidth
         axiospost(APIS.bandwidthApi(time), { service_list }).then(res => {
             const { result_header, result_header: { result_code, result_message } } = res;
             if (result_header && +result_code === 200) {
-                setBandwidthData(res.result_body.slicing_total_bandwidth_list);
+                let isLoading = res.result_body.slicing_total_bandwidth_list.every(item =>
+                    isEmptyArr(item.total_bandwidth_list)
+                )
+                setBandwidthData(res.result_body.slicing_total_bandwidth_list, !isLoading);
             } else {
                 message.error(result_message || 'get bandwidth data error', 1);
             }
@@ -163,14 +161,11 @@ class BusinessMonitor extends React.Component {
 
     render() {
         const { t } = this.props;
-        // const { showLoading } = this.state;
-        const { loading } = this.state;
         const pageSizeOptions = ['6', '8', '10'];
 
         const trafficData = this.props.businessmonitor.get('traffic').toJS();
         const onlineusersData = this.props.businessmonitor.get('onlineusers').toJS();
         const bandwidthData = this.props.businessmonitor.get('bandwidth').toJS();
-
         const trafficConfig = this.processPieData(trafficData, "traffic");
         const onlineusersConfig = this.processLineData(onlineusersData, "onlineusers");
         const bandwidthConfig = this.processLineData(bandwidthData, "bandwidth");
@@ -180,13 +175,13 @@ class BusinessMonitor extends React.Component {
                 <DatePicker showTime disabledDate={this.setDisabledDate} onChange={this.changeDate} onOpenChange={this.selectedDate} />
                 <Row type="flex" gutter={16} justify="space-around" className="businessmonitor_imagecontainer">
                     <Col span={6}>
-                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} loading={loading} />
+                        <Chartbox chartConfig={pieChartconfig} pieExtraConfig={trafficConfig} chartName={t("Slicing Traffic")} chartStyle={chartStyle} loading={trafficData.loading} />
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} loading={loading} />
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={onlineusersConfig} chartName={t("Onlines Users")} chartStyle={chartStyle} loading={onlineusersData.loading} />
                     </Col>
                     <Col span={9}>
-                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} loading={loading} />
+                        <Chartbox chartConfig={chartConfig} lineExtraConfig={bandwidthConfig} chartName={t("Slicing Bandwidth")} chartStyle={chartStyle} loading={bandwidthData.loading} />
                     </Col>
                 </Row>
                 <BusinessMGTTable className="businessmonitor_table" getChartsData={this.getChartsData} pageSizeOptions={pageSizeOptions} />

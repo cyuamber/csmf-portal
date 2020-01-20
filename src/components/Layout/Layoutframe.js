@@ -12,7 +12,6 @@ const { Content } = Layout;
 class Layoutframe extends React.Component {
     render() {
         const isBread = window.location.href.indexOf('login') === -1 ? true : false;
-        console.log(window.location.href, window.location.href.indexOf('login'))
         return (
             <Layout className="layout" style={{ background: "#fff" }}>
                 <Appheader />
